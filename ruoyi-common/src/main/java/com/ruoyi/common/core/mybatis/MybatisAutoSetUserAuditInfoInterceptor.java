@@ -29,7 +29,7 @@ public class MybatisAutoSetUserAuditInfoInterceptor implements Interceptor {
     private void autoSetUserAuditInfo(Invocation invocation){
         Object[] queryArgs = invocation.getArgs();
         MappedStatement mappedStatement = (MappedStatement) queryArgs[INDEX_ZERO];
-        if(!mappedStatement.getId().contains("com.cyl")){
+        if(!mappedStatement.getId().contains("com.tt")){
             return;
         }
         Long userId = this.getUserId();

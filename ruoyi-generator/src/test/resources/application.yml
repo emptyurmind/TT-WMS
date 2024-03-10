@@ -6,8 +6,8 @@ spring:
     #    data: classpath:sql/data.sql
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/wms?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
-    username:
-    password:
+    username: root
+    password: wangkun123
   jpa:
     properties:
       hibernate:
@@ -27,7 +27,7 @@ gen:
   # 作者
   author: zcc
   # 默认生成包路径 system 需改成自己的模块名称 如 system monitor tool
-  packageName: com.cyl.wms
+  packageName: com.tt.wms
   # 自动去除表前缀，默认是false
   autoRemovePre: true
   # 表前缀（生成类名不会包含表前缀，多个用逗号分隔）

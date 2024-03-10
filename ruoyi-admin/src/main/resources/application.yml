@@ -124,7 +124,7 @@ token:
 # mybatis-plus 配置
 mybatis-plus:
   # 搜索指定包别名
-  typeAliasesPackage: com.cyl.**.domain, com.ruoyi.common.core.domain.entity,  com.ruoyi.**.domain
+  typeAliasesPackage: com.tt.**.domain, com.ruoyi.common.core.domain.entity,  com.ruoyi.**.domain
   # 配置mapper的扫描，找到所有的mapper.xml映射文件
   mapperLocations: classpath*:mapper/**/*Mapper.xml
   # 加载全局的配置文件
@@ -164,7 +164,7 @@ gen:
   # 作者
   author: zcc
   # 默认生成包路径 system 需改成自己的模块名称 如 system monitor tool
-  packageName: com.cyl.wms
+  packageName: com.tt.wms
   # 自动去除表前缀，默认是false
   autoRemovePre: true
   # 表前缀（生成类名不会包含表前缀，多个用逗号分隔）
