@@ -210,6 +210,31 @@
             </dependency>
 
             <dependency>
+                <groupId>com.tt.wms</groupId>
+                <artifactId>wms-portal</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tt.wms</groupId>
+                <artifactId>wms-inbound</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tt.wms</groupId>
+                <artifactId>wms-inner</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tt.wms</groupId>
+                <artifactId>wms-outbound</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tt.wms</groupId>
+                <artifactId>wms-basic</artifactId>
+            </dependency>
+
+            <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
@@ -235,7 +260,11 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
-        <module>wms</module>
+        <module>wms-basic</module>
+        <module>wms-inbound</module>
+        <module>wms-inner</module>
+        <module>wms-outbound</module>
+        <module>wms-portal</module>
     </modules>
     <packaging>pom</packaging>
 
