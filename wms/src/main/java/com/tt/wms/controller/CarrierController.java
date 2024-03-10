@@ -27,6 +27,9 @@ import com.tt.wms.domain.query.CarrierQuery;
 import com.tt.wms.service.CarrierService;
 import com.tt.wms.domain.vo.CarrierVO;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+
+import javax.annotation.Resource;
+
 /**
  * 承运商Controller
  * 
@@ -36,9 +39,11 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 @RestController
 @RequestMapping("/wms/carrier")
 public class CarrierController extends BaseController {
-    @Autowired
+
+    @Resource
     private CarrierService service;
-    @Autowired
+
+    @Resource
     private CarrierConvert convert;
 
     @ApiOperation("查询承运商列表")

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 库区  ENTITY <=> VO / Form / Query
  *
- * @author zcc
+ * @auhtor wangkun
  */
 @Mapper(componentModel = "spring")
 public interface AreaConvert  {

@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * 货区 查询 对象
  *
- * @author zcc
+ * @auhtor wangkun
  */
 @ApiModel(description="货区 查询 对象")
 @Data

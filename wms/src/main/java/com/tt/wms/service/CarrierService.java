@@ -12,6 +12,8 @@ import com.tt.wms.mapper.CarrierMapper;
 import com.tt.wms.domain.entity.Carrier;
 import com.tt.wms.domain.query.CarrierQuery;
 
+import javax.annotation.Resource;
+
 /**
  * 承运商Service业务层处理
  *
@@ -20,7 +22,8 @@ import com.tt.wms.domain.query.CarrierQuery;
  */
 @Service
 public class CarrierService {
-    @Autowired
+
+    @Resource
     private CarrierMapper carrierMapper;
 
     /**
