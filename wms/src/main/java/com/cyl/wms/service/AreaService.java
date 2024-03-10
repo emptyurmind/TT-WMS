@@ -18,8 +18,7 @@ import javax.annotation.Resource;
 /**
  * 货区Service业务层处理
  *
- *
- * @author zcc
+ * @author wangkun
  */
 @Service
 public class AreaService {

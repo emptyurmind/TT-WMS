@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 /**
  * 货区对象 wms_area
  * 
- * @author zcc
+ * @author wangkun
  */
 @ApiModel(description="货区对象")
 @Data

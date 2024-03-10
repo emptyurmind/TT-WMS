@@ -8,7 +8,7 @@ import com.cyl.wms.domain.entity.Area;
 /**
  * 货区Mapper接口
  * 
- * @author zcc
+ * @author wangkun
  */
 public interface AreaMapper extends BaseMapper<Area> {
     /**
