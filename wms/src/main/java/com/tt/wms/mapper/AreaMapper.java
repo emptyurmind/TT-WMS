@@ -1,9 +1,9 @@
-package com.cyl.wms.mapper;
+package com.tt.wms.mapper;
 
 import java.util.List;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
-import com.cyl.wms.domain.entity.Area;
+import com.tt.wms.domain.entity.Area;
 
 /**
  * 货区Mapper接口

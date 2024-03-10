@@ -1,4 +1,4 @@
-package com.cyl.wms.domain.entity;
+package com.tt.wms.domain.entity;
 
 import com.ruoyi.common.annotation.Excel;
 import io.swagger.annotations.ApiModel;

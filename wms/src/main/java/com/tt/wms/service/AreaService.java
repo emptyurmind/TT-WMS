@@ -1,17 +1,16 @@
-package com.cyl.wms.service;
+package com.tt.wms.service;
 
 import java.util.*;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import com.cyl.wms.mapper.AreaMapper;
-import com.cyl.wms.domain.entity.Area;
-import com.cyl.wms.domain.query.AreaQuery;
+import com.tt.wms.mapper.AreaMapper;
+import com.tt.wms.domain.entity.Area;
+import com.tt.wms.domain.query.AreaQuery;
 
 import javax.annotation.Resource;
 

@@ -1,4 +1,4 @@
-package com.cyl.wms;
+package com.tt.wms;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,8 +1,8 @@
-package com.cyl.wms.convert;
+package com.tt.wms.convert;
 
 import org.mapstruct.Mapper;
-import com.cyl.wms.domain.entity.Area;
-import com.cyl.wms.domain.vo.AreaVO;
+import com.tt.wms.domain.entity.Area;
+import com.tt.wms.domain.vo.AreaVO;
 import java.util.List;
 /**
  * 库区  ENTITY <=> VO / Form / Query

@@ -1,4 +1,4 @@
-package com.cyl.wms.domain.vo;
+package com.tt.wms.domain.vo;
 
 public interface AreaAndItemInfo extends PlaceAndItem {
     void setItemName(String name);

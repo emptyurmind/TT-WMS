@@ -1,4 +1,4 @@
-package com.cyl.wms.controller;
+package com.tt.wms.controller;
 
 import java.util.List;
 
@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.enums.BusinessType;
-import com.cyl.wms.convert.AreaConvert;
-import com.cyl.wms.domain.entity.Area;
-import com.cyl.wms.domain.query.AreaQuery;
-import com.cyl.wms.service.AreaService;
-import com.cyl.wms.domain.vo.AreaVO;
+import com.tt.wms.convert.AreaConvert;
+import com.tt.wms.domain.entity.Area;
+import com.tt.wms.domain.query.AreaQuery;
+import com.tt.wms.service.AreaService;
+import com.tt.wms.domain.vo.AreaVO;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 /**
  * 货区Controller

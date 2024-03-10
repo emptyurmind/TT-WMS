@@ -1,4 +1,4 @@
-package com.cyl.wms.domain.query;
+package com.tt.wms.domain.query;
 
 import lombok.Data;
 import io.swagger.annotations.ApiModel;
