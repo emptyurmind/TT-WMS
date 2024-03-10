@@ -13,6 +13,8 @@ import com.cyl.wms.mapper.AreaMapper;
 import com.cyl.wms.domain.entity.Area;
 import com.cyl.wms.domain.query.AreaQuery;
 
+import javax.annotation.Resource;
+
 /**
  * 货区Service业务层处理
  *
@@ -21,7 +23,7 @@ import com.cyl.wms.domain.query.AreaQuery;
  */
 @Service
 public class AreaService {
-    @Autowired
+    @Resource
     private AreaMapper areaMapper;
 
     /**
