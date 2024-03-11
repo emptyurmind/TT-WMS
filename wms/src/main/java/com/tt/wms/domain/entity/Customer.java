@@ -1,20 +1,20 @@
 package com.tt.wms.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.core.domain.BaseAudit;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import com.ruoyi.common.core.domain.BaseAudit;
 import lombok.Data;
-import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.math.BigDecimal;
 
 /**
  * 客户对象 wms_customer
- * 
+ *
  * @auhtor wangkun
  */
-@ApiModel(description="客户对象")
+@ApiModel(description = "客户对象")
 @Data
 @TableName("wms_customer")
 public class Customer extends BaseAudit {

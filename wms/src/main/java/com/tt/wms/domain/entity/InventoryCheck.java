@@ -1,22 +1,23 @@
 package com.tt.wms.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.core.domain.BaseAudit;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.ruoyi.common.annotation.Excel;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import com.ruoyi.common.core.domain.BaseAudit;
-import lombok.Data;
-import com.baomidou.mybatisplus.annotation.TableName;
 /**
  * 库存盘点单据对象 wms_inventory_check
- * 
+ *
  * @auhtor wangkun
  */
-@ApiModel(description="库存盘点单据对象")
+@ApiModel(description = "库存盘点单据对象")
 @Data
 @TableName("wms_inventory_check")
 public class InventoryCheck extends BaseAudit {

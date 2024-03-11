@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tt.wms.mapper.InventorySettlementDetailMapper">
-    
+
     <resultMap type="InventorySettlementDetail" id="InventorySettlementDetailResult">
         <result property="id" column="id"/>
         <result property="settlementId" column="settlement_id"/>
@@ -31,11 +31,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
-        <result property="updateTime" column="update_time" />
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <sql id="selectInventorySettlementDetailVo">
-        select id, settlement_id, settlement_type, item_id, item_no, item_name, warehouse_id, warehouse_no, warehouse_name, area_id, area_no, area_name, previous_balance, current_enter, current_out, current_check, current_balance, del_flag, remark, create_by, create_time, update_by, update_time   from wms_inventory_settlement_detail
+        select id,
+               settlement_id,
+               settlement_type,
+               item_id,
+               item_no,
+               item_name,
+               warehouse_id,
+               warehouse_no,
+               warehouse_name,
+               area_id,
+               area_no,
+               area_name,
+               previous_balance,
+               current_enter,
+               current_out,
+               current_check,
+               current_balance,
+               del_flag,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from wms_inventory_settlement_detail
     </sql>
     <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
 
@@ -61,30 +84,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectByEntity" parameterType="InventorySettlementDetail" resultMap="InventorySettlementDetailResult">
         <include refid="selectInventorySettlementDetailVo"/>
-        <where>  
-            <if test="settlementId != null "> and settlement_id = #{settlementId}</if>
-            <if test="settlementType != null "> and settlement_type = #{settlementType}</if>
-            <if test="itemId != null "> and item_id = #{itemId}</if>
-            <if test="itemNo != null  and itemNo != ''"> and item_no = #{itemNo}</if>
-            <if test="itemName != null  and itemName != ''"> and item_name like concat('%', #{itemName}, '%')</if>
-            <if test="warehouseId != null "> and warehouse_id = #{warehouseId}</if>
-            <if test="warehouseNo != null  and warehouseNo != ''"> and warehouse_no = #{warehouseNo}</if>
-            <if test="warehouseName != null  and warehouseName != ''"> and warehouse_name like concat('%', #{warehouseName}, '%')</if>
-            <if test="areaId != null "> and area_id = #{areaId}</if>
-            <if test="areaNo != null  and areaNo != ''"> and area_no = #{areaNo}</if>
-            <if test="areaName != null  and areaName != ''"> and area_name like concat('%', #{areaName}, '%')</if>
-            <if test="previousBalance != null "> and previous_balance = #{previousBalance}</if>
-            <if test="currentEnter != null "> and current_enter = #{currentEnter}</if>
-            <if test="currentOut != null "> and current_out = #{currentOut}</if>
-            <if test="currentCheck != null "> and current_check = #{currentCheck}</if>
-            <if test="currentBalance != null "> and current_balance = #{currentBalance}</if>
+        <where>
+            <if test="settlementId != null ">and settlement_id = #{settlementId}</if>
+            <if test="settlementType != null ">and settlement_type = #{settlementType}</if>
+            <if test="itemId != null ">and item_id = #{itemId}</if>
+            <if test="itemNo != null  and itemNo != ''">and item_no = #{itemNo}</if>
+            <if test="itemName != null  and itemName != ''">and item_name like concat('%', #{itemName}, '%')</if>
+            <if test="warehouseId != null ">and warehouse_id = #{warehouseId}</if>
+            <if test="warehouseNo != null  and warehouseNo != ''">and warehouse_no = #{warehouseNo}</if>
+            <if test="warehouseName != null  and warehouseName != ''">and warehouse_name like concat('%',
+                #{warehouseName}, '%')
+            </if>
+            <if test="areaId != null ">and area_id = #{areaId}</if>
+            <if test="areaNo != null  and areaNo != ''">and area_no = #{areaNo}</if>
+            <if test="areaName != null  and areaName != ''">and area_name like concat('%', #{areaName}, '%')</if>
+            <if test="previousBalance != null ">and previous_balance = #{previousBalance}</if>
+            <if test="currentEnter != null ">and current_enter = #{currentEnter}</if>
+            <if test="currentOut != null ">and current_out = #{currentOut}</if>
+            <if test="currentCheck != null ">and current_check = #{currentCheck}</if>
+            <if test="currentBalance != null ">and current_balance = #{currentBalance}</if>
         </where>
     </select>
 
     <update id="updateDelFlagByIds">
         update wms_inventory_settlement_detail set del_flag=1
         <where>
-            id in <foreach collection="ids" open="(" item="it" close=")" separator=",">#{it}</foreach>
+            id in
+            <foreach collection="ids" open="(" item="it" close=")" separator=",">#{it}</foreach>
         </where>
     </update>
 </mapper>

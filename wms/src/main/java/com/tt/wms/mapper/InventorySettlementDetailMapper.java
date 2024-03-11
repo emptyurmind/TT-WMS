@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * 库存结算明细Mapper接口
- * 
+ *
  * @auhtor wangkun
  */
 public interface InventorySettlementDetailMapper extends BaseMapper<InventorySettlementDetail> {
@@ -22,13 +22,15 @@ public interface InventorySettlementDetailMapper extends BaseMapper<InventorySet
 
     /**
      * 批量软删除
+     *
      * @param ids
      * @return
-    */
+     */
     int updateDelFlagByIds(@Param("ids") Long[] ids);
 
     /**
      * 批量插入
+     *
      * @param inventorySettlementDetails 库存结算单据详情
      * @return 插入结果
      */

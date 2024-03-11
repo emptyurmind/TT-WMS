@@ -1,18 +1,20 @@
 package com.tt.wms.domain.entity;
 
-import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.core.domain.BaseAudit;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import com.ruoyi.common.core.domain.BaseAudit;
 import lombok.Data;
-import com.baomidou.mybatisplus.annotation.TableName;
+
+import java.time.LocalDateTime;
+
 /**
  * 发货记录对象 wms_delivery
- * 
+ *
  * @auhtor wangkun
  */
-@ApiModel(description="发货记录对象")
+@ApiModel(description = "发货记录对象")
 @Data
 @TableName("wms_delivery")
 public class Delivery extends BaseAudit {

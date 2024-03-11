@@ -1,24 +1,24 @@
 package com.tt.wms.service;
 
-import java.math.BigDecimal;
-import java.util.LinkedList;
-import java.util.List;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.tt.wms.convert.InventoryCheckDetailConvert;
-import com.tt.wms.domain.entity.InventoryHistory;
-import com.tt.wms.domain.vo.InventoryCheckDetailVO;
 import com.github.pagehelper.PageHelper;
+import com.tt.wms.convert.InventoryCheckDetailConvert;
+import com.tt.wms.domain.entity.InventoryCheckDetail;
+import com.tt.wms.domain.entity.InventoryHistory;
+import com.tt.wms.domain.query.InventoryCheckDetailQuery;
+import com.tt.wms.domain.vo.InventoryCheckDetailVO;
+import com.tt.wms.mapper.InventoryCheckDetailMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.tt.wms.mapper.InventoryCheckDetailMapper;
-import com.tt.wms.domain.entity.InventoryCheckDetail;
-import com.tt.wms.domain.query.InventoryCheckDetailQuery;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 库存盘点单据详情Service业务层处理
- *
  *
  * @auhtor wangkun
  */
@@ -62,7 +62,7 @@ public class InventoryCheckDetailService {
      * 查询库存盘点单据详情列表
      *
      * @param query 查询条件
-     * @param page 分页条件
+     * @param page  分页条件
      * @return 库存盘点单据详情
      */
     public List<InventoryCheckDetail> selectList(InventoryCheckDetailQuery query, Pageable page) {
@@ -70,7 +70,7 @@ public class InventoryCheckDetailService {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
         }
         QueryWrapper<InventoryCheckDetail> qw = new QueryWrapper<>();
-        qw.eq("del_flag",0);
+        qw.eq("del_flag", 0);
         Long inventoryCheckId = query.getInventoryCheckId();
         if (inventoryCheckId != null) {
             qw.eq("inventory_check_id", inventoryCheckId);

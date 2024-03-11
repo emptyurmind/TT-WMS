@@ -1,13 +1,14 @@
 package com.tt.wms.mapper;
 
-import java.util.List;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Param;
 import com.tt.wms.domain.entity.Carrier;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 承运商Mapper接口
- * 
+ *
  * @author wangkun
  */
 public interface CarrierMapper extends BaseMapper<Carrier> {
@@ -21,8 +22,9 @@ public interface CarrierMapper extends BaseMapper<Carrier> {
 
     /**
      * 批量软删除
+     *
      * @param ids
      * @return
-    */
+     */
     int updateDelFlagByIds(@Param("ids") Long[] ids);
 }

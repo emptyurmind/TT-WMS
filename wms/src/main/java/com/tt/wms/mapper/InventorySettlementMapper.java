@@ -22,8 +22,9 @@ public interface InventorySettlementMapper extends BaseMapper<InventorySettlemen
 
     /**
      * 批量软删除
+     *
      * @param ids
      * @return
-    */
+     */
     int updateDelFlagByIds(@Param("ids") Long[] ids);
 }

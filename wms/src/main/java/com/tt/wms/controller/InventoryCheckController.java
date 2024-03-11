@@ -1,40 +1,34 @@
 package com.tt.wms.controller;
 
-import java.util.List;
-
-import com.tt.wms.domain.form.InventoryCheckFrom;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.tt.wms.convert.InventoryCheckConvert;
 import com.tt.wms.domain.entity.InventoryCheck;
+import com.tt.wms.domain.form.InventoryCheckFrom;
 import com.tt.wms.domain.query.InventoryCheckQuery;
-import com.tt.wms.service.InventoryCheckService;
 import com.tt.wms.domain.vo.InventoryCheckVO;
-import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.tt.wms.service.InventoryCheckService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 /**
  * 库存盘点单据Controller
- * 
+ *
  * @auhtor wangkun
  * @date 2023-04-25
  */
-@Api(description ="库存盘点单据接口列表")
+@Api(description = "库存盘点单据接口列表")
 @RestController
 @RequestMapping("/wms/inventoryCheck")
 public class InventoryCheckController extends BaseController {
@@ -48,7 +42,7 @@ public class InventoryCheckController extends BaseController {
     @PostMapping("/list")
     public ResponseEntity<Page<InventoryCheck>> list(@RequestBody InventoryCheckQuery query, Pageable page) {
         List<InventoryCheck> list = service.selectList(query, page);
-        return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page)list).getTotal()));
+        return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page) list).getTotal()));
     }
 
     @ApiOperation("导出库存盘点单据列表")
@@ -87,7 +81,7 @@ public class InventoryCheckController extends BaseController {
     @ApiOperation("删除库存盘点单据")
     @PreAuthorize("@ss.hasPermi('wms:inventoryCheck:remove')")
     @Log(title = "库存盘点单据", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public ResponseEntity<Integer> remove(@PathVariable Long[] ids) {
         return ResponseEntity.ok(service.deleteByIds(ids));
     }

@@ -1,20 +1,20 @@
 package com.tt.wms.service;
 
-import java.util.List;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-import com.tt.wms.mapper.CustomerMapper;
 import com.tt.wms.domain.entity.Customer;
 import com.tt.wms.domain.query.CustomerQuery;
+import com.tt.wms.mapper.CustomerMapper;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 客户Service业务层处理
- *
  *
  * @auhtor wangkun
  */
@@ -37,7 +37,7 @@ public class CustomerService {
      * 查询客户列表
      *
      * @param query 查询条件
-     * @param page 分页条件
+     * @param page  分页条件
      * @return 客户
      */
     public List<Customer> selectList(CustomerQuery query, Pageable page) {
@@ -45,7 +45,7 @@ public class CustomerService {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
         }
         QueryWrapper<Customer> qw = new QueryWrapper<>();
-        qw.eq("del_flag",0);
+        qw.eq("del_flag", 0);
         String customerNo = query.getCustomerNo();
         if (!StringUtils.isEmpty(customerNo)) {
             qw.eq("customer_no", customerNo);

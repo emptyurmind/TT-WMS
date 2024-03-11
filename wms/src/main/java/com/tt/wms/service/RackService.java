@@ -1,21 +1,22 @@
 package com.tt.wms.service;
 
-import java.util.*;
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-import com.tt.wms.mapper.RackMapper;
 import com.tt.wms.domain.entity.Rack;
 import com.tt.wms.domain.query.RackQuery;
+import com.tt.wms.mapper.RackMapper;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 货架Service业务层处理
- *
  *
  * @auhtor wangkun
  */
@@ -38,7 +39,7 @@ public class RackService {
      * 查询货架列表
      *
      * @param query 查询条件
-     * @param page 分页条件
+     * @param page  分页条件
      * @return 货架
      */
     public List<Rack> selectList(RackQuery query, Pageable page) {
@@ -46,7 +47,7 @@ public class RackService {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
         }
         QueryWrapper<Rack> qw = new QueryWrapper<>();
-        qw.eq("del_flag",0);
+        qw.eq("del_flag", 0);
         String rackNo = query.getRackNo();
         if (!StringUtils.isEmpty(rackNo)) {
             qw.eq("rack_no", rackNo);

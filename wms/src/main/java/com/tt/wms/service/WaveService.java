@@ -2,21 +2,21 @@ package com.tt.wms.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.ruoyi.common.exception.ServiceException;
+import com.ruoyi.common.utils.SecurityUtils;
 import com.tt.wms.constant.ShipmentOrderConstant;
 import com.tt.wms.convert.ShipmentOrderDetailConvert;
-import com.tt.wms.mapper.ShipmentOrderDetailMapper;
-import com.tt.wms.mapper.ShipmentOrderMapper;
-import com.tt.wms.mapper.WaveMapper;
 import com.tt.wms.domain.entity.InventoryHistory;
 import com.tt.wms.domain.entity.ShipmentOrder;
 import com.tt.wms.domain.entity.ShipmentOrderDetail;
 import com.tt.wms.domain.entity.Wave;
+import com.tt.wms.domain.form.OrderWaveFrom;
 import com.tt.wms.domain.query.WaveQuery;
 import com.tt.wms.domain.vo.ShipmentOrderDetailVO;
-import com.tt.wms.domain.form.OrderWaveFrom;
-import com.github.pagehelper.PageHelper;
-import com.ruoyi.common.exception.ServiceException;
-import com.ruoyi.common.utils.SecurityUtils;
+import com.tt.wms.mapper.ShipmentOrderDetailMapper;
+import com.tt.wms.mapper.ShipmentOrderMapper;
+import com.tt.wms.mapper.WaveMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -296,13 +296,12 @@ public class WaveService {
     }
 
 
-
     @Transactional
     public Integer confirmWave(OrderWaveFrom order) {
         //获取波次单
         Wave wave = waveMapper.selectById(order.getId());
         //数据库中的详情
-        Map<Long, ShipmentOrderDetailVO> dbDetailMap = order.getDetails().stream().collect(Collectors.toMap(it->it.getId(), it->it));
+        Map<Long, ShipmentOrderDetailVO> dbDetailMap = order.getDetails().stream().collect(Collectors.toMap(it -> it.getId(), it -> it));
 
 
         List<ShipmentOrderDetailVO> details = order.getAllocationDetails();
@@ -320,7 +319,7 @@ public class WaveService {
         Long userId = SecurityUtils.getUserId();
 
         //获取订单
-        Map<Long, ShipmentOrder> orderMap1 = shipmentOrderMapper.selectList(new QueryWrapper<ShipmentOrder>().in("id", details.stream().map(it->it.getShipmentOrderId()).collect(Collectors.toSet()))).stream().collect(Collectors.toMap(it -> it.getId(), it -> it));
+        Map<Long, ShipmentOrder> orderMap1 = shipmentOrderMapper.selectList(new QueryWrapper<ShipmentOrder>().in("id", details.stream().map(it -> it.getShipmentOrderId()).collect(Collectors.toSet()))).stream().collect(Collectors.toMap(it -> it.getId(), it -> it));
 
 
         details.forEach(it -> {
@@ -330,7 +329,7 @@ public class WaveService {
                 return;
             }
             ShipmentOrderDetailVO dbObj = dbDetailMap.get(it.getId());
-            if (dbObj == null || !Objects.equals(dbObj.getShipmentOrderStatus(),status) || !Objects.equals(it.getRealQuantity(), dbObj.getRealQuantity())) {
+            if (dbObj == null || !Objects.equals(dbObj.getShipmentOrderStatus(), status) || !Objects.equals(it.getRealQuantity(), dbObj.getRealQuantity())) {
                 //计算真实的入库数量
                 BigDecimal added;
                 if (dbObj == null || dbObj.getShipmentOrderStatus() == ShipmentOrderConstant.NOT_IN) {

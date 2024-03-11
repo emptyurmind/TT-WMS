@@ -1,16 +1,17 @@
 package com.tt.wms.domain.query;
 
-import java.math.BigDecimal;
-import lombok.Data;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.math.BigDecimal;
 
 /**
  * 出库单详情 查询 对象
  *
  * @auhtor wangkun
  */
-@ApiModel(description="出库单详情 查询 对象")
+@ApiModel(description = "出库单详情 查询 对象")
 @Data
 public class ShipmentOrderDetailQuery {
     @ApiModelProperty("出库单 精确匹配")

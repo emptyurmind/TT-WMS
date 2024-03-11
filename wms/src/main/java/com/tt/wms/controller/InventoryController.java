@@ -1,14 +1,14 @@
 package com.tt.wms.controller;
 
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.tt.wms.convert.InventoryConvert;
 import com.tt.wms.domain.entity.Inventory;
 import com.tt.wms.domain.query.InventoryQuery;
 import com.tt.wms.domain.vo.InventoryVO;
 import com.tt.wms.service.InventoryService;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.utils.poi.ExcelUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 /**
  * 库存Controller
  *
  * @auhtor wangkun
  * @date 2022-08-05
  */
-@Api(description ="库存接口列表")
+@Api(description = "库存接口列表")
 @RestController
 @RequestMapping("/wms/inventory")
 public class InventoryController extends BaseController {
@@ -84,10 +85,11 @@ public class InventoryController extends BaseController {
     @ApiOperation("删除库存")
     @PreAuthorize("@ss.hasPermi('wms:inventory:remove')")
     @Log(title = "库存", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public ResponseEntity<Integer> remove(@PathVariable Long[] ids) {
         return ResponseEntity.ok(service.deleteByIds(ids));
     }
+
     @ApiOperation("删除库存")
     @PreAuthorize("@ss.hasPermi('wms:inventory:remove')")
     @Log(title = "库存", businessType = BusinessType.DELETE)

@@ -1,20 +1,21 @@
 package com.tt.wms.domain.entity;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import com.baomidou.mybatisplus.annotation.TableName;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 /**
  * 客户账户流水对象 wms_customer_transaction
- * 
+ *
  * @auhtor wangkun
  */
-@ApiModel(description="客户账户流水对象")
+@ApiModel(description = "客户账户流水对象")
 @Data
 @TableName("wms_customer_transaction")
 public class CustomerTransaction {

@@ -1,17 +1,18 @@
 package com.tt.wms.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.core.domain.BaseAudit;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import com.ruoyi.common.core.domain.BaseAudit;
 import lombok.Data;
-import com.baomidou.mybatisplus.annotation.TableName;
+
 /**
  * 货区对象 wms_area
- * 
+ *
  * @author wangkun
  */
-@ApiModel(description="货区对象")
+@ApiModel(description = "货区对象")
 @Data
 @TableName("wms_area")
 public class Area extends BaseAudit {

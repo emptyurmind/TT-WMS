@@ -1,19 +1,19 @@
 package com.tt.wms.domain.query;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * 客户账户流水 查询 对象
  *
  * @auhtor wangkun
  */
-@ApiModel(description="客户账户流水 查询 对象")
+@ApiModel(description = "客户账户流水 查询 对象")
 @Data
 public class CustomerTransactionQuery {
     @ApiModelProperty("交易编号 精确匹配")

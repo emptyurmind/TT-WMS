@@ -1,14 +1,14 @@
 package com.tt.wms.controller;
 
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.tt.wms.convert.InventorySettlementDetailConvert;
 import com.tt.wms.domain.entity.InventorySettlementDetail;
 import com.tt.wms.domain.query.InventorySettlementDetailQuery;
 import com.tt.wms.domain.vo.InventorySettlementDetailVO;
 import com.tt.wms.service.InventorySettlementDetailService;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.utils.poi.ExcelUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +20,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 /**
  * 库存结算明细Controller
- * 
+ *
  * @auhtor wangkun
  * @date 2023-04-18
  */
-@Api(description ="库存结算明细接口列表")
+@Api(description = "库存结算明细接口列表")
 @RestController
 @RequestMapping("/wms/inventorySettlementDetail")
 public class InventorySettlementDetailController extends BaseController {
@@ -40,7 +41,7 @@ public class InventorySettlementDetailController extends BaseController {
     @PostMapping("/list")
     public ResponseEntity<Page<InventorySettlementDetail>> list(@RequestBody InventorySettlementDetailQuery query, Pageable page) {
         List<InventorySettlementDetail> list = service.selectList(query, page);
-        return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page)list).getTotal()));
+        return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page) list).getTotal()));
     }
 
     @ApiOperation("查询库存信息")
@@ -87,7 +88,7 @@ public class InventorySettlementDetailController extends BaseController {
     @ApiOperation("删除库存结算明细")
     @PreAuthorize("@ss.hasPermi('wms:inventorySettlementDetail:remove')")
     @Log(title = "库存结算明细", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public ResponseEntity<Integer> remove(@PathVariable Long[] ids) {
         return ResponseEntity.ok(service.deleteByIds(ids));
     }

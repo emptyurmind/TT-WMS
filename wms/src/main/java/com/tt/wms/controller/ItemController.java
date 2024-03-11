@@ -1,39 +1,33 @@
 package com.tt.wms.controller;
 
-import java.util.List;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.tt.wms.convert.ItemConvert;
 import com.tt.wms.domain.entity.Item;
 import com.tt.wms.domain.query.ItemQuery;
-import com.tt.wms.service.ItemService;
 import com.tt.wms.domain.vo.ItemVO;
-import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.tt.wms.service.ItemService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 /**
  * 物料Controller
- * 
+ *
  * @auhtor wangkun
  * @date 2022-08-05
  */
-@Api(description ="物料接口列表")
+@Api(description = "物料接口列表")
 @RestController
 @RequestMapping("/wms/item")
 public class ItemController extends BaseController {
@@ -49,8 +43,9 @@ public class ItemController extends BaseController {
         List<Item> items = service.selectList(query, page);
         List<ItemVO> list = service.toVos(items);
 
-        return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page)items).getTotal()));
+        return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page) items).getTotal()));
     }
+
     @ApiOperation("查询物料列表")
     @PreAuthorize("@ss.hasPermi('wms:item:list')")
     @PostMapping("/all")
@@ -97,7 +92,7 @@ public class ItemController extends BaseController {
     @ApiOperation("删除物料")
     @PreAuthorize("@ss.hasPermi('wms:item:remove')")
     @Log(title = "物料", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public ResponseEntity<Integer> remove(@PathVariable Long[] ids) {
         return ResponseEntity.ok(service.deleteByIds(ids));
     }
@@ -105,9 +100,9 @@ public class ItemController extends BaseController {
     @ApiOperation("查询过期物料")
     @PreAuthorize("@ss.hasPermi('wms:item:list')")
     @PostMapping("/expiryList")
-    public ResponseEntity<Page<ItemVO>> list(Pageable page){
+    public ResponseEntity<Page<ItemVO>> list(Pageable page) {
         List<Item> items = service.queryExpiry(page);
         List<ItemVO> list = service.toVos(items);
-        return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page)items).getTotal()));
+        return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page) items).getTotal()));
     }
 }

@@ -2,16 +2,16 @@ package com.tt.wms.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.ruoyi.common.exception.ServiceException;
+import com.ruoyi.common.utils.SecurityUtils;
 import com.tt.wms.constant.ReceiptOrderConstant;
 import com.tt.wms.convert.ReceiptOrderDetailConvert;
 import com.tt.wms.domain.entity.*;
+import com.tt.wms.domain.form.OrderWaveReceiptFrom;
+import com.tt.wms.domain.vo.ReceiptOrderDetailVO;
 import com.tt.wms.mapper.ReceiptOrderDetailMapper;
 import com.tt.wms.mapper.ReceiptOrderMapper;
 import com.tt.wms.mapper.WaveMapper;
-import com.tt.wms.domain.vo.ReceiptOrderDetailVO;
-import com.tt.wms.domain.form.OrderWaveReceiptFrom;
-import com.ruoyi.common.exception.ServiceException;
-import com.ruoyi.common.utils.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +43,6 @@ public class WaveForReceiptService {
     private WaveMapper waveMapper;
     @Autowired
     private InventoryHistoryService inventoryHistoryService;
-
 
 
     @Transactional
@@ -103,7 +102,7 @@ public class WaveForReceiptService {
             inventoryList.add(inventory);
         });
         Map<Long, Inventory> itemMap = inventoryList.stream().collect(Collectors.toMap(it -> it.getItemId(), it -> it));
-        originalDetails.forEach(it->{
+        originalDetails.forEach(it -> {
             Inventory inventory = itemMap.get(it.getItemId());
             if (inventory != null) {
                 it.setWarehouseId(inventory.getWarehouseId());
@@ -120,7 +119,7 @@ public class WaveForReceiptService {
         //获取波次单
         Wave wave = waveMapper.selectById(order.getId());
         //数据库中的详情
-        Map<Long, ReceiptOrderDetailVO> dbDetailMap = order.getDetails().stream().collect(Collectors.toMap(it->it.getId(),it->it));
+        Map<Long, ReceiptOrderDetailVO> dbDetailMap = order.getDetails().stream().collect(Collectors.toMap(it -> it.getId(), it -> it));
         //修改之后的详情
         List<ReceiptOrderDetailVO> details = order.getAllocationDetails();
         List<ReceiptOrderDetail> orderDetails = receiptOrderDetailConvert.vos2dos(details);
@@ -135,7 +134,7 @@ public class WaveForReceiptService {
         Long userId = SecurityUtils.getUserId();
 
         //获取订单
-        Map<Long, ReceiptOrder> orderMap1 = receiptOrderMapper.selectList(new QueryWrapper<ReceiptOrder>().in("id", orderDetails.stream().map(it->it.getReceiptOrderId()).collect(Collectors.toSet()))).stream().collect(Collectors.toMap(it -> it.getId(), it -> it));
+        Map<Long, ReceiptOrder> orderMap1 = receiptOrderMapper.selectList(new QueryWrapper<ReceiptOrder>().in("id", orderDetails.stream().map(it -> it.getReceiptOrderId()).collect(Collectors.toSet()))).stream().collect(Collectors.toMap(it -> it.getId(), it -> it));
 
 
         details.forEach(it -> {
@@ -145,7 +144,7 @@ public class WaveForReceiptService {
                 return;
             }
             ReceiptOrderDetailVO dbObj = dbDetailMap.get(it.getId());
-            if (dbObj == null || !Objects.equals(dbObj.getReceiptOrderStatus(),status) || !Objects.equals(it.getRealQuantity(), dbObj.getRealQuantity())) {
+            if (dbObj == null || !Objects.equals(dbObj.getReceiptOrderStatus(), status) || !Objects.equals(it.getRealQuantity(), dbObj.getRealQuantity())) {
                 //计算真实的入库数量
                 BigDecimal added;
                 if (dbObj == null || dbObj.getReceiptOrderStatus() == ReceiptOrderConstant.NOT_IN) {

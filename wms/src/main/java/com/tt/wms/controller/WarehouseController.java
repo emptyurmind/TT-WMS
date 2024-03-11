@@ -1,39 +1,33 @@
 package com.tt.wms.controller;
 
-import java.util.List;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.tt.wms.convert.WarehouseConvert;
 import com.tt.wms.domain.entity.Warehouse;
 import com.tt.wms.domain.query.WarehouseQuery;
-import com.tt.wms.service.WarehouseService;
 import com.tt.wms.domain.vo.WarehouseVO;
-import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.tt.wms.service.WarehouseService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 /**
  * 仓库Controller
- * 
+ *
  * @auhtor wangkun
  * @date 2022-08-05
  */
-@Api(description ="仓库接口列表")
+@Api(description = "仓库接口列表")
 @RestController
 @RequestMapping("/wms/warehouse")
 public class WarehouseController extends BaseController {
@@ -47,7 +41,7 @@ public class WarehouseController extends BaseController {
     @PostMapping("/list")
     public ResponseEntity<Page<Warehouse>> list(@RequestBody WarehouseQuery query, Pageable page) {
         List<Warehouse> list = service.selectList(query, page);
-        return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page)list).getTotal()));
+        return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page) list).getTotal()));
     }
 
     @ApiOperation("导出仓库列表")
@@ -86,7 +80,7 @@ public class WarehouseController extends BaseController {
     @ApiOperation("删除仓库")
     @PreAuthorize("@ss.hasPermi('wms:warehouse:remove')")
     @Log(title = "仓库", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public ResponseEntity<Integer> remove(@PathVariable Long[] ids) {
         return ResponseEntity.ok(service.deleteByIds(ids));
     }

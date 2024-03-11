@@ -101,37 +101,37 @@
     </update>
     <select id="countByOrderId" resultType="com.tt.wms.domain.vo.InventoryMovementVO">
         select inventory_movement_id id,
-               count(*)              detail_count,
-               sum(plan_quantity)    itemCount
+        count(*) detail_count,
+        sum(plan_quantity) itemCount
         from wms_inventory_movement_detail
-                where inventory_movement_id in
+        where inventory_movement_id in
         <foreach collection="collection" item="id" open="(" close=")" separator=",">
             #{id}
         </foreach>
         and del_flag = 0
-                group by inventory_movement_id
+        group by inventory_movement_id
     </select>
-     <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
         insert into wms_inventory_movement_detail
-                (
-               inventory_movement_id,
-               item_id,
-               plan_quantity,
-               real_quantity,
-               del_flag,
-               remark,
-               create_by,
-               create_time,
-               update_by,
-               update_time,
-               source_rack_id,
-               source_warehouse_id,
-               source_area_id,
-               move_status,
-               target_rack_id,
-               target_warehouse_id,
-               target_area_id)
-                values
+        (
+        inventory_movement_id,
+        item_id,
+        plan_quantity,
+        real_quantity,
+        del_flag,
+        remark,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        source_rack_id,
+        source_warehouse_id,
+        source_area_id,
+        move_status,
+        target_rack_id,
+        target_warehouse_id,
+        target_area_id)
+        values
         <foreach collection="list" item="item" separator=",">
             <trim prefix="(" suffix=")" suffixOverrides=",">
                 #{item.inventoryMovementId, jdbcType=BIGINT}, #{item.itemId, jdbcType=BIGINT},
@@ -139,8 +139,10 @@
                 #{item.delFlag, jdbcType=TINYINT}, #{item.remark, jdbcType=VARCHAR},
                 #{item.createBy, jdbcType=BIGINT}, #{item.createTime, jdbcType=DATE}, #{item.updateBy, jdbcType=BIGINT},
                 #{item.updateTime, jdbcType=DATE}, #{item.sourceRackId, jdbcType=BIGINT},
-                #{item.sourceWarehouseId, jdbcType=BIGINT}, #{item.sourceAreaId,jdbcType=BIGINT},#{item.moveStatus, jdbcType=TINYINT},
-                #{item.targetRackId, jdbcType=BIGINT},#{item.targetWarehouseId, jdbcType=BIGINT}, #{item.targetAreaId,jdbcType=BIGINT}
+                #{item.sourceWarehouseId, jdbcType=BIGINT},
+                #{item.sourceAreaId,jdbcType=BIGINT},#{item.moveStatus, jdbcType=TINYINT},
+                #{item.targetRackId, jdbcType=BIGINT},#{item.targetWarehouseId, jdbcType=BIGINT},
+                #{item.targetAreaId,jdbcType=BIGINT}
             </trim>
         </foreach>
     </insert>

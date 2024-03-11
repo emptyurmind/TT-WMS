@@ -1,23 +1,22 @@
 package com.tt.wms.service;
 
-import java.util.*;
-import java.time.LocalDateTime;
-import java.util.stream.Collectors;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.tt.wms.domain.entity.ItemTypeTreeSelect;
 import com.github.pagehelper.PageHelper;
+import com.tt.wms.domain.entity.ItemType;
+import com.tt.wms.domain.entity.ItemTypeTreeSelect;
+import com.tt.wms.domain.query.ItemTypeQuery;
+import com.tt.wms.mapper.ItemTypeMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import com.tt.wms.mapper.ItemTypeMapper;
-import com.tt.wms.domain.entity.ItemType;
-import com.tt.wms.domain.query.ItemTypeQuery;
+
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 物料类型表Service业务层处理
- *
  *
  * @auhtor wangkun
  */
@@ -33,11 +32,11 @@ public class ItemTypeService {
      * @return 物料类型表
      */
     public List<ItemType> selectByIdIn(Collection<Long> ids) {
-        if (ids.isEmpty()){
+        if (ids.isEmpty()) {
             return Collections.emptyList();
         }
         QueryWrapper<ItemType> qw = new QueryWrapper<>();
-        qw.in("item_type_id",ids);
+        qw.in("item_type_id", ids);
         return itemTypeMapper.selectList(qw);
     }
 
@@ -55,7 +54,7 @@ public class ItemTypeService {
      * 查询物料类型表列表
      *
      * @param query 查询条件
-     * @param page 分页条件
+     * @param page  分页条件
      * @return 物料类型表
      */
     public List<ItemType> selectList(ItemTypeQuery query, Pageable page) {
@@ -63,7 +62,7 @@ public class ItemTypeService {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
         }
         QueryWrapper<ItemType> qw = new QueryWrapper<>();
-        qw.eq("del_flag",0);
+        qw.eq("del_flag", 0);
         Long parentId = query.getParentId();
         if (parentId != null) {
             qw.eq("parent_id", parentId);

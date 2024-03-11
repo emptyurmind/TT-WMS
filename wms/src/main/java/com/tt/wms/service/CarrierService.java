@@ -1,22 +1,20 @@
 package com.tt.wms.service;
 
-import java.util.List;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-import com.tt.wms.mapper.CarrierMapper;
 import com.tt.wms.domain.entity.Carrier;
 import com.tt.wms.domain.query.CarrierQuery;
+import com.tt.wms.mapper.CarrierMapper;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 承运商Service业务层处理
- *
  *
  * @author wangkun
  */
@@ -40,7 +38,7 @@ public class CarrierService {
      * 查询承运商列表
      *
      * @param query 查询条件
-     * @param page 分页条件
+     * @param page  分页条件
      * @return 承运商
      */
     public List<Carrier> selectList(CarrierQuery query, Pageable page) {
@@ -48,7 +46,7 @@ public class CarrierService {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
         }
         QueryWrapper<Carrier> qw = new QueryWrapper<>();
-        qw.eq("del_flag",0);
+        qw.eq("del_flag", 0);
         String carrierNo = query.getCarrierNo();
         if (!StringUtils.isEmpty(carrierNo)) {
             qw.eq("carrier_no", carrierNo);

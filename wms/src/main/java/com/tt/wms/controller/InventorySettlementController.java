@@ -1,15 +1,15 @@
 package com.tt.wms.controller;
 
-import com.tt.wms.convert.InventorySettlementConvert;
-import com.tt.wms.domain.entity.InventorySettlement;
-import com.tt.wms.domain.query.InventorySettlementQuery;
-import com.tt.wms.domain.vo.InventorySettlementVO;
-import com.tt.wms.domain.form.InventorySettlementFrom;
-import com.tt.wms.service.InventorySettlementService;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.tt.wms.convert.InventorySettlementConvert;
+import com.tt.wms.domain.entity.InventorySettlement;
+import com.tt.wms.domain.form.InventorySettlementFrom;
+import com.tt.wms.domain.query.InventorySettlementQuery;
+import com.tt.wms.domain.vo.InventorySettlementVO;
+import com.tt.wms.service.InventorySettlementService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 /**
  * 库存结算单Controller
- * 
+ *
  * @auhtor wangkun
  * @date 2023-04-18
  */
-@Api(description ="库存结算单接口列表")
+@Api(description = "库存结算单接口列表")
 @RestController
 @RequestMapping("/wms/inventorySettlement")
 public class InventorySettlementController extends BaseController {
@@ -41,7 +42,7 @@ public class InventorySettlementController extends BaseController {
     @PostMapping("/list")
     public ResponseEntity<Page<InventorySettlement>> list(@RequestBody InventorySettlementQuery query, Pageable page) {
         List<InventorySettlement> list = service.selectList(query, page);
-        return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page)list).getTotal()));
+        return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page) list).getTotal()));
     }
 
     @ApiOperation("导出库存结算单列表")
@@ -80,10 +81,11 @@ public class InventorySettlementController extends BaseController {
     @ApiOperation("删除库存结算单")
     @PreAuthorize("@ss.hasPermi('wms:inventorySettlement:remove')")
     @Log(title = "库存结算单", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public ResponseEntity<Integer> remove(@PathVariable Long[] ids) {
         return ResponseEntity.ok(service.deleteByIds(ids));
     }
+
     @ApiOperation("新增或更新结算单据以及结算单据明细")
     @PreAuthorize("@ss.hasPermi('wms:inventorySettlement:edit')")
     @Log(title = "库存结算单据", businessType = BusinessType.INSERT)

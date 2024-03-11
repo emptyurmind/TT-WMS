@@ -9,7 +9,7 @@ import lombok.Data;
  *
  * @auhtor wangkun
  */
-@ApiModel(description="库存移动 查询 对象")
+@ApiModel(description = "库存移动 查询 对象")
 @Data
 public class InventoryMovementQuery {
     @ApiModelProperty("库存移动编号 精确匹配")

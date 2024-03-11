@@ -1,13 +1,14 @@
 package com.tt.wms.mapper;
 
-import java.util.List;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Param;
 import com.tt.wms.domain.entity.Item;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 物料Mapper接口
- * 
+ *
  * @auhtor wangkun
  */
 public interface ItemMapper extends BaseMapper<Item> {
@@ -21,9 +22,10 @@ public interface ItemMapper extends BaseMapper<Item> {
 
     /**
      * 批量软删除
+     *
      * @param ids
      * @return
-    */
+     */
     int updateDelFlagByIds(@Param("ids") Long[] ids);
 
     List<Item> selectExpiry();

@@ -3,6 +3,8 @@ package com.tt.wms.service;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.ruoyi.common.utils.SecurityUtils;
 import com.tt.wms.constant.ReceiptOrderConstant;
 import com.tt.wms.constant.ShipmentOrderConstant;
 import com.tt.wms.convert.InventoryCheckConvert;
@@ -11,16 +13,14 @@ import com.tt.wms.domain.entity.InventoryCheck;
 import com.tt.wms.domain.entity.InventoryCheckDetail;
 import com.tt.wms.domain.entity.InventoryHistory;
 import com.tt.wms.domain.entity.Item;
-import com.tt.wms.mapper.InventoryCheckDetailMapper;
-import com.tt.wms.mapper.InventoryCheckMapper;
+import com.tt.wms.domain.form.InventoryCheckFrom;
 import com.tt.wms.domain.query.InventoryCheckDetailQuery;
 import com.tt.wms.domain.query.InventoryCheckQuery;
 import com.tt.wms.domain.query.ItemQuery;
 import com.tt.wms.domain.vo.InventoryCheckDetailVO;
 import com.tt.wms.domain.vo.ItemVO;
-import com.tt.wms.domain.form.InventoryCheckFrom;
-import com.github.pagehelper.PageHelper;
-import com.ruoyi.common.utils.SecurityUtils;
+import com.tt.wms.mapper.InventoryCheckDetailMapper;
+import com.tt.wms.mapper.InventoryCheckMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,6 @@ import java.util.stream.Collectors;
 
 /**
  * 库存盘点单据Service业务层处理
- *
  *
  * @auhtor wangkun
  */
@@ -67,6 +66,7 @@ public class InventoryCheckService {
 
     @Autowired
     private InventoryCheckConvert convert;
+
     /**
      * 查询库存盘点单据
      *
@@ -119,7 +119,7 @@ public class InventoryCheckService {
      * 查询库存盘点单据列表
      *
      * @param query 查询条件
-     * @param page 分页条件
+     * @param page  分页条件
      * @return 库存盘点单据
      */
     public List<InventoryCheck> selectList(InventoryCheckQuery query, Pageable page) {
@@ -127,7 +127,7 @@ public class InventoryCheckService {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize(), "create_time desc");
         }
         QueryWrapper<InventoryCheck> qw = new QueryWrapper<>();
-        qw.eq("del_flag",0);
+        qw.eq("del_flag", 0);
         String inventoryCheckNo = query.getInventoryCheckNo();
         if (!StringUtils.isEmpty(inventoryCheckNo)) {
             qw.eq("inventory_check_no", inventoryCheckNo);

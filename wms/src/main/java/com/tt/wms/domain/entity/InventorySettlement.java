@@ -12,10 +12,10 @@ import java.time.LocalDateTime;
 
 /**
  * 库存结算单对象 wms_inventory_settlement
- * 
+ *
  * @auhtor wangkun
  */
-@ApiModel(description="库存结算单对象")
+@ApiModel(description = "库存结算单对象")
 @Data
 @TableName("wms_inventory_settlement")
 public class InventorySettlement extends BaseAudit {

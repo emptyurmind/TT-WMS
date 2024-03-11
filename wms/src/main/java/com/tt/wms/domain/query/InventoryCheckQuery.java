@@ -1,17 +1,18 @@
 package com.tt.wms.domain.query;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import lombok.Data;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * 库存盘点单据 查询 对象
  *
  * @auhtor wangkun
  */
-@ApiModel(description="库存盘点单据 查询 对象")
+@ApiModel(description = "库存盘点单据 查询 对象")
 @Data
 public class InventoryCheckQuery {
     @ApiModelProperty("库存盘点单号，系统自动生成 精确匹配")

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  *
  * @auhtor wangkun
  */
-@ApiModel(description="库存结算明细 查询 对象")
+@ApiModel(description = "库存结算明细 查询 对象")
 @Data
 public class InventorySettlementDetailQuery {
     @ApiModelProperty("结算单id 精确匹配")

@@ -9,7 +9,7 @@ import lombok.Data;
  *
  * @auhtor wangkun
  */
-@ApiModel(description="库存结算单 查询 对象")
+@ApiModel(description = "库存结算单 查询 对象")
 @Data
 public class InventorySettlementQuery {
     @ApiModelProperty("库存结算单状态11：结算中 22：已完成 精确匹配")

@@ -1,18 +1,19 @@
 package com.tt.wms.service;
 
-import java.util.*;
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
-import org.springframework.data.domain.Pageable;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-import com.tt.wms.mapper.AreaMapper;
 import com.tt.wms.domain.entity.Area;
 import com.tt.wms.domain.query.AreaQuery;
+import com.tt.wms.mapper.AreaMapper;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 货区Service业务层处理
@@ -38,7 +39,7 @@ public class AreaService {
      * 查询货区列表
      *
      * @param query 查询条件
-     * @param page 分页条件
+     * @param page  分页条件
      * @return 货区
      */
     public List<Area> selectList(AreaQuery query, Pageable page) {
@@ -46,7 +47,7 @@ public class AreaService {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
         }
         QueryWrapper<Area> qw = new QueryWrapper<>();
-        qw.eq("del_flag",0);
+        qw.eq("del_flag", 0);
         String areaNo = query.getAreaNo();
         if (!StringUtils.isEmpty(areaNo)) {
             qw.eq("area_no", areaNo);

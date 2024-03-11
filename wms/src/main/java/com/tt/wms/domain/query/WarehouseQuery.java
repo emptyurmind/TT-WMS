@@ -1,15 +1,15 @@
 package com.tt.wms.domain.query;
 
-import lombok.Data;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
  * 仓库 查询 对象
  *
  * @auhtor wangkun
  */
-@ApiModel(description="仓库 查询 对象")
+@ApiModel(description = "仓库 查询 对象")
 @Data
 public class WarehouseQuery {
     @ApiModelProperty("仓库编号 精确匹配")

@@ -1,22 +1,23 @@
 package com.tt.wms.convert;
 
 import com.tt.wms.domain.entity.InventoryHistory;
-import org.mapstruct.Mapper;
 import com.tt.wms.domain.entity.ShipmentOrderDetail;
 import com.tt.wms.domain.vo.ShipmentOrderDetailVO;
 import org.apache.commons.lang3.SerializationUtils;
+import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 /**
  * 出库单详情  ENTITY <=> VO / Form / Query
  *
  * @auhtor wangkun
  */
 @Mapper(componentModel = "spring")
-public interface ShipmentOrderDetailConvert  {
+public interface ShipmentOrderDetailConvert {
     List<ShipmentOrderDetailVO> dos2vos(List<ShipmentOrderDetail> list);
 
     List<ShipmentOrderDetail> vos2dos(List<ShipmentOrderDetailVO> details);

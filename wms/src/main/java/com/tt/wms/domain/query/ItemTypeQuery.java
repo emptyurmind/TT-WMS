@@ -1,15 +1,15 @@
 package com.tt.wms.domain.query;
 
-import lombok.Data;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
  * 物料类型表 查询 对象
  *
  * @auhtor wangkun
  */
-@ApiModel(description="物料类型表 查询 对象")
+@ApiModel(description = "物料类型表 查询 对象")
 @Data
 public class ItemTypeQuery {
     @ApiModelProperty("父物料类型id 精确匹配")

@@ -1,21 +1,20 @@
 package com.tt.wms.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.tt.wms.domain.entity.Delivery;
+import com.tt.wms.domain.query.DeliveryQuery;
+import com.tt.wms.mapper.DeliveryMapper;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.github.pagehelper.PageHelper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-import com.tt.wms.mapper.DeliveryMapper;
-import com.tt.wms.domain.entity.Delivery;
-import com.tt.wms.domain.query.DeliveryQuery;
-
 /**
  * 发货记录Service业务层处理
- *
  *
  * @auhtor wangkun
  */
@@ -38,7 +37,7 @@ public class DeliveryService {
      * 查询发货记录列表
      *
      * @param query 查询条件
-     * @param page 分页条件
+     * @param page  分页条件
      * @return 发货记录
      */
     public List<Delivery> selectList(DeliveryQuery query, Pageable page) {
@@ -46,7 +45,7 @@ public class DeliveryService {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize(), "create_time desc");
         }
         QueryWrapper<Delivery> qw = new QueryWrapper<>();
-        qw.eq("del_flag",0);
+        qw.eq("del_flag", 0);
         Long shipmentOrderId = query.getShipmentOrderId();
         if (shipmentOrderId != null) {
             qw.eq("shipment_order_id", shipmentOrderId);

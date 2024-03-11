@@ -1,19 +1,19 @@
 package com.tt.wms.domain.query;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import lombok.Data;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 物料 查询 对象
  *
  * @auhtor wangkun
  */
-@ApiModel(description="物料 查询 对象")
+@ApiModel(description = "物料 查询 对象")
 @Data
 public class ItemQuery {
     @ApiModelProperty("搜索内容")

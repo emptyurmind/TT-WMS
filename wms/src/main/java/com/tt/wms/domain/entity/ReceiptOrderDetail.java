@@ -1,20 +1,21 @@
 package com.tt.wms.domain.entity;
 
-import java.math.BigDecimal;
-
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.core.domain.BaseAudit;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import com.ruoyi.common.core.domain.BaseAudit;
 import lombok.Data;
-import com.baomidou.mybatisplus.annotation.TableName;
+
+import java.math.BigDecimal;
+
 /**
  * 入库单详情对象 wms_receipt_order_detail
- * 
+ *
  * @auhtor wangkun
  */
-@ApiModel(description="入库单详情对象")
+@ApiModel(description = "入库单详情对象")
 @Data
 @TableName("wms_receipt_order_detail")
 public class ReceiptOrderDetail extends BaseAudit {

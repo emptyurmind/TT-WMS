@@ -8,12 +8,13 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
+
 /**
  * 库存结算明细对象 wms_inventory_settlement_detail
- * 
+ *
  * @auhtor wangkun
  */
-@ApiModel(description="库存结算明细对象")
+@ApiModel(description = "库存结算明细对象")
 @Data
 @TableName("wms_inventory_settlement_detail")
 public class InventorySettlementDetail extends BaseAudit {

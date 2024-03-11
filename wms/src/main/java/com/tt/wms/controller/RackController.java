@@ -1,39 +1,33 @@
 package com.tt.wms.controller;
 
-import java.util.List;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.tt.wms.convert.RackConvert;
 import com.tt.wms.domain.entity.Rack;
 import com.tt.wms.domain.query.RackQuery;
-import com.tt.wms.service.RackService;
 import com.tt.wms.domain.vo.RackVO;
-import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.tt.wms.service.RackService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 /**
  * 货架Controller
- * 
+ *
  * @auhtor wangkun
  * @date 2022-08-05
  */
-@Api(description ="货架接口列表")
+@Api(description = "货架接口列表")
 @RestController
 @RequestMapping("/wms/rack")
 public class RackController extends BaseController {
@@ -47,7 +41,7 @@ public class RackController extends BaseController {
     @PostMapping("/list")
     public ResponseEntity<Page<Rack>> list(@RequestBody RackQuery query, Pageable page) {
         List<Rack> list = service.selectList(query, page);
-        return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page)list).getTotal()));
+        return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page) list).getTotal()));
     }
 
     @ApiOperation("导出货架列表")
@@ -86,7 +80,7 @@ public class RackController extends BaseController {
     @ApiOperation("删除货架")
     @PreAuthorize("@ss.hasPermi('wms:rack:remove')")
     @Log(title = "货架", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public ResponseEntity<Integer> remove(@PathVariable Long[] ids) {
         return ResponseEntity.ok(service.deleteByIds(ids));
     }

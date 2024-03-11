@@ -1,17 +1,18 @@
 package com.tt.wms.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.core.domain.BaseAudit;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import com.ruoyi.common.core.domain.BaseAudit;
 import lombok.Data;
-import com.baomidou.mybatisplus.annotation.TableName;
+
 /**
  * 货架对象 wms_rack
- * 
+ *
  * @auhtor wangkun
  */
-@ApiModel(description="货架对象")
+@ApiModel(description = "货架对象")
 @Data
 @TableName("wms_rack")
 public class Rack extends BaseAudit {

@@ -1,15 +1,15 @@
 package com.tt.wms.controller;
 
-import com.tt.wms.convert.ShipmentOrderConvert;
-import com.tt.wms.domain.entity.ShipmentOrder;
-import com.tt.wms.domain.query.ShipmentOrderQuery;
-import com.tt.wms.domain.vo.ShipmentOrderVO;
-import com.tt.wms.domain.form.ShipmentOrderFrom;
-import com.tt.wms.service.ShipmentOrderService;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.tt.wms.convert.ShipmentOrderConvert;
+import com.tt.wms.domain.entity.ShipmentOrder;
+import com.tt.wms.domain.form.ShipmentOrderFrom;
+import com.tt.wms.domain.query.ShipmentOrderQuery;
+import com.tt.wms.domain.vo.ShipmentOrderVO;
+import com.tt.wms.service.ShipmentOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +18,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 /**
  * 出库单Controller
  *
  * @auhtor wangkun
  * @date 2022-08-05
  */
-@Api(description ="出库单接口列表")
+@Api(description = "出库单接口列表")
 @RestController
 @RequestMapping("/wms/shipmentOrder")
 public class ShipmentOrderController extends BaseController {
@@ -76,7 +77,7 @@ public class ShipmentOrderController extends BaseController {
     @ApiOperation("删除出库单")
     @PreAuthorize("@ss.hasPermi('wms:shipmentOrder:remove')")
     @Log(title = "出库单", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public ResponseEntity<Integer> remove(@PathVariable Long[] ids) {
         return ResponseEntity.ok(service.deleteByIds(ids));
     }
@@ -86,18 +87,19 @@ public class ShipmentOrderController extends BaseController {
     @Log(title = "出库单", businessType = BusinessType.INSERT)
     @PostMapping("add-or-update")
     public ResponseEntity<Integer> addOrUpdate(@RequestBody ShipmentOrderFrom order) {
-        if(order.getId()==null){
+        if (order.getId() == null) {
             return ResponseEntity.ok(service.add(order));
-        }else {
+        } else {
             return ResponseEntity.ok(service.update(order));
         }
     }
+
     @ApiOperation("单个订单分配仓库")
     @PreAuthorize("@ss.hasPermi('wms:shipmentOrder:edit')")
     @Log(title = "出库单", businessType = BusinessType.UPDATE)
     @PostMapping("allocated")
-    public ResponseEntity allocatedInventory(Long id,Integer type) {
-        service.allocatedInventory(id,type);
+    public ResponseEntity allocatedInventory(Long id, Integer type) {
+        service.allocatedInventory(id, type);
         return ResponseEntity.ok().build();
     }
 }

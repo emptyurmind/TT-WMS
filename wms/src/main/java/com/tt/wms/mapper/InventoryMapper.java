@@ -72,10 +72,10 @@ public interface InventoryMapper extends BaseMapper<Inventory> {
 
     /**
      * 查询所有有效的物料(仓库，物料未被删除)
-     *
      */
     List<Inventory> selectValidAll();
 
-    List<Inventory> selectLastInventory(@Param("itemId")Long itemId, @Param("sort")String sort);
-    List<Inventory> selectLastInventoryForReceipt(@Param("itemId")Long itemId, @Param("sort")String sort);
+    List<Inventory> selectLastInventory(@Param("itemId") Long itemId, @Param("sort") String sort);
+
+    List<Inventory> selectLastInventoryForReceipt(@Param("itemId") Long itemId, @Param("sort") String sort);
 }

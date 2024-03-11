@@ -6,6 +6,7 @@ import com.tt.wms.domain.vo.WaveVO;
 import lombok.Data;
 
 import java.util.List;
+
 /**
  * 波次 数据视图对象
  *
@@ -13,9 +14,9 @@ import java.util.List;
  */
 @Data
 public class OrderWaveFrom extends WaveVO {
-  // 出库单详情
-  private List<ShipmentOrderDetailVO> details;
-  private List<ShipmentOrderDetailVO> allocationDetails;
-  // 所有商品
-  private List<ItemVO> items;
+    // 出库单详情
+    private List<ShipmentOrderDetailVO> details;
+    private List<ShipmentOrderDetailVO> allocationDetails;
+    // 所有商品
+    private List<ItemVO> items;
 }

@@ -1,10 +1,10 @@
 package com.tt.wms.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.tt.wms.domain.entity.Warehouse;
-import com.tt.wms.mapper.WarehouseMapper;
-import com.tt.wms.domain.query.WarehouseQuery;
 import com.github.pagehelper.PageHelper;
+import com.tt.wms.domain.entity.Warehouse;
+import com.tt.wms.domain.query.WarehouseQuery;
+import com.tt.wms.mapper.WarehouseMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +17,6 @@ import java.util.List;
 
 /**
  * 仓库Service业务层处理
- *
  *
  * @auhtor wangkun
  */
@@ -40,7 +39,7 @@ public class WarehouseService {
      * 查询仓库列表
      *
      * @param query 查询条件
-     * @param page 分页条件
+     * @param page  分页条件
      * @return 仓库
      */
     public List<Warehouse> selectList(WarehouseQuery query, Pageable page) {
@@ -48,7 +47,7 @@ public class WarehouseService {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
         }
         QueryWrapper<Warehouse> qw = new QueryWrapper<>();
-        qw.eq("del_flag",0);
+        qw.eq("del_flag", 0);
         String warehouseNo = query.getWarehouseNo();
         if (!StringUtils.isEmpty(warehouseNo)) {
             qw.eq("warehouse_no", warehouseNo);
@@ -115,7 +114,7 @@ public class WarehouseService {
             return new ArrayList<>();
         }
         QueryWrapper<Warehouse> qw = new QueryWrapper<>();
-        qw.in("id",ids);
+        qw.in("id", ids);
         return warehouseMapper.selectList(qw);
     }
 }

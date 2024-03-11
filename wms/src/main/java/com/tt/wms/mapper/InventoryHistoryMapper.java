@@ -1,14 +1,15 @@
 package com.tt.wms.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.tt.wms.domain.entity.InventoryHistory;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.Collection;
 import java.util.List;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Param;
-import com.tt.wms.domain.entity.InventoryHistory;
 
 /**
  * 库存记录Mapper接口
- * 
+ *
  * @auhtor wangkun
  */
 public interface InventoryHistoryMapper extends BaseMapper<InventoryHistory> {
@@ -22,9 +23,10 @@ public interface InventoryHistoryMapper extends BaseMapper<InventoryHistory> {
 
     /**
      * 批量软删除
+     *
      * @param ids
      * @return
-    */
+     */
     int updateDelFlagByIds(@Param("ids") Long[] ids);
 
     int batchInsert(@Param("list") Collection<InventoryHistory> list);

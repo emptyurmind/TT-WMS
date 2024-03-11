@@ -3,17 +3,17 @@ package com.tt.wms.service;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.common.utils.SortUtil;
 import com.tt.wms.convert.ItemConvert;
 import com.tt.wms.domain.entity.Area;
 import com.tt.wms.domain.entity.Item;
 import com.tt.wms.domain.entity.ItemType;
 import com.tt.wms.domain.entity.Warehouse;
-import com.tt.wms.mapper.ItemMapper;
 import com.tt.wms.domain.query.ItemQuery;
 import com.tt.wms.domain.vo.ItemVO;
-import com.github.pagehelper.PageHelper;
-import com.ruoyi.common.utils.SecurityUtils;
-import com.ruoyi.common.utils.SortUtil;
+import com.tt.wms.mapper.ItemMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -216,12 +216,13 @@ public class ItemService {
         return itemMapper.selectList(qw);
     }
 
-    public List<Item> getAllSaftyItems(){
+    public List<Item> getAllSaftyItems() {
         QueryWrapper<Item> qw = new QueryWrapper<>();
         qw.eq("del_flag", 0);
         qw.isNotNull("quantity");
         return this.getItemList(qw);
     }
+
     private List<Item> getItemList(QueryWrapper<Item> qw) {
         List<Item> items = itemMapper.selectList(qw);
         injectTypeName(items);
@@ -256,16 +257,17 @@ public class ItemService {
 
     /**
      * 注入仓库名称
+     *
      * @param res 物料
      */
-    public void injectWarehouseName(List<Item> res){
-        if (CollUtil.isEmpty(res)){
+    public void injectWarehouseName(List<Item> res) {
+        if (CollUtil.isEmpty(res)) {
             return;
         }
         Set<Long> warehouses = res.stream().map(Item::getWarehouseId).collect(Collectors.toSet());
         Map<Long, Warehouse> warehouseMap = warehouseService.selectByIdIn(warehouses).stream().collect(Collectors.toMap(Warehouse::getId, it -> it));
         res.forEach(it -> {
-            if (it.getWarehouseId() != null && warehouseMap.containsKey(it.getWarehouseId())){
+            if (it.getWarehouseId() != null && warehouseMap.containsKey(it.getWarehouseId())) {
                 it.setWarehouseName(warehouseMap.get(it.getWarehouseId()).getWarehouseName());
             }
         });
@@ -273,16 +275,17 @@ public class ItemService {
 
     /**
      * 注入库区名称
+     *
      * @param res 物料
      */
-    public void injectAreaName(List<Item> res){
-        if (CollUtil.isEmpty(res)){
+    public void injectAreaName(List<Item> res) {
+        if (CollUtil.isEmpty(res)) {
             return;
         }
         Set<Long> areas = res.stream().map(Item::getAreaId).collect(Collectors.toSet());
         Map<Long, Area> areaMap = areaService.selectByIdIn(areas).stream().collect(Collectors.toMap(Area::getId, it -> it));
         res.forEach(it -> {
-            if (it.getAreaId() != null && areaMap.containsKey(it.getAreaId())){
+            if (it.getAreaId() != null && areaMap.containsKey(it.getAreaId())) {
                 it.setAreaName(areaMap.get(it.getAreaId()).getAreaName());
             }
         });
@@ -290,11 +293,12 @@ public class ItemService {
 
     /**
      * 查询过期物料
+     *
      * @param page 分页条件
      * @return 结果
      */
     public List<Item> queryExpiry(Pageable page) {
-        if (page != null){
+        if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize(), SortUtil.sort2string(page.getSort()));
         }
         List<Item> items = itemMapper.selectExpiry();

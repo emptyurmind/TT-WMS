@@ -1,17 +1,17 @@
 package com.tt.wms.controller;
 
-import com.tt.wms.convert.WaveConvert;
-import com.tt.wms.domain.entity.Wave;
-import com.tt.wms.domain.query.WaveQuery;
-import com.tt.wms.domain.vo.WaveVO;
-import com.tt.wms.domain.form.OrderWaveFrom;
-import com.tt.wms.domain.form.OrderWaveReceiptFrom;
-import com.tt.wms.service.WaveForReceiptService;
-import com.tt.wms.service.WaveService;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.tt.wms.convert.WaveConvert;
+import com.tt.wms.domain.entity.Wave;
+import com.tt.wms.domain.form.OrderWaveFrom;
+import com.tt.wms.domain.form.OrderWaveReceiptFrom;
+import com.tt.wms.domain.query.WaveQuery;
+import com.tt.wms.domain.vo.WaveVO;
+import com.tt.wms.service.WaveForReceiptService;
+import com.tt.wms.service.WaveService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,18 +93,18 @@ public class WaveController extends BaseController {
     @PreAuthorize("@ss.hasPermi('wms:wave:edit')")
     @Log(title = "波次单", businessType = BusinessType.UPDATE)
     @PostMapping("/shipment/allocated")
-    public ResponseEntity<OrderWaveFrom> allocatedInventory(Long id,Integer type) {
+    public ResponseEntity<OrderWaveFrom> allocatedInventory(Long id, Integer type) {
 
-        return ResponseEntity.ok(service.allocatedInventory(id,type));
+        return ResponseEntity.ok(service.allocatedInventory(id, type));
     }
 
     @ApiOperation("波次单为入库分配仓库")
     @PreAuthorize("@ss.hasPermi('wms:wave:edit')")
     @Log(title = "波次单", businessType = BusinessType.UPDATE)
     @PostMapping("/receipt/allocated")
-    public ResponseEntity<OrderWaveReceiptFrom> allocatedInventoryForReceipt(Long id,Integer type) {
+    public ResponseEntity<OrderWaveReceiptFrom> allocatedInventoryForReceipt(Long id, Integer type) {
 
-        return ResponseEntity.ok(waveForReceiptService.allocatedInventoryForReceipt(id,type));
+        return ResponseEntity.ok(waveForReceiptService.allocatedInventoryForReceipt(id, type));
     }
 
     @ApiOperation("应用波次作业为出库单")
