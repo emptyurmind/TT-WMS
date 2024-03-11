@@ -24,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -38,7 +39,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class WaveService {
-    @Autowired
+    @Resource
     private WaveMapper waveMapper;
     @Autowired
     private InventoryHistoryService inventoryHistoryService;
@@ -50,10 +51,10 @@ public class WaveService {
     private ShipmentOrderDetailConvert shipmentOrderDetailConvert;
 
 
-    @Autowired
+    @Resource
     private ShipmentOrderMapper shipmentOrderMapper;
 
-    @Autowired
+    @Resource
     private ShipmentOrderDetailMapper shipmentOrderDetailMapper;
     @Autowired
     private InventoryService inventoryService;
