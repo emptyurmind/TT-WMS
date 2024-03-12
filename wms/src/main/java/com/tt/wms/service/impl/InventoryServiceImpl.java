@@ -447,7 +447,7 @@ public class InventoryServiceImpl implements InventoryService {
         List<Inventory> inventories = inventoryMapper.selectWarning();
         List<InventoryVO> res = inventoryConvert.dos2vos(inventories);
         injectAreaAndItemInfo(res);
-        List<Item> allItems = itemService.getAllSaftyItems();
+        List<Item> allItems = itemService.getAllSafetyItems();
         Map<Long, BigDecimal> saftyItems = allItems.stream().collect(Collectors.toMap(Item::getId, item -> item.getQuantity()));
         res.forEach(item -> {
             BigDecimal saftyQuantify = saftyItems.get(item.getItemId());

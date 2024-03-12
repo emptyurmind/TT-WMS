@@ -14,11 +14,14 @@ import com.tt.wms.domain.entity.Warehouse;
 import com.tt.wms.domain.query.ItemQuery;
 import com.tt.wms.domain.vo.ItemVO;
 import com.tt.wms.mapper.ItemMapper;
+import com.tt.wms.service.AreaService;
+import com.tt.wms.service.ItemService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -30,19 +33,24 @@ import java.util.stream.Collectors;
  * @author wangkun
  */
 @Service
-public class ItemService {
-    @Autowired
+public class ItemServiceImpl implements ItemService {
+
+    @Resource
     private ItemMapper itemMapper;
-    @Autowired
+
+    @Resource
     private ItemConvert convert;
 
-    @Autowired
+    @Resource
     private ItemTypeService itemTypeService;
-    @Autowired
-    private WarehouseService warehouseService;
-    @Autowired
-    private AreaServiceImpl areaService;
 
+    @Resource
+    private WarehouseService warehouseService;
+
+    @Resource
+    private AreaService areaService;
+
+    @Override
     public List<ItemVO> toVos(List<Item> items) {
         List<ItemVO> list = convert.dos2vos(items);
         list.forEach(itemVO -> {
@@ -61,6 +69,7 @@ public class ItemService {
         return list;
     }
 
+    @Override
     public ItemVO toVo(Item item) {
         ItemVO itemVO = convert.toVo(item);
 
@@ -84,6 +93,7 @@ public class ItemService {
      * @param id 物料主键
      * @return 物料
      */
+    @Override
     public Item selectById(Long id) {
         return itemMapper.selectById(id);
     }
@@ -95,6 +105,7 @@ public class ItemService {
      * @param page  分页条件
      * @return 物料
      */
+    @Override
     public List<Item> selectList(ItemQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
@@ -163,6 +174,7 @@ public class ItemService {
      * @param item 物料
      * @return 结果
      */
+    @Override
     public int insert(Item item) {
         item.setDelFlag(0);
         item.setCreateTime(LocalDateTime.now());
@@ -175,6 +187,7 @@ public class ItemService {
      * @param item 物料
      * @return 结果
      */
+    @Override
     public int update(Item item) {
         return itemMapper.updateById(item);
     }
@@ -185,6 +198,7 @@ public class ItemService {
      * @param ids 需要删除的物料主键
      * @return 结果
      */
+    @Override
     public int deleteByIds(Long[] ids) {
         return itemMapper.updateDelFlagByIds(ids);
     }
@@ -195,6 +209,7 @@ public class ItemService {
      * @param id 物料主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return itemMapper.updateDelFlagByIds(ids);
@@ -206,6 +221,7 @@ public class ItemService {
      * @param ids 物料主键集合
      * @return 物料列表
      */
+    @Override
     public List<Item> selectByIdIn(Collection<Long> ids) {
         // 如果主键集合为空，直接返回空集合
         if (ids == null || ids.isEmpty()) {
@@ -216,7 +232,8 @@ public class ItemService {
         return itemMapper.selectList(qw);
     }
 
-    public List<Item> getAllSaftyItems() {
+    @Override
+    public List<Item> getAllSafetyItems() {
         QueryWrapper<Item> qw = new QueryWrapper<>();
         qw.eq("del_flag", 0);
         qw.isNotNull("quantity");
@@ -236,6 +253,7 @@ public class ItemService {
      *
      * @param res 物料
      */
+    @Override
     public void injectTypeName(List<Item> res) {
         if (CollUtil.isEmpty(res)) {
             return;
@@ -260,6 +278,7 @@ public class ItemService {
      *
      * @param res 物料
      */
+    @Override
     public void injectWarehouseName(List<Item> res) {
         if (CollUtil.isEmpty(res)) {
             return;
@@ -278,6 +297,7 @@ public class ItemService {
      *
      * @param res 物料
      */
+    @Override
     public void injectAreaName(List<Item> res) {
         if (CollUtil.isEmpty(res)) {
             return;
@@ -297,6 +317,7 @@ public class ItemService {
      * @param page 分页条件
      * @return 结果
      */
+    @Override
     public List<Item> queryExpiry(Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize(), SortUtil.sort2string(page.getSort()));
