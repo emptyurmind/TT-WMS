@@ -8,7 +8,7 @@ import com.tt.wms.convert.CustomerTransactionConvert;
 import com.tt.wms.domain.entity.CustomerTransaction;
 import com.tt.wms.domain.query.CustomerTransactionQuery;
 import com.tt.wms.domain.vo.CustomerTransactionVO;
-import com.tt.wms.service.CustomerTransactionService;
+import com.tt.wms.service.impl.CustomerTransactionServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -31,16 +32,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/wms/customerTransaction")
 public class CustomerTransactionController extends BaseController {
-    @Autowired
-    private CustomerTransactionService service;
-    @Autowired
-    private CustomerTransactionConvert convert;
+
+    @Resource
+    private CustomerTransactionServiceImpl customerTransactionService;
+
+    @Resource
+    private CustomerTransactionConvert customerTransactionConvert;
 
     @ApiOperation("查询客户账户流水列表")
     @PreAuthorize("@ss.hasPermi('wms:customerTransaction:list')")
     @PostMapping("/list")
     public ResponseEntity<Page<CustomerTransaction>> list(@RequestBody CustomerTransactionQuery query, Pageable page) {
-        List<CustomerTransaction> list = service.selectList(query, page);
+        List<CustomerTransaction> list = customerTransactionService.selectList(query, page);
         return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page) list).getTotal()));
     }
 
@@ -49,16 +52,16 @@ public class CustomerTransactionController extends BaseController {
     @Log(title = "客户账户流水", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
     public ResponseEntity<String> export(CustomerTransactionQuery query) {
-        List<CustomerTransaction> list = service.selectList(query, null);
+        List<CustomerTransaction> list = customerTransactionService.selectList(query, null);
         ExcelUtil<CustomerTransactionVO> util = new ExcelUtil<>(CustomerTransactionVO.class);
-        return ResponseEntity.ok(util.writeExcel(convert.dos2vos(list), "客户账户流水数据"));
+        return ResponseEntity.ok(util.writeExcel(customerTransactionConvert.dos2vos(list), "客户账户流水数据"));
     }
 
     @ApiOperation("获取客户账户流水详细信息")
     @PreAuthorize("@ss.hasPermi('wms:customerTransaction:query')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<CustomerTransaction> getInfo(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(service.selectById(id));
+        return ResponseEntity.ok(customerTransactionService.selectById(id));
     }
 
     @ApiOperation("新增客户账户流水")
@@ -66,7 +69,7 @@ public class CustomerTransactionController extends BaseController {
     @Log(title = "客户账户流水", businessType = BusinessType.INSERT)
     @PostMapping
     public ResponseEntity<Integer> add(@RequestBody CustomerTransaction customerTransaction) {
-        return ResponseEntity.ok(service.insert(customerTransaction));
+        return ResponseEntity.ok(customerTransactionService.insert(customerTransaction));
     }
 
     @ApiOperation("修改客户账户流水")
@@ -74,7 +77,7 @@ public class CustomerTransactionController extends BaseController {
     @Log(title = "客户账户流水", businessType = BusinessType.UPDATE)
     @PutMapping
     public ResponseEntity<Integer> edit(@RequestBody CustomerTransaction customerTransaction) {
-        return ResponseEntity.ok(service.update(customerTransaction));
+        return ResponseEntity.ok(customerTransactionService.update(customerTransaction));
     }
 
     @ApiOperation("删除客户账户流水")
@@ -82,6 +85,6 @@ public class CustomerTransactionController extends BaseController {
     @Log(title = "客户账户流水", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public ResponseEntity<Integer> remove(@PathVariable Long[] ids) {
-        return ResponseEntity.ok(service.deleteByIds(ids));
+        return ResponseEntity.ok(customerTransactionService.deleteByIds(ids));
     }
 }
