@@ -21,6 +21,7 @@ import com.tt.wms.domain.vo.InventoryCheckDetailVO;
 import com.tt.wms.domain.vo.ItemVO;
 import com.tt.wms.mapper.InventoryCheckDetailMapper;
 import com.tt.wms.mapper.InventoryCheckMapper;
+import com.tt.wms.service.InventoryCheckService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +43,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class InventoryCheckServiceImpl {
+public class InventoryCheckServiceImpl implements InventoryCheckService {
 
     @Resource
     private InventoryCheckMapper inventoryCheckMapper;
@@ -60,7 +61,7 @@ public class InventoryCheckServiceImpl {
     private InventoryHistoryServiceImpl inventoryHistoryService;
 
     @Resource
-    private InventoryService inventoryService;
+    private InventoryServiceImpl inventoryService;
 
     @Resource
     private ItemService itemService;
@@ -74,6 +75,7 @@ public class InventoryCheckServiceImpl {
      * @param id 库存盘点单据主键
      * @return 库存盘点单据
      */
+    @Override
     public InventoryCheckForm selectById(Long id) {
         InventoryCheck inventoryCheck = inventoryCheckMapper.selectById(id);
         if (inventoryCheck == null) {
@@ -123,6 +125,7 @@ public class InventoryCheckServiceImpl {
      * @param page  分页条件
      * @return 库存盘点单据
      */
+    @Override
     public List<InventoryCheck> selectList(InventoryCheckQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize(), "create_time desc");
@@ -182,6 +185,7 @@ public class InventoryCheckServiceImpl {
      * @param inventoryCheck 库存盘点单据
      * @return 结果
      */
+    @Override
     public int insert(InventoryCheck inventoryCheck) {
         inventoryCheck.setDelFlag(0);
         inventoryCheck.setCreateTime(LocalDateTime.now());
@@ -194,6 +198,7 @@ public class InventoryCheckServiceImpl {
      * @param inventoryCheck 库存盘点单据
      * @return 结果
      */
+    @Override
     public int update(InventoryCheck inventoryCheck) {
         return inventoryCheckMapper.updateById(inventoryCheck);
     }
@@ -204,6 +209,7 @@ public class InventoryCheckServiceImpl {
      * @param ids 需要删除的库存盘点单据主键
      * @return 结果
      */
+    @Override
     public int deleteByIds(Long[] ids) {
         return inventoryCheckMapper.updateDelFlagByIds(ids);
     }
@@ -214,6 +220,7 @@ public class InventoryCheckServiceImpl {
      * @param id 库存盘点单据主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return inventoryCheckMapper.updateDelFlagByIds(ids);
@@ -226,6 +233,7 @@ public class InventoryCheckServiceImpl {
      * @return 结果
      */
     @Transactional
+    @Override
     public int addOrUpdate(InventoryCheckForm inventoryCheckForm) {
         int res;
         // 1. 新增
@@ -302,7 +310,7 @@ public class InventoryCheckServiceImpl {
         });
         if (adds.size() > 0) {
             int add1 = inventoryHistoryService.batchInsert(adds);
-            int update1 = inventoryService.batchUpdate1(adds);
+            int update1 = inventoryService.batchUpdate(adds);
             log.info("inventoryHistory: {}, inventory: {}", add1, update1);
         }
     }

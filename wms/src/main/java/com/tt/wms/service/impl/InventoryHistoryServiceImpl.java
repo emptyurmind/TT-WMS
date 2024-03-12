@@ -10,12 +10,13 @@ import com.tt.wms.domain.entity.InventoryHistory;
 import com.tt.wms.domain.query.InventoryHistoryQuery;
 import com.tt.wms.domain.vo.InventoryHistoryVO;
 import com.tt.wms.mapper.InventoryHistoryMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.tt.wms.service.InventoryHistoryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -27,13 +28,16 @@ import java.util.List;
  * @author wangkun
  */
 @Service
-public class InventoryHistoryServiceImpl {
-    @Autowired
+public class InventoryHistoryServiceImpl implements InventoryHistoryService {
+
+    @Resource
     private InventoryHistoryMapper inventoryHistoryMapper;
-    @Autowired
+
+    @Resource
     private InventoryHistoryConvert inventoryHistoryConvert;
-    @Autowired
-    private InventoryService inventoryService;
+
+    @Resource
+    private InventoryServiceImpl inventoryService;
 
     /**
      * 查询库存记录
@@ -41,6 +45,7 @@ public class InventoryHistoryServiceImpl {
      * @param id 库存记录主键
      * @return 库存记录
      */
+    @Override
     public InventoryHistory selectById(Long id) {
         return inventoryHistoryMapper.selectById(id);
     }
@@ -51,6 +56,7 @@ public class InventoryHistoryServiceImpl {
      * @param query 查询条件
      * @return 库存记录
      */
+    @Override
     public List<InventoryHistoryVO> selectList(InventoryHistoryQuery query) {
         List<InventoryHistory> list = queryInventoryHistories(query);
         List<InventoryHistoryVO> res = inventoryHistoryConvert.dos2vos(list);
@@ -92,6 +98,7 @@ public class InventoryHistoryServiceImpl {
         return list;
     }
 
+    @Override
     public Page<InventoryHistoryVO> selectList(InventoryHistoryQuery query, Pageable page) {
         PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize(), "create_time desc");
         List<InventoryHistory> list = queryInventoryHistories(query);
@@ -106,6 +113,7 @@ public class InventoryHistoryServiceImpl {
      * @param inventoryHistory 库存记录
      * @return 结果
      */
+    @Override
     public int insert(InventoryHistory inventoryHistory) {
         inventoryHistory.setDelFlag(0);
         inventoryHistory.setCreateTime(LocalDateTime.now());
@@ -118,6 +126,7 @@ public class InventoryHistoryServiceImpl {
      * @param inventoryHistory 库存记录
      * @return 结果
      */
+    @Override
     public int update(InventoryHistory inventoryHistory) {
         return inventoryHistoryMapper.updateById(inventoryHistory);
     }
@@ -128,6 +137,7 @@ public class InventoryHistoryServiceImpl {
      * @param ids 需要删除的库存记录主键
      * @return 结果
      */
+    @Override
     public int deleteByIds(Long[] ids) {
         return inventoryHistoryMapper.updateDelFlagByIds(ids);
     }
@@ -138,6 +148,7 @@ public class InventoryHistoryServiceImpl {
      * @param id 库存记录主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return inventoryHistoryMapper.updateDelFlagByIds(ids);
@@ -150,6 +161,7 @@ public class InventoryHistoryServiceImpl {
      * @param formType 单据类型
      * @return 结果
      */
+    @Override
     public int deleteByForm(Long formId, Integer... formType) {
         LambdaQueryWrapper<InventoryHistory> qw = new LambdaQueryWrapper<InventoryHistory>()
                 .eq(InventoryHistory::getFormId, formId);
@@ -167,6 +179,7 @@ public class InventoryHistoryServiceImpl {
      * @param formType 单据类型
      * @return 结果
      */
+    @Override
     public List<InventoryHistory> selectByForm(Long formId, Integer... formType) {
         LambdaQueryWrapper<InventoryHistory> qw = new LambdaQueryWrapper<InventoryHistory>()
                 .eq(InventoryHistory::getFormId, formId);
@@ -183,6 +196,7 @@ public class InventoryHistoryServiceImpl {
      * @param list 库存记录列表
      * @return 结果
      */
+    @Override
     public int batchInsert(List<InventoryHistory> list) {
         if (CollUtil.isEmpty(list)) {
             return 0;

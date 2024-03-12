@@ -8,7 +8,7 @@ import com.tt.wms.convert.InventoryConvert;
 import com.tt.wms.domain.entity.Inventory;
 import com.tt.wms.domain.query.InventoryQuery;
 import com.tt.wms.domain.vo.InventoryVO;
-import com.tt.wms.service.impl.InventoryService;
+import com.tt.wms.service.impl.InventoryServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ import java.util.List;
 @RequestMapping("/wms/inventory")
 public class InventoryController extends BaseController {
     @Autowired
-    private InventoryService service;
+    private InventoryServiceImpl service;
     @Autowired
     private InventoryConvert convert;
 

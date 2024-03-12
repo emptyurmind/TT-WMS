@@ -9,7 +9,7 @@ import com.tt.wms.domain.entity.InventoryMovement;
 import com.tt.wms.domain.form.InventoryMovementForm;
 import com.tt.wms.domain.query.InventoryMovementQuery;
 import com.tt.wms.domain.vo.InventoryMovementVO;
-import com.tt.wms.service.impl.InventoryMovementService;
+import com.tt.wms.service.impl.InventoryMovementServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/wms/inventoryMovement")
 public class InventoryMovementController extends BaseController {
     @Autowired
-    private InventoryMovementService service;
+    private InventoryMovementServiceImpl service;
     @Autowired
     private InventoryMovementConvert convert;
 

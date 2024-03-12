@@ -21,15 +21,17 @@ import com.tt.wms.domain.vo.InventoryHistoryVO;
 import com.tt.wms.domain.vo.InventoryVO;
 import com.tt.wms.domain.vo.PlaceAndItem;
 import com.tt.wms.mapper.InventoryMapper;
+import com.tt.wms.service.AreaService;
+import com.tt.wms.service.InventoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -43,22 +45,30 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class InventoryService {
-    @Autowired
+public class InventoryServiceImpl implements InventoryService {
+
+    @Resource
     private InventoryMapper inventoryMapper;
-    @Autowired
+
+    @Resource
     private InventoryConvert inventoryConvert;
-    @Autowired
+
+    @Resource
     private WarehouseService warehouseService;
-    @Autowired
-    private AreaServiceImpl areaService;
-    @Autowired
+
+    @Resource
+    private AreaService areaService;
+
+    @Resource
     private RackService rackService;
-    @Autowired
+
+    @Resource
     private ItemService itemService;
-    @Autowired
+
+    @Resource
     private ItemTypeService itemTypeService;
-    @Autowired
+
+    @Resource
     private ISysDictDataService sysDictDataService;
 
     /**
@@ -67,6 +77,7 @@ public class InventoryService {
      * @param id 库存主键
      * @return 库存
      */
+    @Override
     public Inventory selectById(Long id) {
         return inventoryMapper.selectById(id);
     }
@@ -78,6 +89,7 @@ public class InventoryService {
      * @param page  分页条件
      * @return 库存
      */
+    @Override
     public List<Inventory> selectList(InventoryQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
@@ -112,6 +124,7 @@ public class InventoryService {
      * @param inventory 库存
      * @return 结果
      */
+    @Override
     public int insert(Inventory inventory) {
         inventory.setDelFlag(0);
         inventory.setCreateTime(LocalDateTime.now());
@@ -133,6 +146,7 @@ public class InventoryService {
      * @param inventory 库存
      * @return 结果
      */
+    @Override
     public int update(Inventory inventory) {
         return inventoryMapper.updateById(inventory);
     }
@@ -143,6 +157,7 @@ public class InventoryService {
      * @param ids 需要删除的库存主键
      * @return 结果
      */
+    @Override
     public int deleteByIds(Long[] ids) {
         return inventoryMapper.updateDelFlagByIds(ids);
     }
@@ -153,11 +168,13 @@ public class InventoryService {
      * @param id 库存主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return inventoryMapper.updateDelFlagByIds(ids);
     }
 
+    @Override
     public List<Inventory> getInventoryList(Long panelType, QueryWrapper<Inventory> qw) {
         List<Inventory> items;
         if (Objects.equals(panelType, InventoryQuery.WAREHOUSE)) {
@@ -196,6 +213,7 @@ public class InventoryService {
         });
     }
 
+    @Override
     public boolean canOutStock(Long itemId, Long warehouseId, Long areaId, Long rackId, BigDecimal quantity) {
         QueryWrapper<Inventory> qw = new QueryWrapper<>();
         qw.eq("item_id", itemId)
@@ -210,9 +228,10 @@ public class InventoryService {
         return inventoryMapper.selectCount(qw) > 0;
     }
 
-    /*
+    /**
      * 根据物料id查询库存
-     * */
+     */
+    @Override
     public Inventory queryInventoryByItemId(Long itemId, Long warehouseId, Long areaId, Long rackId) {
         QueryWrapper<Inventory> qw = new QueryWrapper<>();
         qw.eq("item_id", itemId).eq("warehouse_id", warehouseId);
@@ -225,9 +244,10 @@ public class InventoryService {
         return inventoryMapper.selectOne(qw);
     }
 
-    /*
+    /**
      * 判断库存是否足够出库
-     * */
+     */
+    @Override
     public void checkInventory(Long itemId, Long warehouseId, Long areaId, Long rackId, BigDecimal added) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("itemId", itemId);
@@ -244,7 +264,8 @@ public class InventoryService {
         }
     }
 
-    public int batchUpdate1(List<InventoryHistory> list) {
+    @Override
+    public int batchUpdate(List<InventoryHistory> list) {
         if (CollUtil.isEmpty(list)) {
             return 0;
         }
@@ -266,19 +287,19 @@ public class InventoryService {
             warehouses.add(it);
         });
         int res = 0;
-        if (warehouses.size() > 0) {
+        if (!warehouses.isEmpty()) {
             res += saveData(warehouses, now, userId,
                     it -> it.getWarehouseId() + "_" + it.getItemId(),
                     inventoryMapper::selectAllByWarehouseAndItemId
             );
         }
-        if (areas.size() > 0) {
+        if (!areas.isEmpty()) {
             res += saveData(areas, now, userId,
                     it -> it.getWarehouseId() + "_" + it.getAreaId() + "_" + it.getItemId(),
                     inventoryMapper::selectAllByAreaAndItemId
             );
         }
-        if (racks.size() > 0) {
+        if (!racks.isEmpty()) {
             res += saveData(racks, now, userId,
                     it -> it.getWarehouseId() + "_" + it.getAreaId() + "_" + it.getRackId() + "_" + it.getItemId(),
                     inventoryMapper::selectAllByRackAndItemId
@@ -314,9 +335,10 @@ public class InventoryService {
         return re1 + re2;
     }
 
+    @Override
     public int batchUpdateQuantity(List<Inventory> updates, LocalDateTime updateTime, Long userId) {
         //将updates按照id分组
-        Map<Long, List<Inventory>> collect = updates.stream().collect(Collectors.groupingBy(it -> it.getId()));
+        Map<Long, List<Inventory>> collect = updates.stream().collect(Collectors.groupingBy(Inventory::getId));
         List<Inventory> saveList = new ArrayList<>();
         collect.forEach((k, v) -> {
             Inventory inventory = new Inventory();
@@ -342,6 +364,7 @@ public class InventoryService {
         return re;
     }
 
+    @Override
     public int batchInsert(List<Inventory> list) {
         if (CollUtil.isEmpty(list)) {
             return 0;
@@ -353,6 +376,7 @@ public class InventoryService {
         return re;
     }
 
+    @Override
     public Page<InventoryVO> queryPage(InventoryQuery query, Pageable page) {
         List<Inventory> list = selectList(query, page);
         List<InventoryVO> res = inventoryConvert.dos2vos(list);
@@ -361,6 +385,7 @@ public class InventoryService {
         return new PageImpl<>(res, page, ((com.github.pagehelper.Page) list).getTotal());
     }
 
+    @Override
     public void injectAreaAndItemInfo(List<? extends AreaAndItemInfo> res) {
         if (CollUtil.isEmpty(res)) {
             return;
@@ -414,6 +439,7 @@ public class InventoryService {
         });
     }
 
+    @Override
     public Page<InventoryVO> queryWarning(Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize(), SortUtil.sort2string(page.getSort()));
@@ -430,6 +456,7 @@ public class InventoryService {
         return new PageImpl<>(res, page, ((com.github.pagehelper.Page) inventories).getTotal());
     }
 
+    @Override
     public List<InventoryVO> queryAll(InventoryQuery query) {
 
         List<Inventory> list = selectList(query, null);
@@ -441,6 +468,7 @@ public class InventoryService {
     /**
      * 查询所有有效的物料
      */
+    @Override
     public List<InventoryVO> queryValidAll() {
         List<Inventory> list = inventoryMapper.selectValidAll();
         List<InventoryVO> res = inventoryConvert.dos2vos(list);
@@ -453,6 +481,7 @@ public class InventoryService {
      *
      * @param res 物料
      */
+    @Override
     public void injectItemNoAndItemName(List<Inventory> res) {
         if (CollUtil.isEmpty(res)) {
             return;
@@ -472,6 +501,7 @@ public class InventoryService {
      *
      * @param res 物料
      */
+    @Override
     public void injectWarehouseName(List<Inventory> res) {
         if (CollUtil.isEmpty(res)) {
             return;
@@ -490,6 +520,7 @@ public class InventoryService {
      *
      * @param res 物料
      */
+    @Override
     public void injectAreaName(List<Inventory> res) {
         if (CollUtil.isEmpty(res)) {
             return;
@@ -503,6 +534,7 @@ public class InventoryService {
         });
     }
 
+    @Override
     public void injectDictDataLabel(List<InventoryHistoryVO> res) {
         if (CollUtil.isEmpty(res)) {
             return;
@@ -522,6 +554,7 @@ public class InventoryService {
      *
      * @param itemIds 物料ids
      */
+    @Override
     public Integer deleteByItemIds(Long[] itemIds) {
         LambdaQueryWrapper<Inventory> inventoryLambdaQueryWrapper = new LambdaQueryWrapper<>();
         inventoryLambdaQueryWrapper.select(Inventory::getId);
@@ -541,6 +574,7 @@ public class InventoryService {
      *
      * @param warehouseIds 仓库ids
      */
+    @Override
     @Transactional
     public Integer deleteByWarehouseIds(Long[] warehouseIds) {
         LambdaQueryWrapper<Inventory> inventoryLambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -556,11 +590,12 @@ public class InventoryService {
         return inventoryMapper.updateDelFlagByIds(idArr);
     }
 
-    /*
+    /**
      * 根据库存分配规则分配库存
      * @param itemId 物料id
      * @param planQuantity 计划数量
-     * */
+     */
+    @Override
     public List<ShipmentOrderDetail> allocatedInventory(Long itemId, BigDecimal planQuantity, Integer type) {
         List<Inventory> inventoryList = new ArrayList<>();
         if (type == 1) {
@@ -604,6 +639,7 @@ public class InventoryService {
         return shipmentOrderDetailList;
     }
 
+    @Override
     public Inventory allocatedInventoryForReceipt(Long itemId, BigDecimal planQuantity, Integer type) {
         List<Inventory> inventoryList = new ArrayList<>();
         if (type == 1) {

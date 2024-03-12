@@ -20,10 +20,10 @@ import com.tt.wms.domain.vo.InventoryMovementVO;
 import com.tt.wms.domain.vo.ItemVO;
 import com.tt.wms.mapper.InventoryMovementDetailMapper;
 import com.tt.wms.mapper.InventoryMovementMapper;
+import com.tt.wms.service.InventoryMovementService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -43,23 +44,31 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class InventoryMovementService {
-    @Autowired
+public class InventoryMovementServiceImpl implements InventoryMovementService {
+
+    @Resource
     private InventoryMovementMapper inventoryMovementMapper;
-    @Autowired
+
+    @Resource
     private InventoryMovementConvert convert;
-    @Autowired
+
+    @Resource
     private InventoryMovementDetailMapper inventoryMovementDetailMapper;
-    @Autowired
-    private InventoryMovementDetailService inventoryMovementDetailService;
-    @Autowired
+
+    @Resource
+    private InventoryMovementDetailServiceImpl inventoryMovementDetailService;
+
+    @Resource
     private ItemService itemService;
-    @Autowired
+
+    @Resource
     private InventoryMovementDetailConvert detailConvert;
-    @Autowired
+
+    @Resource
     private InventoryHistoryServiceImpl inventoryHistoryService;
-    @Autowired
-    private InventoryService inventoryService;
+
+    @Resource
+    private InventoryServiceImpl inventoryService;
 
 
     /**
@@ -68,6 +77,7 @@ public class InventoryMovementService {
      * @param id 库存移动主键
      * @return 库存移动
      */
+    @Override
     public InventoryMovementForm selectById(Long id) {
 
         InventoryMovement order = inventoryMovementMapper.selectById(id);
@@ -98,6 +108,7 @@ public class InventoryMovementService {
      * @param page  分页条件
      * @return 库存移动
      */
+    @Override
     public Page<InventoryMovementVO> selectList(InventoryMovementQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
@@ -139,6 +150,7 @@ public class InventoryMovementService {
      * @param inventoryMovement 库存移动
      * @return 结果
      */
+    @Override
     public int insert(InventoryMovement inventoryMovement) {
         inventoryMovement.setDelFlag(0);
         inventoryMovement.setCreateTime(LocalDateTime.now());
@@ -151,6 +163,7 @@ public class InventoryMovementService {
      * @param inventoryMovement 库存移动
      * @return 结果
      */
+    @Override
     public int update(InventoryMovement inventoryMovement) {
         return inventoryMovementMapper.updateById(inventoryMovement);
     }
@@ -162,6 +175,7 @@ public class InventoryMovementService {
      * @return 结果
      */
     @Transactional
+    @Override
     public int deleteByIds(Long[] ids) {
         int flag = 0;
         for (Long id : ids) {
@@ -192,7 +206,7 @@ public class InventoryMovementService {
             });
 
             // 4. 回滚库存
-            inventoryService.batchUpdate1(inventoryHistories);
+            inventoryService.batchUpdate(inventoryHistories);
 
             // 5. 删除库存记录
             inventoryHistoryService.deleteByForm(inventoryMovement.getId(), InventoryMovementConstant.IN_TYPE, InventoryMovementConstant.OUT_TYPE);
@@ -209,12 +223,14 @@ public class InventoryMovementService {
      * @param id 库存移动主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return inventoryMovementMapper.updateDelFlagByIds(ids);
     }
 
     @Transactional
+    @Override
     public int addOrUpdate(InventoryMovementForm order) {
         int res;
         // 1. 新增
@@ -285,13 +301,13 @@ public class InventoryMovementService {
             out.setAreaId(it.getSourceAreaId());
             outList.add(out);
         });
-        if (outList.size() > 0) {
+        if (!outList.isEmpty()) {
             inventoryHistoryService.batchInsert(outList);
-            inventoryService.batchUpdate1(outList);
+            inventoryService.batchUpdate(outList);
         }
-        if (inList.size() > 0) {
+        if (!inList.isEmpty()) {
             inventoryHistoryService.batchInsert(inList);
-            inventoryService.batchUpdate1(inList);
+            inventoryService.batchUpdate(inList);
         }
         // 2.1 先删除details 再重新保存
         inventoryMovementDetailMapper.delete(qw);

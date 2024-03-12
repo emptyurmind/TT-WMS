@@ -11,6 +11,8 @@ import com.tt.wms.domain.query.InventorySettlementDetailQuery;
 import com.tt.wms.domain.vo.InventoryVO;
 import com.tt.wms.mapper.InventoryHistoryMapper;
 import com.tt.wms.mapper.InventorySettlementDetailMapper;
+import com.tt.wms.service.InventoryService;
+import com.tt.wms.service.InventorySettlementDetailService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -30,13 +33,15 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class InventorySettlementDetailService {
-    @Autowired
+public class InventorySettlementDetailServiceImpl implements InventorySettlementDetailService {
+
+    @Resource
     private InventoryService inventoryService;
-    @Autowired
+
+    @Resource
     private InventorySettlementDetailMapper inventorySettlementDetailMapper;
 
-    @Autowired
+    @Resource
     private InventoryHistoryMapper inventoryHistoryMapper;
 
     /**
@@ -45,6 +50,7 @@ public class InventorySettlementDetailService {
      * @param id 库存结算明细主键
      * @return 库存结算明细
      */
+    @Override
     public InventorySettlementDetail selectById(Long id) {
         return inventorySettlementDetailMapper.selectById(id);
     }
@@ -56,6 +62,7 @@ public class InventorySettlementDetailService {
      * @param page  分页条件
      * @return 库存结算明细
      */
+    @Override
     public List<InventorySettlementDetail> selectList(InventorySettlementDetailQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
@@ -135,6 +142,7 @@ public class InventorySettlementDetailService {
      * @param inventorySettlementDetail 库存结算明细
      * @return 结果
      */
+    @Override
     public int insert(InventorySettlementDetail inventorySettlementDetail) {
         inventorySettlementDetail.setDelFlag(0);
         inventorySettlementDetail.setCreateTime(LocalDateTime.now());
@@ -147,6 +155,7 @@ public class InventorySettlementDetailService {
      * @param inventorySettlementDetail 库存结算明细
      * @return 结果
      */
+    @Override
     public int update(InventorySettlementDetail inventorySettlementDetail) {
         return inventorySettlementDetailMapper.updateById(inventorySettlementDetail);
     }
@@ -157,6 +166,7 @@ public class InventorySettlementDetailService {
      * @param ids 需要删除的库存结算明细主键
      * @return 结果
      */
+    @Override
     public int deleteByIds(Long[] ids) {
         return inventorySettlementDetailMapper.updateDelFlagByIds(ids);
     }
@@ -167,6 +177,7 @@ public class InventorySettlementDetailService {
      * @param id 库存结算明细主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return inventorySettlementDetailMapper.updateDelFlagByIds(ids);
@@ -178,6 +189,7 @@ public class InventorySettlementDetailService {
      * @param query 查询条件
      * @return 结果
      */
+    @Override
     public List<InventorySettlementDetail> listByTime(InventorySettlementDetailQuery query) {
 
         //获取本结算周期的库存历史记录表

@@ -8,7 +8,7 @@ import com.tt.wms.convert.InventorySettlementDetailConvert;
 import com.tt.wms.domain.entity.InventorySettlementDetail;
 import com.tt.wms.domain.query.InventorySettlementDetailQuery;
 import com.tt.wms.domain.vo.InventorySettlementDetailVO;
-import com.tt.wms.service.impl.InventorySettlementDetailService;
+import com.tt.wms.service.impl.InventorySettlementDetailServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ import java.util.List;
 @RequestMapping("/wms/inventorySettlementDetail")
 public class InventorySettlementDetailController extends BaseController {
     @Autowired
-    private InventorySettlementDetailService service;
+    private InventorySettlementDetailServiceImpl service;
     @Autowired
     private InventorySettlementDetailConvert convert;
 

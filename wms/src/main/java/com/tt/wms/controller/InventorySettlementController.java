@@ -9,7 +9,7 @@ import com.tt.wms.domain.entity.InventorySettlement;
 import com.tt.wms.domain.form.InventorySettlementForm;
 import com.tt.wms.domain.query.InventorySettlementQuery;
 import com.tt.wms.domain.vo.InventorySettlementVO;
-import com.tt.wms.service.impl.InventorySettlementService;
+import com.tt.wms.service.impl.InventorySettlementServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ import java.util.List;
 @RequestMapping("/wms/inventorySettlement")
 public class InventorySettlementController extends BaseController {
     @Autowired
-    private InventorySettlementService service;
+    private InventorySettlementServiceImpl service;
     @Autowired
     private InventorySettlementConvert convert;
 

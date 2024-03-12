@@ -9,10 +9,12 @@ import com.tt.wms.domain.entity.InventoryMovementDetail;
 import com.tt.wms.domain.query.InventoryMovementDetailQuery;
 import com.tt.wms.domain.vo.InventoryMovementDetailVO;
 import com.tt.wms.mapper.InventoryMovementDetailMapper;
+import com.tt.wms.service.InventoryMovementDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -24,10 +26,12 @@ import java.util.List;
  * @author wangkun
  */
 @Service
-public class InventoryMovementDetailService {
-    @Autowired
+public class InventoryMovementDetailServiceImpl implements InventoryMovementDetailService {
+
+    @Resource
     private InventoryMovementDetailMapper inventoryMovementDetailMapper;
-    @Autowired
+
+    @Resource
     private InventoryMovementDetailConvert convert;
 
     /**
@@ -36,6 +40,7 @@ public class InventoryMovementDetailService {
      * @param id 库存移动详情主键
      * @return 库存移动详情
      */
+    @Override
     public InventoryMovementDetail selectById(Long id) {
         return inventoryMovementDetailMapper.selectById(id);
     }
@@ -47,6 +52,7 @@ public class InventoryMovementDetailService {
      * @param page  分页条件
      * @return 库存移动详情
      */
+    @Override
     public List<InventoryMovementDetail> selectList(InventoryMovementDetailQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
@@ -135,6 +141,7 @@ public class InventoryMovementDetailService {
      * @param inventoryMovementDetail 库存移动详情
      * @return 结果
      */
+    @Override
     public int insert(InventoryMovementDetail inventoryMovementDetail) {
         inventoryMovementDetail.setDelFlag(0);
         inventoryMovementDetail.setCreateTime(LocalDateTime.now());
@@ -147,6 +154,7 @@ public class InventoryMovementDetailService {
      * @param inventoryMovementDetail 库存移动详情
      * @return 结果
      */
+    @Override
     public int update(InventoryMovementDetail inventoryMovementDetail) {
         return inventoryMovementDetailMapper.updateById(inventoryMovementDetail);
     }
@@ -157,6 +165,7 @@ public class InventoryMovementDetailService {
      * @param ids 需要删除的库存移动详情主键
      * @return 结果
      */
+    @Override
     public int deleteByIds(Long[] ids) {
         return inventoryMovementDetailMapper.updateDelFlagByIds(ids);
     }
@@ -167,6 +176,7 @@ public class InventoryMovementDetailService {
      * @param id 库存移动详情主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return inventoryMovementDetailMapper.updateDelFlagByIds(ids);
@@ -177,6 +187,7 @@ public class InventoryMovementDetailService {
      *
      * @param inventoryMovement 库存移动单
      */
+    @Override
     public void updateDelFlag(InventoryMovement inventoryMovement) {
         LambdaUpdateWrapper<InventoryMovementDetail> updateWrapper = new LambdaUpdateWrapper<InventoryMovementDetail>()
                 .eq(InventoryMovementDetail::getInventoryMovementId, inventoryMovement.getId())

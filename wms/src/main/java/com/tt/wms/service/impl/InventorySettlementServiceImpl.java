@@ -14,11 +14,13 @@ import com.tt.wms.domain.query.InventorySettlementQuery;
 import com.tt.wms.domain.vo.InventorySettlementDetailVO;
 import com.tt.wms.mapper.InventorySettlementDetailMapper;
 import com.tt.wms.mapper.InventorySettlementMapper;
+import com.tt.wms.service.InventorySettlementService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -28,14 +30,18 @@ import java.util.List;
  * @author wangkun
  */
 @Service
-public class InventorySettlementService {
-    @Autowired
+public class InventorySettlementServiceImpl implements InventorySettlementService {
+
+    @Resource
     private InventorySettlementMapper inventorySettlementMapper;
-    @Autowired
+
+    @Resource
     private InventorySettlementDetailMapper inventorySettlementDetailMapper;
-    @Autowired
+
+    @Resource
     private InventorySettlementDetailConvert detailConvert;
-    @Autowired
+
+    @Resource
     private InventorySettlementConvert convert;
 
     /**
@@ -44,6 +50,7 @@ public class InventorySettlementService {
      * @param id 库存结算单主键
      * @return 库存结算单
      */
+    @Override
     public InventorySettlementForm selectById(Long id) {
         InventorySettlement inventorySettlement = inventorySettlementMapper.selectById(id);
         if (inventorySettlement == null) {
@@ -67,6 +74,7 @@ public class InventorySettlementService {
      * @param page  分页条件
      * @return 库存结算单
      */
+    @Override
     public List<InventorySettlement> selectList(InventorySettlementQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
@@ -95,6 +103,7 @@ public class InventorySettlementService {
      * @param inventorySettlement 库存结算单
      * @return 结果
      */
+    @Override
     public int insert(InventorySettlement inventorySettlement) {
         inventorySettlement.setDelFlag(0);
         inventorySettlement.setCreateTime(LocalDateTime.now());
@@ -107,6 +116,7 @@ public class InventorySettlementService {
      * @param inventorySettlement 库存结算单
      * @return 结果
      */
+    @Override
     public int update(InventorySettlement inventorySettlement) {
         return inventorySettlementMapper.updateById(inventorySettlement);
     }
@@ -117,6 +127,7 @@ public class InventorySettlementService {
      * @param ids 需要删除的库存结算单主键
      * @return 结果
      */
+    @Override
     public int deleteByIds(Long[] ids) {
         return inventorySettlementMapper.updateDelFlagByIds(ids);
     }
@@ -127,6 +138,7 @@ public class InventorySettlementService {
      * @param id 库存结算单主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return inventorySettlementMapper.updateDelFlagByIds(ids);
@@ -138,6 +150,7 @@ public class InventorySettlementService {
      * @param inventorySettlementForm 库存结算单
      * @return 结果
      */
+    @Override
     public int addOrUpdate(InventorySettlementForm inventorySettlementForm) {
         int res;
         // 1. 新增
