@@ -8,9 +8,14 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class InventoryMovementFrom extends InventoryMovement {
-    // 详情
+public class InventoryMovementForm extends InventoryMovement {
+    /**
+     * 详情
+     */
     private List<InventoryMovementDetailVO> details;
-    // 所有商品
+
+    /**
+     * 所有商品
+     */
     private List<ItemVO> items;
 }

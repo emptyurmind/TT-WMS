@@ -9,8 +9,13 @@ import java.util.List;
 
 @Data
 public class ReceiptOrderForm extends ReceiptOrder {
-    // 入库单详情
+    /**
+     * 入库单详情
+     */
     private List<ReceiptOrderDetailVO> details;
-    // 所有商品
+
+    /**
+     * 所有商品
+     */
     private List<ItemVO> items;
 }

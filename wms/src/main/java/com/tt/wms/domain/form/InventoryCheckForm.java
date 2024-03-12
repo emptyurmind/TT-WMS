@@ -13,9 +13,14 @@ import java.util.List;
  * @author wangkun
  */
 @Data
-public class InventoryCheckFrom extends InventoryCheck {
-    // 盘库单据详情
+public class InventoryCheckForm extends InventoryCheck {
+    /**
+     * 盘库单据详情
+     */
     private List<InventoryCheckDetailVO> details;
-    // 所有商品
+
+    /**
+     * 所有商品
+     */
     private List<ItemVO> items;
 }

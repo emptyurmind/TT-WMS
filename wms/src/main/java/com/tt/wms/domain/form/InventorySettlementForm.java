@@ -13,9 +13,14 @@ import java.util.List;
  * @author wangkun
  */
 @Data
-public class InventorySettlementFrom extends InventorySettlement {
-    // 盘库结算详情
+public class InventorySettlementForm extends InventorySettlement {
+    /**
+     * 盘库结算详情
+     */
     private List<InventorySettlementDetailVO> details;
-    // 所有商品
+
+    /**
+     * 所有商品
+     */
     private List<ItemVO> items;
 }

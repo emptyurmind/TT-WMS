@@ -13,10 +13,19 @@ import java.util.List;
  * @author wangkun
  */
 @Data
-public class OrderWaveReceiptFrom extends WaveVO {
-    // 出库单详情
+public class OrderWaveReceiptForm extends WaveVO {
+    /**
+     * 出库单详情
+     */
     private List<ReceiptOrderDetailVO> details;
+
+    /**
+     * 分配详情
+     */
     private List<ReceiptOrderDetailVO> allocationDetails;
-    // 所有商品
+
+    /**
+     * 所有商品
+     */
     private List<ItemVO> items;
 }
