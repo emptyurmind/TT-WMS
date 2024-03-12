@@ -8,10 +8,9 @@ import com.tt.wms.convert.DeliveryConvert;
 import com.tt.wms.domain.entity.Delivery;
 import com.tt.wms.domain.query.DeliveryQuery;
 import com.tt.wms.domain.vo.DeliveryVO;
-import com.tt.wms.service.DeliveryService;
+import com.tt.wms.service.impl.DeliveryServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -31,16 +31,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/wms/delivery")
 public class DeliveryController extends BaseController {
-    @Autowired
-    private DeliveryService service;
-    @Autowired
-    private DeliveryConvert convert;
+
+    @Resource
+    private DeliveryServiceImpl deliveryService;
+
+    @Resource
+    private DeliveryConvert deliveryConvert;
 
     @ApiOperation("查询发货记录列表")
     @PreAuthorize("@ss.hasPermi('wms:delivery:list')")
     @PostMapping("/list")
     public ResponseEntity<Page<Delivery>> list(@RequestBody DeliveryQuery query, Pageable page) {
-        List<Delivery> list = service.selectList(query, page);
+        List<Delivery> list = deliveryService.selectList(query, page);
         return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page) list).getTotal()));
     }
 
@@ -49,16 +51,16 @@ public class DeliveryController extends BaseController {
     @Log(title = "发货记录", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
     public ResponseEntity<String> export(DeliveryQuery query) {
-        List<Delivery> list = service.selectList(query, null);
+        List<Delivery> list = deliveryService.selectList(query, null);
         ExcelUtil<DeliveryVO> util = new ExcelUtil<>(DeliveryVO.class);
-        return ResponseEntity.ok(util.writeExcel(convert.dos2vos(list), "发货记录数据"));
+        return ResponseEntity.ok(util.writeExcel(deliveryConvert.dos2vos(list), "发货记录数据"));
     }
 
     @ApiOperation("获取发货记录详细信息")
     @PreAuthorize("@ss.hasPermi('wms:delivery:query')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Delivery> getInfo(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(service.selectById(id));
+        return ResponseEntity.ok(deliveryService.selectById(id));
     }
 
     @ApiOperation("新增发货记录")
@@ -66,7 +68,7 @@ public class DeliveryController extends BaseController {
     @Log(title = "发货记录", businessType = BusinessType.INSERT)
     @PostMapping
     public ResponseEntity<Integer> add(@RequestBody Delivery delivery) {
-        return ResponseEntity.ok(service.insert(delivery));
+        return ResponseEntity.ok(deliveryService.insert(delivery));
     }
 
     @ApiOperation("修改发货记录")
@@ -74,7 +76,7 @@ public class DeliveryController extends BaseController {
     @Log(title = "发货记录", businessType = BusinessType.UPDATE)
     @PutMapping
     public ResponseEntity<Integer> edit(@RequestBody Delivery delivery) {
-        return ResponseEntity.ok(service.update(delivery));
+        return ResponseEntity.ok(deliveryService.update(delivery));
     }
 
     @ApiOperation("删除发货记录")
@@ -82,6 +84,6 @@ public class DeliveryController extends BaseController {
     @Log(title = "发货记录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public ResponseEntity<Integer> remove(@PathVariable Long[] ids) {
-        return ResponseEntity.ok(service.deleteByIds(ids));
+        return ResponseEntity.ok(deliveryService.deleteByIds(ids));
     }
 }
