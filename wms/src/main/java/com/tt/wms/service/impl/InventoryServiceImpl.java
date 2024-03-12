@@ -23,6 +23,8 @@ import com.tt.wms.domain.vo.PlaceAndItem;
 import com.tt.wms.mapper.InventoryMapper;
 import com.tt.wms.service.AreaService;
 import com.tt.wms.service.InventoryService;
+import com.tt.wms.service.ItemService;
+import com.tt.wms.service.ItemTypeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -63,7 +65,7 @@ public class InventoryServiceImpl implements InventoryService {
     private RackService rackService;
 
     @Resource
-    private ItemServiceImpl itemService;
+    private ItemService itemService;
 
     @Resource
     private ItemTypeService itemTypeService;

@@ -6,11 +6,13 @@ import com.tt.wms.domain.entity.ItemType;
 import com.tt.wms.domain.entity.ItemTypeTreeSelect;
 import com.tt.wms.domain.query.ItemTypeQuery;
 import com.tt.wms.mapper.ItemTypeMapper;
+import com.tt.wms.service.ItemTypeService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,8 +23,9 @@ import java.util.stream.Collectors;
  * @author wangkun
  */
 @Service
-public class ItemTypeService {
-    @Autowired
+public class ItemTypeServiceImpl implements ItemTypeService {
+
+    @Resource
     private ItemTypeMapper itemTypeMapper;
 
     /**
@@ -31,6 +34,7 @@ public class ItemTypeService {
      * @param ids 物料类型表主键
      * @return 物料类型表
      */
+    @Override
     public List<ItemType> selectByIdIn(Collection<Long> ids) {
         if (ids.isEmpty()) {
             return Collections.emptyList();
@@ -46,6 +50,7 @@ public class ItemTypeService {
      * @param itemTypeId 物料类型表主键
      * @return 物料类型表
      */
+    @Override
     public ItemType selectByItemTypeId(Long itemTypeId) {
         return itemTypeMapper.selectById(itemTypeId);
     }
@@ -57,6 +62,7 @@ public class ItemTypeService {
      * @param page  分页条件
      * @return 物料类型表
      */
+    @Override
     public List<ItemType> selectList(ItemTypeQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
@@ -92,6 +98,7 @@ public class ItemTypeService {
      * @param itemType 物料类型表
      * @return 结果
      */
+    @Override
     public int insert(ItemType itemType) {
         itemType.setDelFlag(String.valueOf(0));
         itemType.setCreateTime(LocalDateTime.now());
@@ -104,6 +111,7 @@ public class ItemTypeService {
      * @param itemType 物料类型表
      * @return 结果
      */
+    @Override
     public int update(ItemType itemType) {
         return itemTypeMapper.updateById(itemType);
     }
@@ -114,6 +122,7 @@ public class ItemTypeService {
      * @param itemTypeIds 需要删除的物料类型表主键
      * @return 结果
      */
+    @Override
     public int deleteByItemTypeIds(Long[] itemTypeIds) {
         return itemTypeMapper.updateDelFlagByIds(itemTypeIds);
     }
@@ -124,11 +133,13 @@ public class ItemTypeService {
      * @param itemTypeId 物料类型表主键
      * @return 结果
      */
+    @Override
     public int deleteByItemTypeId(Long itemTypeId) {
         Long[] itemTypeIds = {itemTypeId};
         return itemTypeMapper.updateDelFlagByIds(itemTypeIds);
     }
 
+    @Override
     public List<ItemTypeTreeSelect> buildItemTypeTreeSelect(List<ItemType> itemTypes) {
         List<ItemType> itemTypeTrees = buildDeptTree(itemTypes);
         return itemTypeTrees.stream().map(ItemTypeTreeSelect::new).collect(Collectors.toList());
@@ -140,14 +151,14 @@ public class ItemTypeService {
      * @param itemTypes 部门列表
      * @return 树结构列表
      */
+    @Override
     public List<ItemType> buildDeptTree(List<ItemType> itemTypes) {
         List<ItemType> returnList = new ArrayList<>();
         List<Long> tempList = new ArrayList<Long>();
         for (ItemType dept : itemTypes) {
             tempList.add(dept.getItemTypeId());
         }
-        for (Iterator<ItemType> iterator = itemTypes.iterator(); iterator.hasNext(); ) {
-            ItemType dept = (ItemType) iterator.next();
+        for (ItemType dept : itemTypes) {
             // 如果是顶级节点, 遍历该父节点的所有子节点
             if (!tempList.contains(dept.getParentId())) {
                 recursionFn(itemTypes, dept);
@@ -191,6 +202,6 @@ public class ItemTypeService {
      * 判断是否有子节点
      */
     private boolean hasChild(List<ItemType> list, ItemType t) {
-        return getChildList(list, t).size() > 0 ? true : false;
+        return !getChildList(list, t).isEmpty();
     }
 }

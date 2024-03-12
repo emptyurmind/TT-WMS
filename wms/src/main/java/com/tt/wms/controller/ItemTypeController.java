@@ -9,7 +9,7 @@ import com.tt.wms.convert.ItemTypeConvert;
 import com.tt.wms.domain.entity.ItemType;
 import com.tt.wms.domain.query.ItemTypeQuery;
 import com.tt.wms.domain.vo.ItemTypeVO;
-import com.tt.wms.service.impl.ItemTypeService;
+import com.tt.wms.service.impl.ItemTypeServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ import java.util.List;
 @RequestMapping("/wms/itemType")
 public class ItemTypeController extends BaseController {
     @Autowired
-    private ItemTypeService service;
+    private ItemTypeServiceImpl service;
     @Autowired
     private ItemTypeConvert convert;
 
