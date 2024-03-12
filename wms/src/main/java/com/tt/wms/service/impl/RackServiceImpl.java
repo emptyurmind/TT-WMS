@@ -5,11 +5,12 @@ import com.github.pagehelper.PageHelper;
 import com.tt.wms.domain.entity.Rack;
 import com.tt.wms.domain.query.RackQuery;
 import com.tt.wms.mapper.RackMapper;
+import com.tt.wms.service.RackService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,8 +22,9 @@ import java.util.List;
  * @author wangkun
  */
 @Service
-public class RackService {
-    @Autowired
+public class RackServiceImpl implements RackService {
+
+    @Resource
     private RackMapper rackMapper;
 
     /**
@@ -31,6 +33,7 @@ public class RackService {
      * @param id 货架主键
      * @return 货架
      */
+    @Override
     public Rack selectById(Long id) {
         return rackMapper.selectById(id);
     }
@@ -42,6 +45,7 @@ public class RackService {
      * @param page  分页条件
      * @return 货架
      */
+    @Override
     public List<Rack> selectList(RackQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
@@ -73,6 +77,7 @@ public class RackService {
      * @param rack 货架
      * @return 结果
      */
+    @Override
     public int insert(Rack rack) {
         rack.setDelFlag(0);
         rack.setCreateTime(LocalDateTime.now());
@@ -85,6 +90,7 @@ public class RackService {
      * @param rack 货架
      * @return 结果
      */
+    @Override
     public int update(Rack rack) {
         return rackMapper.updateById(rack);
     }
@@ -95,6 +101,7 @@ public class RackService {
      * @param ids 需要删除的货架主键
      * @return 结果
      */
+    @Override
     public int deleteByIds(Long[] ids) {
         return rackMapper.updateDelFlagByIds(ids);
     }
@@ -105,11 +112,13 @@ public class RackService {
      * @param id 货架主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return rackMapper.updateDelFlagByIds(ids);
     }
 
+    @Override
     public List<Rack> selectByIdIn(Collection<Long> ids) {
         if (ids.isEmpty()) {
             return new ArrayList<>();

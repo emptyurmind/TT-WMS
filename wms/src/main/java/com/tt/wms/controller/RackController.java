@@ -8,10 +8,9 @@ import com.tt.wms.convert.RackConvert;
 import com.tt.wms.domain.entity.Rack;
 import com.tt.wms.domain.query.RackQuery;
 import com.tt.wms.domain.vo.RackVO;
-import com.tt.wms.service.impl.RackService;
+import com.tt.wms.service.RackService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -31,9 +31,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/wms/rack")
 public class RackController extends BaseController {
-    @Autowired
+
+    @Resource
     private RackService service;
-    @Autowired
+
+    @Resource
     private RackConvert convert;
 
     @ApiOperation("查询货架列表")
