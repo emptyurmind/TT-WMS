@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 出库单详情Mapper接口
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 public interface ShipmentOrderDetailMapper extends BaseMapper<ShipmentOrderDetail> {
     /**

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 仓库Mapper接口
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 public interface WarehouseMapper extends BaseMapper<Warehouse> {
     /**

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 /**
  * 客户账户流水 查询 对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @ApiModel(description = "客户账户流水 查询 对象")
 @Data

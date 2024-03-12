@@ -1,4 +1,4 @@
-package com.tt.wms.service;
+package com.tt.wms.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -12,7 +12,7 @@ import com.tt.wms.convert.DeliveryConvert;
 import com.tt.wms.convert.ShipmentOrderConvert;
 import com.tt.wms.convert.ShipmentOrderDetailConvert;
 import com.tt.wms.domain.entity.*;
-import com.tt.wms.domain.form.OrderWaveFrom;
+import com.tt.wms.domain.form.OrderWaveForm;
 import com.tt.wms.domain.form.ShipmentOrderFrom;
 import com.tt.wms.domain.query.DeliveryQuery;
 import com.tt.wms.domain.query.ItemQuery;
@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
 /**
  * 出库单Service业务层处理
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Service
 @Slf4j
@@ -61,13 +61,13 @@ public class ShipmentOrderService {
     @Autowired
     private DeliveryConvert deliveryConvert;
     @Autowired
-    private DeliveryService deliveryService;
+    private DeliveryServiceImpl deliveryService;
     @Autowired
-    private InventoryHistoryService inventoryHistoryService;
+    private InventoryHistoryServiceImpl inventoryHistoryService;
     @Autowired
     private InventoryService inventoryService;
     @Autowired
-    private CustomerTransactionService customerTransactionService;
+    private CustomerTransactionServiceImpl customerTransactionService;
 
     /**
      * 查询出库单
@@ -417,8 +417,8 @@ public class ShipmentOrderService {
     /*
      *
      * */
-    public OrderWaveFrom selectDetailByWaveNo(String waveNo) {
-        OrderWaveFrom form = new OrderWaveFrom();
+    public OrderWaveForm selectDetailByWaveNo(String waveNo) {
+        OrderWaveForm form = new OrderWaveForm();
         List<ShipmentOrderDetail> shipmentOrderDetails = shipmentOrderDetailMapper.selectDetailByWaveNo(waveNo);
         List<ShipmentOrderDetailVO> shipmentOrderDetailVOS = shipmentOrderDetailService.toVos(shipmentOrderDetails);
         form.setDetails(shipmentOrderDetailVOS);

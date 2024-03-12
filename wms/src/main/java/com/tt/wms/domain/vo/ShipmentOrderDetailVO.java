@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 出库单详情 数据视图对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Data
 public class ShipmentOrderDetailVO extends BaseAudit {

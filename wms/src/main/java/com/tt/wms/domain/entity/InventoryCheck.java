@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 库存盘点单据对象 wms_inventory_check
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @ApiModel(description = "库存盘点单据对象")
 @Data

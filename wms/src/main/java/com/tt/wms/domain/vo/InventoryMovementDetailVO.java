@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 库存移动详情 数据视图对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Data
 public class InventoryMovementDetailVO extends BaseAudit {

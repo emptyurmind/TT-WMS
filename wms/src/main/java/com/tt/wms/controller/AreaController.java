@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * 货区Controller
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Api(description = "货区接口列表")
 @RestController

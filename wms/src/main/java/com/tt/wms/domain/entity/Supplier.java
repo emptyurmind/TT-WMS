@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 /**
  * 供应商对象 wms_supplier
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @ApiModel(description = "供应商对象")
 @Data

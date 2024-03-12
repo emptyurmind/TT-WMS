@@ -10,7 +10,7 @@ import lombok.Data;
 /**
  * 货架对象 wms_rack
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @ApiModel(description = "货架对象")
 @Data

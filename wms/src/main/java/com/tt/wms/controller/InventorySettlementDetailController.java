@@ -8,7 +8,7 @@ import com.tt.wms.convert.InventorySettlementDetailConvert;
 import com.tt.wms.domain.entity.InventorySettlementDetail;
 import com.tt.wms.domain.query.InventorySettlementDetailQuery;
 import com.tt.wms.domain.vo.InventorySettlementDetailVO;
-import com.tt.wms.service.InventorySettlementDetailService;
+import com.tt.wms.service.impl.InventorySettlementDetailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 库存结算明细Controller
  *
- * @auhtor wangkun
+ * @author wangkun
  * @date 2023-04-18
  */
 @Api(description = "库存结算明细接口列表")

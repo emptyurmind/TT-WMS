@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 供应商Mapper接口
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 public interface SupplierMapper extends BaseMapper<Supplier> {
     /**

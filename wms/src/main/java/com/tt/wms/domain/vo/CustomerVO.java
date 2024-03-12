@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 客户 数据视图对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Data
 public class CustomerVO extends BaseAudit {

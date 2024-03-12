@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 库存盘点单据Mapper接口
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 public interface InventoryCheckMapper extends BaseMapper<InventoryCheck> {
     /**

@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 库存结算单 数据视图对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Data
 public class InventorySettlementVO extends BaseAudit {

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 库存记录Mapper接口
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 public interface InventoryHistoryMapper extends BaseMapper<InventoryHistory> {
     /**

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 /**
  * 发货记录 数据视图对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Data
 public class DeliveryVO extends BaseAudit {

@@ -1,4 +1,4 @@
-package com.tt.wms.service;
+package com.tt.wms.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -7,7 +7,7 @@ import com.ruoyi.common.utils.SecurityUtils;
 import com.tt.wms.constant.ReceiptOrderConstant;
 import com.tt.wms.convert.ReceiptOrderDetailConvert;
 import com.tt.wms.domain.entity.*;
-import com.tt.wms.domain.form.OrderWaveReceiptFrom;
+import com.tt.wms.domain.form.OrderWaveReceiptForm;
 import com.tt.wms.domain.vo.ReceiptOrderDetailVO;
 import com.tt.wms.mapper.ReceiptOrderDetailMapper;
 import com.tt.wms.mapper.ReceiptOrderMapper;
@@ -42,17 +42,17 @@ public class WaveForReceiptService {
     @Autowired
     private WaveMapper waveMapper;
     @Autowired
-    private InventoryHistoryService inventoryHistoryService;
+    private InventoryHistoryServiceImpl inventoryHistoryService;
 
 
     @Transactional
-    public OrderWaveReceiptFrom getReceiptOrders(Long id) {
+    public OrderWaveReceiptForm getReceiptOrders(Long id) {
         Wave wave = waveMapper.selectById(id);
         if (wave == null || wave.getType() != 1) {
             throw new ServiceException("批次单不存在");
         }
         String waveNo = wave.getWaveNo();
-        OrderWaveReceiptFrom orderWaveFrom = receiptOrderService.selectDetailByWaveNo(waveNo);
+        OrderWaveReceiptForm orderWaveFrom = receiptOrderService.selectDetailByWaveNo(waveNo);
         orderWaveFrom.setRemark(wave.getRemark());
         orderWaveFrom.setStatus(wave.getStatus());
         return orderWaveFrom;
@@ -78,11 +78,11 @@ public class WaveForReceiptService {
     }
 
     @Transactional
-    public OrderWaveReceiptFrom allocatedInventoryForReceipt(Long id, Integer type) {
+    public OrderWaveReceiptForm allocatedInventoryForReceipt(Long id, Integer type) {
         log.info("波次单为入库分配仓库,波次单id:{}", id);
         Wave wave = waveMapper.selectById(id);
         String waveNo = wave.getWaveNo();
-        OrderWaveReceiptFrom receiptFrom = receiptOrderService.selectDetailByWaveNo(waveNo);
+        OrderWaveReceiptForm receiptFrom = receiptOrderService.selectDetailByWaveNo(waveNo);
         receiptFrom.setStatus(wave.getStatus());
         receiptFrom.setRemark(wave.getRemark());
         List<ReceiptOrderDetailVO> originalDetail = (List<ReceiptOrderDetailVO>) receiptOrderDetailConvert.copyList(receiptFrom.getDetails());
@@ -115,7 +115,7 @@ public class WaveForReceiptService {
     }
 
     @Transactional
-    public int confirmWaveForReceipt(OrderWaveReceiptFrom order) {
+    public int confirmWaveForReceipt(OrderWaveReceiptForm order) {
         //获取波次单
         Wave wave = waveMapper.selectById(order.getId());
         //数据库中的详情
@@ -218,7 +218,7 @@ public class WaveForReceiptService {
     public Integer cancelAllocatedInventoryForReceipt(Long id) {
         Wave wave = waveMapper.selectById(id);
         String waveNo = wave.getWaveNo();
-        OrderWaveReceiptFrom orderFrom = receiptOrderService.selectDetailByWaveNo(waveNo);
+        OrderWaveReceiptForm orderFrom = receiptOrderService.selectDetailByWaveNo(waveNo);
         List<ReceiptOrderDetailVO> originalDetail = (List<ReceiptOrderDetailVO>) receiptOrderDetailConvert.copyList(orderFrom.getDetails());
 
         List<ReceiptOrderDetailVO> originalDetails = aggregatedReceiptOrderDetailVOS(originalDetail);

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 库存移动详情  ENTITY <=> VO / Form / Query
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Mapper(componentModel = "spring")
 public interface InventoryMovementDetailConvert {

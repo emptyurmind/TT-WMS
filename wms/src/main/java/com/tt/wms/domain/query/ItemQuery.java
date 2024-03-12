@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 物料 查询 对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @ApiModel(description = "物料 查询 对象")
 @Data

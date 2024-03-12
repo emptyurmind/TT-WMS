@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 /**
  * 供应商 数据视图对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Data
 public class SupplierVO extends BaseAudit {

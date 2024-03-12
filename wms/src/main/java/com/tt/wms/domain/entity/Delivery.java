@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 /**
  * 发货记录对象 wms_delivery
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @ApiModel(description = "发货记录对象")
 @Data

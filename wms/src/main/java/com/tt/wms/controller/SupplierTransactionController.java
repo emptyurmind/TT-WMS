@@ -8,7 +8,7 @@ import com.tt.wms.convert.SupplierTransactionConvert;
 import com.tt.wms.domain.entity.SupplierTransaction;
 import com.tt.wms.domain.query.SupplierTransactionQuery;
 import com.tt.wms.domain.vo.SupplierTransactionVO;
-import com.tt.wms.service.SupplierTransactionService;
+import com.tt.wms.service.impl.SupplierTransactionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 供应商账户流水Controller
  *
- * @auhtor wangkun
+ * @author wangkun
  * @date 2023-05-04
  */
 @Api(description = "供应商账户流水接口列表")

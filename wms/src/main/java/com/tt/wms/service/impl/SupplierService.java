@@ -1,4 +1,4 @@
-package com.tt.wms.service;
+package com.tt.wms.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * 供应商Service业务层处理
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Service
 public class SupplierService {

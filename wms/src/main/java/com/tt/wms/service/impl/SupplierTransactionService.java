@@ -1,4 +1,4 @@
-package com.tt.wms.service;
+package com.tt.wms.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
@@ -19,7 +19,7 @@ import java.util.Optional;
 /**
  * 供应商账户流水Service业务层处理
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Service
 public class SupplierTransactionService {

@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 货区 数据视图对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Data
 public class AreaVO extends BaseAudit {

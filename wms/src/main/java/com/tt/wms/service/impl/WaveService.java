@@ -1,4 +1,4 @@
-package com.tt.wms.service;
+package com.tt.wms.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -11,7 +11,7 @@ import com.tt.wms.domain.entity.InventoryHistory;
 import com.tt.wms.domain.entity.ShipmentOrder;
 import com.tt.wms.domain.entity.ShipmentOrderDetail;
 import com.tt.wms.domain.entity.Wave;
-import com.tt.wms.domain.form.OrderWaveFrom;
+import com.tt.wms.domain.form.OrderWaveForm;
 import com.tt.wms.domain.query.WaveQuery;
 import com.tt.wms.domain.vo.ShipmentOrderDetailVO;
 import com.tt.wms.mapper.ShipmentOrderDetailMapper;
@@ -42,7 +42,7 @@ public class WaveService {
     @Resource
     private WaveMapper waveMapper;
     @Autowired
-    private InventoryHistoryService inventoryHistoryService;
+    private InventoryHistoryServiceImpl inventoryHistoryService;
     @Autowired
     private ShipmentOrderService shipmentOrderService;
     @Autowired
@@ -141,16 +141,16 @@ public class WaveService {
      * @return 结果
      */
     @Transactional
-    public OrderWaveFrom getShipmentOrders(long id) {
+    public OrderWaveForm getShipmentOrders(long id) {
         Wave wave = selectById(id);
         if (wave == null || wave.getType() != 2) {
             throw new ServiceException("波次单不存在");
         }
         String waveNo = wave.getWaveNo();
-        OrderWaveFrom orderWaveFrom = shipmentOrderService.selectDetailByWaveNo(waveNo);
-        orderWaveFrom.setRemark(wave.getRemark());
-        orderWaveFrom.setStatus(wave.getStatus());
-        return orderWaveFrom;
+        OrderWaveForm orderWaveForm = shipmentOrderService.selectDetailByWaveNo(waveNo);
+        orderWaveForm.setRemark(wave.getRemark());
+        orderWaveForm.setStatus(wave.getStatus());
+        return orderWaveForm;
     }
 
 
@@ -193,11 +193,11 @@ public class WaveService {
      * 波次单分配仓库
      * */
     @Transactional
-    public OrderWaveFrom allocatedInventory(Long id, Integer type) {
+    public OrderWaveForm allocatedInventory(Long id, Integer type) {
         log.info("波次单分配仓库分配仓库,波次单id:{}", id);
         Wave wave = selectById(id);
         String waveNo = wave.getWaveNo();
-        OrderWaveFrom shipmentOrderFrom = shipmentOrderService.selectDetailByWaveNo(waveNo);
+        OrderWaveForm shipmentOrderFrom = shipmentOrderService.selectDetailByWaveNo(waveNo);
         shipmentOrderFrom.setStatus(wave.getStatus());
         shipmentOrderFrom.setRemark(wave.getRemark());
         List<ShipmentOrderDetailVO> originalDetail = (List<ShipmentOrderDetailVO>) shipmentOrderDetailConvert.copyList(shipmentOrderFrom.getDetails());
@@ -297,7 +297,7 @@ public class WaveService {
 
 
     @Transactional
-    public Integer confirmWave(OrderWaveFrom order) {
+    public Integer confirmWave(OrderWaveForm order) {
         //获取波次单
         Wave wave = waveMapper.selectById(order.getId());
         //数据库中的详情
@@ -407,7 +407,7 @@ public class WaveService {
     public Integer cancelAllocatedInventory(Long id) {
         Wave wave = selectById(id);
         String waveNo = wave.getWaveNo();
-        OrderWaveFrom shipmentOrderFrom = shipmentOrderService.selectDetailByWaveNo(waveNo);
+        OrderWaveForm shipmentOrderFrom = shipmentOrderService.selectDetailByWaveNo(waveNo);
         List<ShipmentOrderDetailVO> originalDetail = (List<ShipmentOrderDetailVO>) shipmentOrderDetailConvert.copyList(shipmentOrderFrom.getDetails());
 
         List<ShipmentOrderDetailVO> originalDetails = aggregatedShipmentOrderDetailVOS(originalDetail);

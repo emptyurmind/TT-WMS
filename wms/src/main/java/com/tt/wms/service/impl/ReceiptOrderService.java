@@ -1,4 +1,4 @@
-package com.tt.wms.service;
+package com.tt.wms.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -12,7 +12,7 @@ import com.tt.wms.constant.ShipmentOrderConstant;
 import com.tt.wms.convert.ReceiptOrderConvert;
 import com.tt.wms.convert.ReceiptOrderDetailConvert;
 import com.tt.wms.domain.entity.*;
-import com.tt.wms.domain.form.OrderWaveReceiptFrom;
+import com.tt.wms.domain.form.OrderWaveReceiptForm;
 import com.tt.wms.domain.form.ReceiptOrderForm;
 import com.tt.wms.domain.query.ItemQuery;
 import com.tt.wms.domain.query.ReceiptOrderDetailQuery;
@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 /**
  * 入库单Service业务层处理
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Service
 @Slf4j
@@ -60,7 +60,7 @@ public class ReceiptOrderService {
     @Autowired
     private ItemService itemService;
     @Autowired
-    private InventoryHistoryService inventoryHistoryService;
+    private InventoryHistoryServiceImpl inventoryHistoryService;
 
     @Autowired
     private InventoryService inventoryService;
@@ -340,8 +340,8 @@ public class ReceiptOrderService {
         return receiptOrderMapper.updateDelFlagByIds(ids);
     }
 
-    public OrderWaveReceiptFrom selectDetailByWaveNo(String waveNo) {
-        OrderWaveReceiptFrom form = new OrderWaveReceiptFrom();
+    public OrderWaveReceiptForm selectDetailByWaveNo(String waveNo) {
+        OrderWaveReceiptForm form = new OrderWaveReceiptForm();
         List<ReceiptOrderDetail> orderDetails = receiptOrderDetailMapper.selectDetailByWaveNo(waveNo);
         List<ReceiptOrderDetailVO> orderDetailVOS = receiptOrderDetailService.toVos(orderDetails);
         form.setDetails(orderDetailVOS);

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 发货记录Mapper接口
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 public interface DeliveryMapper extends BaseMapper<Delivery> {
     /**

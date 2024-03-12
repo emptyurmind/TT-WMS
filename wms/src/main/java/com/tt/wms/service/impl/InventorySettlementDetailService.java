@@ -1,4 +1,4 @@
-package com.tt.wms.service;
+package com.tt.wms.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 /**
  * 库存结算明细Service业务层处理
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Service
 @Slf4j

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 货架Mapper接口
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 public interface RackMapper extends BaseMapper<Rack> {
     /**

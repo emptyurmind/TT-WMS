@@ -1,4 +1,4 @@
-package com.tt.wms.service;
+package com.tt.wms.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 入库单详情Service业务层处理
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Service
 public class ReceiptOrderDetailService {

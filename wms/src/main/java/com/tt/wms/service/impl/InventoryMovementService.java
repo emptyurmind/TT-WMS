@@ -1,4 +1,4 @@
-package com.tt.wms.service;
+package com.tt.wms.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -11,7 +11,7 @@ import com.tt.wms.domain.entity.InventoryHistory;
 import com.tt.wms.domain.entity.InventoryMovement;
 import com.tt.wms.domain.entity.InventoryMovementDetail;
 import com.tt.wms.domain.entity.Item;
-import com.tt.wms.domain.form.InventoryMovementFrom;
+import com.tt.wms.domain.form.InventoryMovementForm;
 import com.tt.wms.domain.query.InventoryMovementDetailQuery;
 import com.tt.wms.domain.query.InventoryMovementQuery;
 import com.tt.wms.domain.query.ItemQuery;
@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 /**
  * 库存移动Service业务层处理
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Service
 @Slf4j
@@ -57,7 +57,7 @@ public class InventoryMovementService {
     @Autowired
     private InventoryMovementDetailConvert detailConvert;
     @Autowired
-    private InventoryHistoryService inventoryHistoryService;
+    private InventoryHistoryServiceImpl inventoryHistoryService;
     @Autowired
     private InventoryService inventoryService;
 
@@ -68,7 +68,7 @@ public class InventoryMovementService {
      * @param id 库存移动主键
      * @return 库存移动
      */
-    public InventoryMovementFrom selectById(Long id) {
+    public InventoryMovementForm selectById(Long id) {
 
         InventoryMovement order = inventoryMovementMapper.selectById(id);
         if (order == null) {
@@ -76,7 +76,7 @@ public class InventoryMovementService {
         }
         InventoryMovementDetailQuery query = new InventoryMovementDetailQuery();
         query.setInventoryMovementId(id);
-        InventoryMovementFrom form = convert.do2form(order);
+        InventoryMovementForm form = convert.do2form(order);
         List<InventoryMovementDetail> details = inventoryMovementDetailService.selectList(query, null);
         List<InventoryMovementDetailVO> detailVOS = inventoryMovementDetailService.toVos(details);
         form.setDetails(detailVOS);
@@ -215,7 +215,7 @@ public class InventoryMovementService {
     }
 
     @Transactional
-    public int addOrUpdate(InventoryMovementFrom order) {
+    public int addOrUpdate(InventoryMovementForm order) {
         int res;
         // 1. 新增
         if (order.getId() == null) {

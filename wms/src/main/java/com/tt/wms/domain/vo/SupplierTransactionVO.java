@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 /**
  * 供应商账户流水 数据视图对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Data
 public class SupplierTransactionVO {

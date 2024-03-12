@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 /**
  * 库存记录 数据视图对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Data
 public class InventoryHistoryVO extends BaseAudit implements AreaAndItemInfo {

@@ -1,4 +1,4 @@
-package com.tt.wms.service;
+package com.tt.wms.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -13,7 +13,7 @@ import com.tt.wms.domain.entity.InventoryCheck;
 import com.tt.wms.domain.entity.InventoryCheckDetail;
 import com.tt.wms.domain.entity.InventoryHistory;
 import com.tt.wms.domain.entity.Item;
-import com.tt.wms.domain.form.InventoryCheckFrom;
+import com.tt.wms.domain.form.InventoryCheckForm;
 import com.tt.wms.domain.query.InventoryCheckDetailQuery;
 import com.tt.wms.domain.query.InventoryCheckQuery;
 import com.tt.wms.domain.query.ItemQuery;
@@ -23,11 +23,11 @@ import com.tt.wms.mapper.InventoryCheckDetailMapper;
 import com.tt.wms.mapper.InventoryCheckMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -38,33 +38,34 @@ import java.util.stream.Collectors;
 /**
  * 库存盘点单据Service业务层处理
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Slf4j
 @Service
-public class InventoryCheckService {
-    @Autowired
+public class InventoryCheckServiceImpl {
+
+    @Resource
     private InventoryCheckMapper inventoryCheckMapper;
 
-    @Autowired
+    @Resource
     private InventoryCheckDetailMapper inventoryCheckDetailMapper;
 
-    @Autowired
+    @Resource
     private InventoryCheckDetailConvert detailConvert;
 
-    @Autowired
-    private InventoryCheckDetailService inventoryCheckDetailService;
+    @Resource
+    private InventoryCheckDetailServiceImpl inventoryCheckDetailService;
 
-    @Autowired
-    private InventoryHistoryService inventoryHistoryService;
+    @Resource
+    private InventoryHistoryServiceImpl inventoryHistoryService;
 
-    @Autowired
+    @Resource
     private InventoryService inventoryService;
 
-    @Autowired
+    @Resource
     private ItemService itemService;
 
-    @Autowired
+    @Resource
     private InventoryCheckConvert convert;
 
     /**
@@ -73,12 +74,12 @@ public class InventoryCheckService {
      * @param id 库存盘点单据主键
      * @return 库存盘点单据
      */
-    public InventoryCheckFrom selectById(Long id) {
+    public InventoryCheckForm selectById(Long id) {
         InventoryCheck inventoryCheck = inventoryCheckMapper.selectById(id);
         if (inventoryCheck == null) {
             return null;
         }
-        InventoryCheckFrom from = do2form(inventoryCheck);
+        InventoryCheckForm from = do2form(inventoryCheck);
 
         InventoryCheckDetailQuery inventoryCheckDetailQuery = new InventoryCheckDetailQuery();
         inventoryCheckDetailQuery.setInventoryCheckId(id);
@@ -97,8 +98,8 @@ public class InventoryCheckService {
         return from;
     }
 
-    private InventoryCheckFrom do2form(InventoryCheck inventoryCheck) {
-        InventoryCheckFrom itemVO = convert.do2form(inventoryCheck);
+    private InventoryCheckForm do2form(InventoryCheck inventoryCheck) {
+        InventoryCheckForm itemVO = convert.do2form(inventoryCheck);
 
         List<Long> place = new LinkedList<>();
         if (itemVO.getWarehouseId() != null) {
@@ -221,45 +222,45 @@ public class InventoryCheckService {
     /**
      * 新增或更新盘点单据以及盘点单据明细
      *
-     * @param inventoryCheckFrom 盘点单据
+     * @param inventoryCheckForm 盘点单据
      * @return 结果
      */
     @Transactional
-    public int addOrUpdate(InventoryCheckFrom inventoryCheckFrom) {
+    public int addOrUpdate(InventoryCheckForm inventoryCheckForm) {
         int res;
         // 1. 新增
-        if (inventoryCheckFrom.getId() == null) {
-            inventoryCheckFrom.setDelFlag(0);
-            inventoryCheckFrom.setCreateTime(LocalDateTime.now());
-            res = inventoryCheckMapper.insert(inventoryCheckFrom);
+        if (inventoryCheckForm.getId() == null) {
+            inventoryCheckForm.setDelFlag(0);
+            inventoryCheckForm.setCreateTime(LocalDateTime.now());
+            res = inventoryCheckMapper.insert(inventoryCheckForm);
         } else {
             // 2.编辑
             // 2.1 更新盘点单
-            res = inventoryCheckMapper.updateById(inventoryCheckFrom);
+            res = inventoryCheckMapper.updateById(inventoryCheckForm);
         }
 
-        if (InventoryCheckFrom.CREATED.equals(String.valueOf(inventoryCheckFrom.getInventoryCheckStatus()))) {
+        if (InventoryCheckForm.CREATED.equals(String.valueOf(inventoryCheckForm.getInventoryCheckStatus()))) {
             // 3.暂存
             // 3.1 删除明细单
             LambdaQueryWrapper<InventoryCheckDetail> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(InventoryCheckDetail::getInventoryCheckId, inventoryCheckFrom.getId());
+            queryWrapper.eq(InventoryCheckDetail::getInventoryCheckId, inventoryCheckForm.getId());
             inventoryCheckDetailMapper.delete(queryWrapper);
 
             // 3.2 保存明细单
-            saveDetails(inventoryCheckFrom.getId(), inventoryCheckFrom.getDetails());
-        } else if (InventoryCheckFrom.FINISH.equals(String.valueOf(inventoryCheckFrom.getInventoryCheckStatus()))) {
+            saveDetails(inventoryCheckForm.getId(), inventoryCheckForm.getDetails());
+        } else if (InventoryCheckForm.FINISH.equals(String.valueOf(inventoryCheckForm.getInventoryCheckStatus()))) {
             // 4.盘点结束
 
             // 4.1 删除明细单
             LambdaQueryWrapper<InventoryCheckDetail> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(InventoryCheckDetail::getInventoryCheckId, inventoryCheckFrom.getId());
+            queryWrapper.eq(InventoryCheckDetail::getInventoryCheckId, inventoryCheckForm.getId());
             inventoryCheckDetailMapper.delete(queryWrapper);
 
             // 4.2 保存明细单
-            saveDetails(inventoryCheckFrom.getId(), inventoryCheckFrom.getDetails());
+            saveDetails(inventoryCheckForm.getId(), inventoryCheckForm.getDetails());
 
             // 4.3 操作库存流水，物料库存
-            saveInventory(inventoryCheckFrom.getId(), inventoryCheckFrom.getDetails());
+            saveInventory(inventoryCheckForm.getId(), inventoryCheckForm.getDetails());
         }
 
         return res;

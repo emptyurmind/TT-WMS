@@ -6,12 +6,12 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.tt.wms.convert.WaveConvert;
 import com.tt.wms.domain.entity.Wave;
-import com.tt.wms.domain.form.OrderWaveFrom;
-import com.tt.wms.domain.form.OrderWaveReceiptFrom;
+import com.tt.wms.domain.form.OrderWaveForm;
+import com.tt.wms.domain.form.OrderWaveReceiptForm;
 import com.tt.wms.domain.query.WaveQuery;
 import com.tt.wms.domain.vo.WaveVO;
-import com.tt.wms.service.WaveForReceiptService;
-import com.tt.wms.service.WaveService;
+import com.tt.wms.service.impl.WaveForReceiptService;
+import com.tt.wms.service.impl.WaveService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,14 +62,14 @@ public class WaveController extends BaseController {
     @ApiOperation("获取出库波次详细信息")
     @PreAuthorize("@ss.hasPermi('wms:wave:query')")
     @GetMapping(value = "/shipment/{id}")
-    public ResponseEntity<OrderWaveFrom> getInfo(@PathVariable("id") Long id) {
+    public ResponseEntity<OrderWaveForm> getInfo(@PathVariable("id") Long id) {
         return ResponseEntity.ok(service.getShipmentOrders(id));
     }
 
     @ApiOperation("获取入库波次详细信息")
     @PreAuthorize("@ss.hasPermi('wms:wave:query')")
     @GetMapping(value = "/receipt/{id}")
-    public ResponseEntity<OrderWaveReceiptFrom> getReceiptInfo(@PathVariable("id") Long id) {
+    public ResponseEntity<OrderWaveReceiptForm> getReceiptInfo(@PathVariable("id") Long id) {
         return ResponseEntity.ok(waveForReceiptService.getReceiptOrders(id));
     }
 
@@ -93,7 +93,7 @@ public class WaveController extends BaseController {
     @PreAuthorize("@ss.hasPermi('wms:wave:edit')")
     @Log(title = "波次单", businessType = BusinessType.UPDATE)
     @PostMapping("/shipment/allocated")
-    public ResponseEntity<OrderWaveFrom> allocatedInventory(Long id, Integer type) {
+    public ResponseEntity<OrderWaveForm> allocatedInventory(Long id, Integer type) {
 
         return ResponseEntity.ok(service.allocatedInventory(id, type));
     }
@@ -102,7 +102,7 @@ public class WaveController extends BaseController {
     @PreAuthorize("@ss.hasPermi('wms:wave:edit')")
     @Log(title = "波次单", businessType = BusinessType.UPDATE)
     @PostMapping("/receipt/allocated")
-    public ResponseEntity<OrderWaveReceiptFrom> allocatedInventoryForReceipt(Long id, Integer type) {
+    public ResponseEntity<OrderWaveReceiptForm> allocatedInventoryForReceipt(Long id, Integer type) {
 
         return ResponseEntity.ok(waveForReceiptService.allocatedInventoryForReceipt(id, type));
     }
@@ -111,7 +111,7 @@ public class WaveController extends BaseController {
     @PreAuthorize("@ss.hasPermi('wms:wave:edit')")
     @Log(title = "波次单", businessType = BusinessType.UPDATE)
     @PostMapping("/shipment/confirmWave")
-    public ResponseEntity<Integer> confirmWave(@RequestBody OrderWaveFrom order) {
+    public ResponseEntity<Integer> confirmWave(@RequestBody OrderWaveForm order) {
         return ResponseEntity.ok(service.confirmWave(order));
     }
 
@@ -119,7 +119,7 @@ public class WaveController extends BaseController {
     @PreAuthorize("@ss.hasPermi('wms:wave:edit')")
     @Log(title = "波次单", businessType = BusinessType.UPDATE)
     @PostMapping("/receipt/confirmWave")
-    public ResponseEntity<Integer> confirmWaveForReceipt(@RequestBody OrderWaveReceiptFrom order) {
+    public ResponseEntity<Integer> confirmWaveForReceipt(@RequestBody OrderWaveReceiptForm order) {
         return ResponseEntity.ok(waveForReceiptService.confirmWaveForReceipt(order));
     }
 

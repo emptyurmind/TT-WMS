@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 /**
  * 入库单 数据视图对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Data
 public class ReceiptOrderVO extends BaseAudit {

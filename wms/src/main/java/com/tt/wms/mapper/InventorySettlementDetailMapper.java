@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 库存结算明细Mapper接口
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 public interface InventorySettlementDetailMapper extends BaseMapper<InventorySettlementDetail> {
     /**

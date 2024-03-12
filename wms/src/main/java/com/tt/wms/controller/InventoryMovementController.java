@@ -6,10 +6,10 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.tt.wms.convert.InventoryMovementConvert;
 import com.tt.wms.domain.entity.InventoryMovement;
-import com.tt.wms.domain.form.InventoryMovementFrom;
+import com.tt.wms.domain.form.InventoryMovementForm;
 import com.tt.wms.domain.query.InventoryMovementQuery;
 import com.tt.wms.domain.vo.InventoryMovementVO;
-import com.tt.wms.service.InventoryMovementService;
+import com.tt.wms.service.impl.InventoryMovementService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * 库存移动Controller
  *
- * @auhtor wangkun
+ * @author wangkun
  * @date 2022-08-05
  */
 @Api(description = "库存移动接口列表")
@@ -54,7 +54,7 @@ public class InventoryMovementController extends BaseController {
     @ApiOperation("获取库存移动详细信息")
     @PreAuthorize("@ss.hasPermi('wms:inventoryMovement:query')")
     @GetMapping(value = "/{id}")
-    public ResponseEntity<InventoryMovementFrom> getInfo(@PathVariable("id") Long id) {
+    public ResponseEntity<InventoryMovementForm> getInfo(@PathVariable("id") Long id) {
         return ResponseEntity.ok(service.selectById(id));
     }
 
@@ -86,7 +86,7 @@ public class InventoryMovementController extends BaseController {
     @PreAuthorize("@ss.hasPermi('wms:inventoryMovement:add')")
     @Log(title = "库存移动", businessType = BusinessType.INSERT)
     @PostMapping("add-or-update")
-    public ResponseEntity<Integer> addOrUpdate(@RequestBody InventoryMovementFrom order) {
+    public ResponseEntity<Integer> addOrUpdate(@RequestBody InventoryMovementForm order) {
         return ResponseEntity.ok(service.addOrUpdate(order));
     }
 }

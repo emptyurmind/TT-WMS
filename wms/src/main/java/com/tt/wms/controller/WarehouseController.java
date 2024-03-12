@@ -8,7 +8,7 @@ import com.tt.wms.convert.WarehouseConvert;
 import com.tt.wms.domain.entity.Warehouse;
 import com.tt.wms.domain.query.WarehouseQuery;
 import com.tt.wms.domain.vo.WarehouseVO;
-import com.tt.wms.service.WarehouseService;
+import com.tt.wms.service.impl.WarehouseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 仓库Controller
  *
- * @auhtor wangkun
+ * @author wangkun
  * @date 2022-08-05
  */
 @Api(description = "仓库接口列表")

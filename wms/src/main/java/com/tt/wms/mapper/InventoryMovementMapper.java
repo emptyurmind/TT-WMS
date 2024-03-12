@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 库存移动Mapper接口
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 public interface InventoryMovementMapper extends BaseMapper<InventoryMovement> {
     /**

@@ -8,7 +8,7 @@ import com.tt.wms.convert.ItemConvert;
 import com.tt.wms.domain.entity.Item;
 import com.tt.wms.domain.query.ItemQuery;
 import com.tt.wms.domain.vo.ItemVO;
-import com.tt.wms.service.ItemService;
+import com.tt.wms.service.impl.ItemService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 物料Controller
  *
- * @auhtor wangkun
+ * @author wangkun
  * @date 2022-08-05
  */
 @Api(description = "物料接口列表")

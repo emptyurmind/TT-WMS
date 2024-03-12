@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 /**
  * 库存移动 数据视图对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Data
 public class InventoryMovementVO extends BaseAudit {

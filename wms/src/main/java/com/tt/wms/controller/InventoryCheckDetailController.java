@@ -11,7 +11,6 @@ import com.tt.wms.domain.vo.InventoryCheckDetailVO;
 import com.tt.wms.service.InventoryCheckDetailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -19,28 +18,31 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
  * 库存盘点单据详情Controller
  *
- * @auhtor wangkun
+ * @author wangkun
  * @date 2023-04-25
  */
 @Api(description = "库存盘点单据详情接口列表")
 @RestController
 @RequestMapping("/wms/inventoryCheckDetail")
 public class InventoryCheckDetailController extends BaseController {
-    @Autowired
-    private InventoryCheckDetailService service;
-    @Autowired
-    private InventoryCheckDetailConvert convert;
+
+    @Resource
+    private InventoryCheckDetailService inventoryCheckDetailService;
+
+    @Resource
+    private InventoryCheckDetailConvert inventoryCheckDetailConvert;
 
     @ApiOperation("查询库存盘点单据详情列表")
     @PreAuthorize("@ss.hasPermi('wms:inventoryCheckDetail:list')")
     @PostMapping("/list")
     public ResponseEntity<Page<InventoryCheckDetail>> list(@RequestBody InventoryCheckDetailQuery query, Pageable page) {
-        List<InventoryCheckDetail> list = service.selectList(query, page);
+        List<InventoryCheckDetail> list = inventoryCheckDetailService.selectList(query, page);
         return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page) list).getTotal()));
     }
 
@@ -49,16 +51,16 @@ public class InventoryCheckDetailController extends BaseController {
     @Log(title = "库存盘点单据详情", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
     public ResponseEntity<String> export(InventoryCheckDetailQuery query) {
-        List<InventoryCheckDetail> list = service.selectList(query, null);
+        List<InventoryCheckDetail> list = inventoryCheckDetailService.selectList(query, null);
         ExcelUtil<InventoryCheckDetailVO> util = new ExcelUtil<>(InventoryCheckDetailVO.class);
-        return ResponseEntity.ok(util.writeExcel(convert.dos2vos(list), "库存盘点单据详情数据"));
+        return ResponseEntity.ok(util.writeExcel(inventoryCheckDetailConvert.dos2vos(list), "库存盘点单据详情数据"));
     }
 
     @ApiOperation("获取库存盘点单据详情详细信息")
     @PreAuthorize("@ss.hasPermi('wms:inventoryCheckDetail:query')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<InventoryCheckDetail> getInfo(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(service.selectById(id));
+        return ResponseEntity.ok(inventoryCheckDetailService.selectById(id));
     }
 
     @ApiOperation("新增库存盘点单据详情")
@@ -66,7 +68,7 @@ public class InventoryCheckDetailController extends BaseController {
     @Log(title = "库存盘点单据详情", businessType = BusinessType.INSERT)
     @PostMapping
     public ResponseEntity<Integer> add(@RequestBody InventoryCheckDetail inventoryCheckDetail) {
-        return ResponseEntity.ok(service.insert(inventoryCheckDetail));
+        return ResponseEntity.ok(inventoryCheckDetailService.insert(inventoryCheckDetail));
     }
 
     @ApiOperation("修改库存盘点单据详情")
@@ -74,7 +76,7 @@ public class InventoryCheckDetailController extends BaseController {
     @Log(title = "库存盘点单据详情", businessType = BusinessType.UPDATE)
     @PutMapping
     public ResponseEntity<Integer> edit(@RequestBody InventoryCheckDetail inventoryCheckDetail) {
-        return ResponseEntity.ok(service.update(inventoryCheckDetail));
+        return ResponseEntity.ok(inventoryCheckDetailService.update(inventoryCheckDetail));
     }
 
     @ApiOperation("删除库存盘点单据详情")
@@ -82,6 +84,6 @@ public class InventoryCheckDetailController extends BaseController {
     @Log(title = "库存盘点单据详情", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public ResponseEntity<Integer> remove(@PathVariable Long[] ids) {
-        return ResponseEntity.ok(service.deleteByIds(ids));
+        return ResponseEntity.ok(inventoryCheckDetailService.deleteByIds(ids));
     }
 }

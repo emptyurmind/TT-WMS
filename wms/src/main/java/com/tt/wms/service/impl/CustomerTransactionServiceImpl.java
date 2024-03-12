@@ -21,7 +21,7 @@ import java.util.Optional;
 /**
  * 客户账户流水Service业务层处理
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Service
 public class CustomerTransactionServiceImpl implements CustomerTransactionService {

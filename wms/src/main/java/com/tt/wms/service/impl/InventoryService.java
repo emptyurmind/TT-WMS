@@ -1,4 +1,4 @@
-package com.tt.wms.service;
+package com.tt.wms.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 /**
  * 库存Service业务层处理
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Service
 @Slf4j
@@ -51,7 +51,7 @@ public class InventoryService {
     @Autowired
     private WarehouseService warehouseService;
     @Autowired
-    private AreaService areaService;
+    private AreaServiceImpl areaService;
     @Autowired
     private RackService rackService;
     @Autowired

@@ -8,7 +8,7 @@ import com.tt.wms.convert.SupplierConvert;
 import com.tt.wms.domain.entity.Supplier;
 import com.tt.wms.domain.query.SupplierQuery;
 import com.tt.wms.domain.vo.SupplierVO;
-import com.tt.wms.service.SupplierService;
+import com.tt.wms.service.impl.SupplierService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 供应商Controller
  *
- * @auhtor wangkun
+ * @author wangkun
  * @date 2022-08-05
  */
 @Api(description = "供应商接口列表")

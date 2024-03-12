@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 /**
  * 出库单对象 wms_shipment_order
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @ApiModel(description = "出库单对象")
 @Data

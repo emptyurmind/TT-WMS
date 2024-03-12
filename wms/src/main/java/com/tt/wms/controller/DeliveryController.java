@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 发货记录Controller
  *
- * @auhtor wangkun
+ * @author wangkun
  * @date 2022-08-05
  */
 @Api(description = "发货记录接口列表")

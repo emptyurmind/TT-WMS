@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 仓库  ENTITY <=> VO / Form / Query
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Mapper(componentModel = "spring")
 public interface WarehouseConvert {

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 /**
  * 入库单详情对象 wms_receipt_order_detail
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @ApiModel(description = "入库单详情对象")
 @Data

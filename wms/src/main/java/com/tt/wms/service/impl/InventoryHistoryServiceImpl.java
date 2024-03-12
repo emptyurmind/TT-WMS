@@ -1,4 +1,4 @@
-package com.tt.wms.service;
+package com.tt.wms.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -24,10 +24,10 @@ import java.util.List;
 /**
  * 库存记录Service业务层处理
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Service
-public class InventoryHistoryService {
+public class InventoryHistoryServiceImpl {
     @Autowired
     private InventoryHistoryMapper inventoryHistoryMapper;
     @Autowired

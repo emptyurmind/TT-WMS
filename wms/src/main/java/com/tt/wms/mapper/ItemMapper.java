@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 物料Mapper接口
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 public interface ItemMapper extends BaseMapper<Item> {
     /**

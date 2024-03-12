@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 /**
  * 出库单详情 查询 对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @ApiModel(description = "出库单详情 查询 对象")
 @Data

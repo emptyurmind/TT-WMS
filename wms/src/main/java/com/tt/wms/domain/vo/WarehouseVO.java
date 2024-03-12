@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 仓库 数据视图对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Data
 public class WarehouseVO extends BaseAudit {

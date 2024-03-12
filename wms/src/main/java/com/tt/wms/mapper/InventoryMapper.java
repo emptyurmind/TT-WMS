@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 库存Mapper接口
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 public interface InventoryMapper extends BaseMapper<Inventory> {
     /**

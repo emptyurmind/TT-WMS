@@ -8,7 +8,7 @@ import com.tt.wms.convert.InventoryHistoryConvert;
 import com.tt.wms.domain.entity.InventoryHistory;
 import com.tt.wms.domain.query.InventoryHistoryQuery;
 import com.tt.wms.domain.vo.InventoryHistoryVO;
-import com.tt.wms.service.InventoryHistoryService;
+import com.tt.wms.service.impl.InventoryHistoryServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * 库存记录Controller
  *
- * @auhtor wangkun
+ * @author wangkun
  * @date 2022-08-05
  */
 @Api(description = "库存记录接口列表")
@@ -31,7 +31,7 @@ import java.util.List;
 @RequestMapping("/wms/inventoryHistory")
 public class InventoryHistoryController extends BaseController {
     @Autowired
-    private InventoryHistoryService service;
+    private InventoryHistoryServiceImpl service;
     @Autowired
     private InventoryHistoryConvert convert;
 

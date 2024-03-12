@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 /**
  * 客户账户流水对象 wms_customer_transaction
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @ApiModel(description = "客户账户流水对象")
 @Data

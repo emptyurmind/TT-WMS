@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 物料 数据视图对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Data
 public class ItemVO extends BaseAudit {

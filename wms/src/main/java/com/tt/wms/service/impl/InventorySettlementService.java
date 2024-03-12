@@ -1,4 +1,4 @@
-package com.tt.wms.service;
+package com.tt.wms.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -8,8 +8,8 @@ import com.tt.wms.convert.InventorySettlementConvert;
 import com.tt.wms.convert.InventorySettlementDetailConvert;
 import com.tt.wms.domain.entity.InventorySettlement;
 import com.tt.wms.domain.entity.InventorySettlementDetail;
-import com.tt.wms.domain.form.InventoryCheckFrom;
-import com.tt.wms.domain.form.InventorySettlementFrom;
+import com.tt.wms.domain.form.InventoryCheckForm;
+import com.tt.wms.domain.form.InventorySettlementForm;
 import com.tt.wms.domain.query.InventorySettlementQuery;
 import com.tt.wms.domain.vo.InventorySettlementDetailVO;
 import com.tt.wms.mapper.InventorySettlementDetailMapper;
@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * 库存结算单Service业务层处理
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Service
 public class InventorySettlementService {
@@ -44,12 +44,12 @@ public class InventorySettlementService {
      * @param id 库存结算单主键
      * @return 库存结算单
      */
-    public InventorySettlementFrom selectById(Long id) {
+    public InventorySettlementForm selectById(Long id) {
         InventorySettlement inventorySettlement = inventorySettlementMapper.selectById(id);
         if (inventorySettlement == null) {
             return null;
         }
-        InventorySettlementFrom from = convert.do2form(inventorySettlement);
+        InventorySettlementForm from = convert.do2form(inventorySettlement);
 
         //注入 详情单
         LambdaQueryWrapper<InventorySettlementDetail> inventoryCheckDetailQuery = new LambdaQueryWrapper<>();
@@ -135,29 +135,29 @@ public class InventorySettlementService {
     /**
      * 新增或更新结算单据以及结算单据明细
      *
-     * @param inventorySettlementFrom 库存结算单
+     * @param inventorySettlementForm 库存结算单
      * @return 结果
      */
-    public int addOrUpdate(InventorySettlementFrom inventorySettlementFrom) {
+    public int addOrUpdate(InventorySettlementForm inventorySettlementForm) {
         int res;
         // 1. 新增
-        if (inventorySettlementFrom.getId() == null) {
-            inventorySettlementFrom.setDelFlag(0);
-            inventorySettlementFrom.setCreateTime(LocalDateTime.now());
-            res = inventorySettlementMapper.insert(inventorySettlementFrom);
+        if (inventorySettlementForm.getId() == null) {
+            inventorySettlementForm.setDelFlag(0);
+            inventorySettlementForm.setCreateTime(LocalDateTime.now());
+            res = inventorySettlementMapper.insert(inventorySettlementForm);
         } else {
             // 2.编辑
             // 2.1 更新结算单
-            res = inventorySettlementMapper.updateById(inventorySettlementFrom);
+            res = inventorySettlementMapper.updateById(inventorySettlementForm);
         }
 
-        if (InventoryCheckFrom.CREATED.equals(String.valueOf(inventorySettlementFrom.getInventorySettlementStatus())) || InventoryCheckFrom.FINISH.equals(String.valueOf(inventorySettlementFrom.getInventorySettlementStatus()))) {
+        if (InventoryCheckForm.CREATED.equals(String.valueOf(inventorySettlementForm.getInventorySettlementStatus())) || InventoryCheckForm.FINISH.equals(String.valueOf(inventorySettlementForm.getInventorySettlementStatus()))) {
             // 3.暂存
             // 3.1 删除明细单
-            deleteDetails(inventorySettlementFrom);
+            deleteDetails(inventorySettlementForm);
 
             // 3.2 保存明细单
-            saveDetails(inventorySettlementFrom);
+            saveDetails(inventorySettlementForm);
         }
 
         return res;
@@ -167,23 +167,23 @@ public class InventorySettlementService {
     /**
      * 删除明细单
      *
-     * @param inventorySettlementFrom 库存结算单
+     * @param inventorySettlementForm 库存结算单
      */
-    private void deleteDetails(InventorySettlementFrom inventorySettlementFrom) {
+    private void deleteDetails(InventorySettlementForm inventorySettlementForm) {
         LambdaQueryWrapper<InventorySettlementDetail> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(InventorySettlementDetail::getSettlementId, inventorySettlementFrom.getId());
+        queryWrapper.eq(InventorySettlementDetail::getSettlementId, inventorySettlementForm.getId());
         inventorySettlementDetailMapper.delete(queryWrapper);
     }
 
     /**
      * 保存单据明细
      *
-     * @param inventorySettlementFrom 库存结算单
+     * @param inventorySettlementForm 库存结算单
      */
-    private void saveDetails(InventorySettlementFrom inventorySettlementFrom) {
-        Long settlementId = inventorySettlementFrom.getId();
-        List<InventorySettlementDetailVO> details = inventorySettlementFrom.getDetails();
-        Integer settlementType = inventorySettlementFrom.getSettlementType();
+    private void saveDetails(InventorySettlementForm inventorySettlementForm) {
+        Long settlementId = inventorySettlementForm.getId();
+        List<InventorySettlementDetailVO> details = inventorySettlementForm.getDetails();
+        Integer settlementType = inventorySettlementForm.getSettlementType();
         if (!CollUtil.isEmpty(details)) {
             List<InventorySettlementDetail> inventoryCheckDetails = detailConvert.vos2dos(details);
             Long userId = SecurityUtils.getUserId();

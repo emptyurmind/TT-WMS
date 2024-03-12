@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 物料类型表 数据视图对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Data
 public class ItemTypeVO extends BaseAudit {

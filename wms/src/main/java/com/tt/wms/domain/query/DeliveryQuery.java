@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 /**
  * 发货记录 查询 对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @ApiModel(description = "发货记录 查询 对象")
 @Data

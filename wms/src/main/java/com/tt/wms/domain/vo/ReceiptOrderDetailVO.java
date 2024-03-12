@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 入库单详情 数据视图对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Data
 public class ReceiptOrderDetailVO extends BaseAudit {

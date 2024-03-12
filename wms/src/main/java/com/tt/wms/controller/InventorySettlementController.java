@@ -6,10 +6,10 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.tt.wms.convert.InventorySettlementConvert;
 import com.tt.wms.domain.entity.InventorySettlement;
-import com.tt.wms.domain.form.InventorySettlementFrom;
+import com.tt.wms.domain.form.InventorySettlementForm;
 import com.tt.wms.domain.query.InventorySettlementQuery;
 import com.tt.wms.domain.vo.InventorySettlementVO;
-import com.tt.wms.service.InventorySettlementService;
+import com.tt.wms.service.impl.InventorySettlementService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * 库存结算单Controller
  *
- * @auhtor wangkun
+ * @author wangkun
  * @date 2023-04-18
  */
 @Api(description = "库存结算单接口列表")
@@ -58,7 +58,7 @@ public class InventorySettlementController extends BaseController {
     @ApiOperation("获取库存结算单详细信息")
     @PreAuthorize("@ss.hasPermi('wms:inventorySettlement:query')")
     @GetMapping(value = "/{id}")
-    public ResponseEntity<InventorySettlementFrom> getInfo(@PathVariable("id") Long id) {
+    public ResponseEntity<InventorySettlementForm> getInfo(@PathVariable("id") Long id) {
         return ResponseEntity.ok(service.selectById(id));
     }
 
@@ -90,7 +90,7 @@ public class InventorySettlementController extends BaseController {
     @PreAuthorize("@ss.hasPermi('wms:inventorySettlement:edit')")
     @Log(title = "库存结算单据", businessType = BusinessType.INSERT)
     @PostMapping("add-or-update")
-    public ResponseEntity<Integer> addOrUpdate(@RequestBody InventorySettlementFrom inventorySettlementFrom) {
-        return ResponseEntity.ok(service.addOrUpdate(inventorySettlementFrom));
+    public ResponseEntity<Integer> addOrUpdate(@RequestBody InventorySettlementForm inventorySettlementForm) {
+        return ResponseEntity.ok(service.addOrUpdate(inventorySettlementForm));
     }
 }

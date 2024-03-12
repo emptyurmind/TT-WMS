@@ -6,10 +6,10 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.tt.wms.convert.InventoryCheckConvert;
 import com.tt.wms.domain.entity.InventoryCheck;
-import com.tt.wms.domain.form.InventoryCheckFrom;
+import com.tt.wms.domain.form.InventoryCheckForm;
 import com.tt.wms.domain.query.InventoryCheckQuery;
 import com.tt.wms.domain.vo.InventoryCheckVO;
-import com.tt.wms.service.InventoryCheckService;
+import com.tt.wms.service.impl.InventoryCheckServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * 库存盘点单据Controller
  *
- * @auhtor wangkun
+ * @author wangkun
  * @date 2023-04-25
  */
 @Api(description = "库存盘点单据接口列表")
@@ -33,7 +33,7 @@ import java.util.List;
 @RequestMapping("/wms/inventoryCheck")
 public class InventoryCheckController extends BaseController {
     @Autowired
-    private InventoryCheckService service;
+    private InventoryCheckServiceImpl service;
     @Autowired
     private InventoryCheckConvert convert;
 
@@ -58,7 +58,7 @@ public class InventoryCheckController extends BaseController {
     @ApiOperation("获取库存盘点单据详细信息")
     @PreAuthorize("@ss.hasPermi('wms:inventoryCheck:query')")
     @GetMapping(value = "/{id}")
-    public ResponseEntity<InventoryCheckFrom> getInfo(@PathVariable("id") Long id) {
+    public ResponseEntity<InventoryCheckForm> getInfo(@PathVariable("id") Long id) {
         return ResponseEntity.ok(service.selectById(id));
     }
 
@@ -90,7 +90,7 @@ public class InventoryCheckController extends BaseController {
     @PreAuthorize("@ss.hasPermi('wms:inventoryCheck:edit')")
     @Log(title = "库存盘点单据", businessType = BusinessType.INSERT)
     @PostMapping("add-or-update")
-    public ResponseEntity<Integer> addOrUpdate(@RequestBody InventoryCheckFrom inventoryCheckFrom) {
-        return ResponseEntity.ok(service.addOrUpdate(inventoryCheckFrom));
+    public ResponseEntity<Integer> addOrUpdate(@RequestBody InventoryCheckForm inventoryCheckForm) {
+        return ResponseEntity.ok(service.addOrUpdate(inventoryCheckForm));
     }
 }

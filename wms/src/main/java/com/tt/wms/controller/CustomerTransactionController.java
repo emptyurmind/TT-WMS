@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * 客户账户流水Controller
  *
- * @auhtor wangkun
+ * @author wangkun
  * @date 2023-05-04
  */
 @Api(description = "客户账户流水接口列表")

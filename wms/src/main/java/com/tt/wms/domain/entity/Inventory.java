@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 /**
  * 库存对象 wms_inventory
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @ApiModel(description = "库存对象")
 @Data

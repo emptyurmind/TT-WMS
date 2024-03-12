@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 客户Mapper接口
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 public interface CustomerMapper extends BaseMapper<Customer> {
     /**

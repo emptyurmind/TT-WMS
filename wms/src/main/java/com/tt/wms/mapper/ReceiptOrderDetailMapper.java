@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 入库单详情Mapper接口
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 public interface ReceiptOrderDetailMapper extends BaseMapper<ReceiptOrderDetail> {
     /**

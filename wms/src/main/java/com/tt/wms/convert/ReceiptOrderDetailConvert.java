@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 入库单详情  ENTITY <=> VO / Form / Query
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Mapper(componentModel = "spring")
 public interface ReceiptOrderDetailConvert {

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 /**
  * 库存记录对象 wms_inventory_history
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @ApiModel(description = "库存记录对象")
 @Data

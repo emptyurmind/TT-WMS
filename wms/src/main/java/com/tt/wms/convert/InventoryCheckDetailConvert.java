@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 库存盘点单据详情  ENTITY <=> VO / Form / Query
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Mapper(componentModel = "spring")
 public interface InventoryCheckDetailConvert {

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 /**
  * 库存盘点单据 数据视图对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Data
 public class InventoryCheckVO extends BaseAudit {

@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 /**
  * 库存盘点单据详情对象 wms_inventory_check_detail
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @ApiModel(description = "库存盘点单据详情对象")
 @Data

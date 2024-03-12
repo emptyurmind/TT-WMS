@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * 客户Service业务层处理
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Service
 public class CustomerServiceImpl implements CustomerService {

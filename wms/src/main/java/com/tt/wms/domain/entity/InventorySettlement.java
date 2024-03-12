@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 /**
  * 库存结算单对象 wms_inventory_settlement
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @ApiModel(description = "库存结算单对象")
 @Data

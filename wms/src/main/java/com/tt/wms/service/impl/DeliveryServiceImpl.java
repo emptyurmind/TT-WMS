@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * 发货记录Service业务层处理
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Service
 public class DeliveryServiceImpl implements DeliveryService {

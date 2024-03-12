@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 入库单Mapper接口
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 public interface ReceiptOrderMapper extends BaseMapper<ReceiptOrder> {
     /**

@@ -1,4 +1,4 @@
-package com.tt.wms.service;
+package com.tt.wms.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 /**
  * 物料Service业务层处理
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Service
 public class ItemService {
@@ -41,7 +41,7 @@ public class ItemService {
     @Autowired
     private WarehouseService warehouseService;
     @Autowired
-    private AreaService areaService;
+    private AreaServiceImpl areaService;
 
     public List<ItemVO> toVos(List<Item> items) {
         List<ItemVO> list = convert.dos2vos(items);

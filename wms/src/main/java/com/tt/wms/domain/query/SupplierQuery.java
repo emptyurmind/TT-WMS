@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 供应商 查询 对象
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @ApiModel(description = "供应商 查询 对象")
 @Data

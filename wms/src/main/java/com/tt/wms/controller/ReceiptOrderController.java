@@ -9,7 +9,7 @@ import com.tt.wms.domain.entity.ReceiptOrder;
 import com.tt.wms.domain.form.ReceiptOrderForm;
 import com.tt.wms.domain.query.ReceiptOrderQuery;
 import com.tt.wms.domain.vo.ReceiptOrderVO;
-import com.tt.wms.service.ReceiptOrderService;
+import com.tt.wms.service.impl.ReceiptOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 入库单Controller
  *
- * @auhtor wangkun
+ * @author wangkun
  * @date 2022-08-29
  */
 @Api(description = "入库单接口列表")

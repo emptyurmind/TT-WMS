@@ -8,7 +8,7 @@ import com.tt.wms.convert.RackConvert;
 import com.tt.wms.domain.entity.Rack;
 import com.tt.wms.domain.query.RackQuery;
 import com.tt.wms.domain.vo.RackVO;
-import com.tt.wms.service.RackService;
+import com.tt.wms.service.impl.RackService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 货架Controller
  *
- * @auhtor wangkun
+ * @author wangkun
  * @date 2022-08-05
  */
 @Api(description = "货架接口列表")

@@ -8,7 +8,7 @@ import com.tt.wms.convert.InventoryMovementDetailConvert;
 import com.tt.wms.domain.entity.InventoryMovementDetail;
 import com.tt.wms.domain.query.InventoryMovementDetailQuery;
 import com.tt.wms.domain.vo.InventoryMovementDetailVO;
-import com.tt.wms.service.InventoryMovementDetailService;
+import com.tt.wms.service.impl.InventoryMovementDetailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 库存移动详情Controller
  *
- * @auhtor wangkun
+ * @author wangkun
  * @date 2022-11-02
  */
 @Api(description = "库存移动详情接口列表")

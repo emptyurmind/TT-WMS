@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 客户  ENTITY <=> VO / Form / Query
  *
- * @auhtor wangkun
+ * @author wangkun
  */
 @Mapper(componentModel = "spring")
 public interface CustomerConvert {
