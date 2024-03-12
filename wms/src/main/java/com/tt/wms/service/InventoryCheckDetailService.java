@@ -1,7 +1,9 @@
 package com.tt.wms.service;
 
 import com.tt.wms.domain.entity.InventoryCheckDetail;
+import com.tt.wms.domain.entity.InventoryHistory;
 import com.tt.wms.domain.query.InventoryCheckDetailQuery;
+import com.tt.wms.domain.vo.InventoryCheckDetailVO;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -23,4 +25,8 @@ public interface InventoryCheckDetailService {
     int deleteByIds(Long[] ids);
 
     int deleteById(Long id);
+
+    InventoryHistory vo2InventoryHistory(InventoryCheckDetailVO it);
+
+    List<InventoryCheckDetailVO> toVos(List<InventoryCheckDetail> items);
 }

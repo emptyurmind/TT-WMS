@@ -63,7 +63,7 @@ public class InventoryServiceImpl implements InventoryService {
     private RackService rackService;
 
     @Resource
-    private ItemService itemService;
+    private ItemServiceImpl itemService;
 
     @Resource
     private ItemTypeService itemTypeService;

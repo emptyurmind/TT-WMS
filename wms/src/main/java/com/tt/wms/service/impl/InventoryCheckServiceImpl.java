@@ -21,7 +21,10 @@ import com.tt.wms.domain.vo.InventoryCheckDetailVO;
 import com.tt.wms.domain.vo.ItemVO;
 import com.tt.wms.mapper.InventoryCheckDetailMapper;
 import com.tt.wms.mapper.InventoryCheckMapper;
+import com.tt.wms.service.InventoryCheckDetailService;
 import com.tt.wms.service.InventoryCheckService;
+import com.tt.wms.service.InventoryHistoryService;
+import com.tt.wms.service.InventoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
@@ -55,16 +58,16 @@ public class InventoryCheckServiceImpl implements InventoryCheckService {
     private InventoryCheckDetailConvert detailConvert;
 
     @Resource
-    private InventoryCheckDetailServiceImpl inventoryCheckDetailService;
+    private InventoryCheckDetailService inventoryCheckDetailService;
 
     @Resource
-    private InventoryHistoryServiceImpl inventoryHistoryService;
+    private InventoryHistoryService inventoryHistoryService;
 
     @Resource
-    private InventoryServiceImpl inventoryService;
+    private InventoryService inventoryService;
 
     @Resource
-    private ItemService itemService;
+    private ItemServiceImpl itemService;
 
     @Resource
     private InventoryCheckConvert convert;
@@ -308,7 +311,7 @@ public class InventoryCheckServiceImpl implements InventoryCheckService {
             h.setUpdateTime(now);
             adds.add(h);
         });
-        if (adds.size() > 0) {
+        if (!adds.isEmpty()) {
             int add1 = inventoryHistoryService.batchInsert(adds);
             int update1 = inventoryService.batchUpdate(adds);
             log.info("inventoryHistory: {}, inventory: {}", add1, update1);

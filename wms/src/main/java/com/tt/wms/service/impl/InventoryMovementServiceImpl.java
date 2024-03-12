@@ -59,7 +59,7 @@ public class InventoryMovementServiceImpl implements InventoryMovementService {
     private InventoryMovementDetailServiceImpl inventoryMovementDetailService;
 
     @Resource
-    private ItemService itemService;
+    private ItemServiceImpl itemService;
 
     @Resource
     private InventoryMovementDetailConvert detailConvert;
