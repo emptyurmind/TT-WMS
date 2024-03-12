@@ -19,21 +19,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
  * 物料Controller
  *
  * @author wangkun
- * @date 2022-08-05
  */
 @Api(description = "物料接口列表")
 @RestController
 @RequestMapping("/wms/item")
 public class ItemController extends BaseController {
-    @Autowired
+
+    @Resource
     private ItemService service;
-    @Autowired
+
+    @Resource
     private ItemConvert convert;
 
     @ApiOperation("查询物料列表")
