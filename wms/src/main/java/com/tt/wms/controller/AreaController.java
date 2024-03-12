@@ -9,6 +9,7 @@ import com.tt.wms.domain.entity.Area;
 import com.tt.wms.domain.query.AreaQuery;
 import com.tt.wms.domain.vo.AreaVO;
 import com.tt.wms.service.AreaService;
+import com.tt.wms.service.impl.AreaServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,22 +26,23 @@ import java.util.List;
  * 货区Controller
  *
  * @auhtor wangkun
- * @date 2022-08-05
  */
 @Api(description = "货区接口列表")
 @RestController
 @RequestMapping("/wms/area")
 public class AreaController extends BaseController {
+
     @Autowired
-    private AreaService service;
+    private AreaService areaService;
+
     @Autowired
-    private AreaConvert convert;
+    private AreaConvert areaConvert;
 
     @ApiOperation("查询货区列表")
     @PreAuthorize("@ss.hasPermi('wms:area:list')")
     @PostMapping("/list")
     public ResponseEntity<Page<Area>> list(@RequestBody AreaQuery query, Pageable page) {
-        List<Area> list = service.selectList(query, page);
+        List<Area> list = areaService.selectList(query, page);
         return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page) list).getTotal()));
     }
 
@@ -49,16 +51,16 @@ public class AreaController extends BaseController {
     @Log(title = "货区", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
     public ResponseEntity<String> export(AreaQuery query) {
-        List<Area> list = service.selectList(query, null);
+        List<Area> list = areaService.selectList(query, null);
         ExcelUtil<AreaVO> util = new ExcelUtil<>(AreaVO.class);
-        return ResponseEntity.ok(util.writeExcel(convert.dos2vos(list), "货区数据"));
+        return ResponseEntity.ok(util.writeExcel(areaConvert.dos2vos(list), "货区数据"));
     }
 
     @ApiOperation("获取货区详细信息")
     @PreAuthorize("@ss.hasPermi('wms:area:query')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Area> getInfo(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(service.selectById(id));
+        return ResponseEntity.ok(areaService.selectById(id));
     }
 
     @ApiOperation("新增货区")
@@ -66,7 +68,7 @@ public class AreaController extends BaseController {
     @Log(title = "货区", businessType = BusinessType.INSERT)
     @PostMapping
     public ResponseEntity<Integer> add(@RequestBody Area area) {
-        return ResponseEntity.ok(service.insert(area));
+        return ResponseEntity.ok(areaService.insert(area));
     }
 
     @ApiOperation("修改货区")
@@ -74,7 +76,7 @@ public class AreaController extends BaseController {
     @Log(title = "货区", businessType = BusinessType.UPDATE)
     @PutMapping
     public ResponseEntity<Integer> edit(@RequestBody Area area) {
-        return ResponseEntity.ok(service.update(area));
+        return ResponseEntity.ok(areaService.update(area));
     }
 
     @ApiOperation("删除货区")
@@ -82,6 +84,6 @@ public class AreaController extends BaseController {
     @Log(title = "货区", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public ResponseEntity<Integer> remove(@PathVariable Long[] ids) {
-        return ResponseEntity.ok(service.deleteByIds(ids));
+        return ResponseEntity.ok(areaService.deleteByIds(ids));
     }
 }

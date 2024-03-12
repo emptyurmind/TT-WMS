@@ -32,16 +32,16 @@ import java.util.List;
 public class CarrierController extends BaseController {
 
     @Resource
-    private CarrierService service;
+    private CarrierService carrierService;
 
     @Resource
-    private CarrierConvert convert;
+    private CarrierConvert carrierConvert;
 
     @ApiOperation("查询承运商列表")
     @PreAuthorize("@ss.hasPermi('wms:carrier:list')")
     @PostMapping("/list")
     public ResponseEntity<Page<Carrier>> list(@RequestBody CarrierQuery query, Pageable page) {
-        List<Carrier> list = service.selectList(query, page);
+        List<Carrier> list = carrierService.selectList(query, page);
         return ResponseEntity.ok(new PageImpl<>(list, page, ((com.github.pagehelper.Page) list).getTotal()));
     }
 
@@ -50,16 +50,16 @@ public class CarrierController extends BaseController {
     @Log(title = "承运商", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
     public ResponseEntity<String> export(CarrierQuery query) {
-        List<Carrier> list = service.selectList(query, null);
+        List<Carrier> list = carrierService.selectList(query, null);
         ExcelUtil<CarrierVO> util = new ExcelUtil<>(CarrierVO.class);
-        return ResponseEntity.ok(util.writeExcel(convert.dos2vos(list), "承运商数据"));
+        return ResponseEntity.ok(util.writeExcel(carrierConvert.dos2vos(list), "承运商数据"));
     }
 
     @ApiOperation("获取承运商详细信息")
     @PreAuthorize("@ss.hasPermi('wms:carrier:query')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Carrier> getInfo(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(service.selectById(id));
+        return ResponseEntity.ok(carrierService.selectById(id));
     }
 
     @ApiOperation("新增承运商")
@@ -67,7 +67,7 @@ public class CarrierController extends BaseController {
     @Log(title = "承运商", businessType = BusinessType.INSERT)
     @PostMapping
     public ResponseEntity<Integer> add(@RequestBody Carrier carrier) {
-        return ResponseEntity.ok(service.insert(carrier));
+        return ResponseEntity.ok(carrierService.insert(carrier));
     }
 
     @ApiOperation("修改承运商")
@@ -75,7 +75,7 @@ public class CarrierController extends BaseController {
     @Log(title = "承运商", businessType = BusinessType.UPDATE)
     @PutMapping
     public ResponseEntity<Integer> edit(@RequestBody Carrier carrier) {
-        return ResponseEntity.ok(service.update(carrier));
+        return ResponseEntity.ok(carrierService.update(carrier));
     }
 
     @ApiOperation("删除承运商")
@@ -83,6 +83,6 @@ public class CarrierController extends BaseController {
     @Log(title = "承运商", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public ResponseEntity<Integer> remove(@PathVariable Long[] ids) {
-        return ResponseEntity.ok(service.deleteByIds(ids));
+        return ResponseEntity.ok(carrierService.deleteByIds(ids));
     }
 }
