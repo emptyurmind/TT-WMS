@@ -19,6 +19,7 @@ import com.tt.wms.service.ItemService;
 import com.tt.wms.service.ItemTypeService;
 import com.tt.wms.service.WarehouseService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -39,16 +40,16 @@ public class ItemServiceImpl implements ItemService {
     @Resource
     private ItemMapper itemMapper;
 
-    @Resource
+    @Autowired
     private ItemConvert convert;
 
-    @Resource
+    @Autowired
     private ItemTypeService itemTypeService;
 
-    @Resource
+    @Autowired
     private WarehouseService warehouseService;
 
-    @Resource
+    @Autowired
     private AreaService areaService;
 
     @Override

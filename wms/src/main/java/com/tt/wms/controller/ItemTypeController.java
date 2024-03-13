@@ -9,7 +9,7 @@ import com.tt.wms.convert.ItemTypeConvert;
 import com.tt.wms.domain.entity.ItemType;
 import com.tt.wms.domain.query.ItemTypeQuery;
 import com.tt.wms.domain.vo.ItemTypeVO;
-import com.tt.wms.service.impl.ItemTypeServiceImpl;
+import com.tt.wms.service.ItemTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +26,15 @@ import java.util.List;
  * 物料类型表Controller
  *
  * @author wangkun
- * @date 2023-04-03
  */
 @Api(description = "物料类型表接口列表")
 @RestController
 @RequestMapping("/wms/itemType")
 public class ItemTypeController extends BaseController {
+
     @Autowired
-    private ItemTypeServiceImpl service;
+    private ItemTypeService service;
+
     @Autowired
     private ItemTypeConvert convert;
 
