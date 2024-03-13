@@ -62,7 +62,7 @@ public class ShipmentOrderServiceImpl implements ShipmentOrderService {
     private ShipmentOrderDetailMapper shipmentOrderDetailMapper;
 
     @Autowired
-    private ShipmentOrderDetailServiceImpl shipmentOrderDetailService;
+    private ShipmentOrderDetailService shipmentOrderDetailService;
 
     @Autowired
     private ItemService itemService;

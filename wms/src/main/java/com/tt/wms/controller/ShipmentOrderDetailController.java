@@ -8,7 +8,7 @@ import com.tt.wms.convert.ShipmentOrderDetailConvert;
 import com.tt.wms.domain.entity.ShipmentOrderDetail;
 import com.tt.wms.domain.query.ShipmentOrderDetailQuery;
 import com.tt.wms.domain.vo.ShipmentOrderDetailVO;
-import com.tt.wms.service.impl.ShipmentOrderDetailServiceImpl;
+import com.tt.wms.service.ShipmentOrderDetailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +25,15 @@ import java.util.List;
  * 出库单详情Controller
  *
  * @author wangkun
- * @date 2022-08-05
  */
 @Api(description = "出库单详情接口列表")
 @RestController
 @RequestMapping("/wms/shipmentOrderDetail")
 public class ShipmentOrderDetailController extends BaseController {
+
     @Autowired
-    private ShipmentOrderDetailServiceImpl service;
+    private ShipmentOrderDetailService service;
+
     @Autowired
     private ShipmentOrderDetailConvert convert;
 
