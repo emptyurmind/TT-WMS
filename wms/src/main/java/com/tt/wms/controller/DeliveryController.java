@@ -8,7 +8,7 @@ import com.tt.wms.convert.DeliveryConvert;
 import com.tt.wms.domain.entity.Delivery;
 import com.tt.wms.domain.query.DeliveryQuery;
 import com.tt.wms.domain.vo.DeliveryVO;
-import com.tt.wms.service.impl.DeliveryServiceImpl;
+import com.tt.wms.service.DeliveryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
@@ -25,7 +25,6 @@ import java.util.List;
  * 发货记录Controller
  *
  * @author wangkun
- * @date 2022-08-05
  */
 @Api(description = "发货记录接口列表")
 @RestController
@@ -33,7 +32,7 @@ import java.util.List;
 public class DeliveryController extends BaseController {
 
     @Resource
-    private DeliveryServiceImpl deliveryService;
+    private DeliveryService deliveryService;
 
     @Resource
     private DeliveryConvert deliveryConvert;
