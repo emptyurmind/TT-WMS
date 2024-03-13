@@ -8,7 +8,7 @@ import com.tt.wms.convert.WarehouseConvert;
 import com.tt.wms.domain.entity.Warehouse;
 import com.tt.wms.domain.query.WarehouseQuery;
 import com.tt.wms.domain.vo.WarehouseVO;
-import com.tt.wms.service.impl.WarehouseService;
+import com.tt.wms.service.WarehouseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +31,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/wms/warehouse")
 public class WarehouseController extends BaseController {
+
     @Autowired
     private WarehouseService service;
+
     @Autowired
     private WarehouseConvert convert;
 

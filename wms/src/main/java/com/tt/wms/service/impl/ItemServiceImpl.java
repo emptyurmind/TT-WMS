@@ -17,6 +17,7 @@ import com.tt.wms.mapper.ItemMapper;
 import com.tt.wms.service.AreaService;
 import com.tt.wms.service.ItemService;
 import com.tt.wms.service.ItemTypeService;
+import com.tt.wms.service.WarehouseService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

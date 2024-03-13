@@ -5,11 +5,13 @@ import com.github.pagehelper.PageHelper;
 import com.tt.wms.domain.entity.Warehouse;
 import com.tt.wms.domain.query.WarehouseQuery;
 import com.tt.wms.mapper.WarehouseMapper;
+import com.tt.wms.service.WarehouseService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,8 +23,9 @@ import java.util.List;
  * @author wangkun
  */
 @Service
-public class WarehouseService {
-    @Autowired
+public class WarehouseServiceImpl implements WarehouseService {
+
+    @Resource
     private WarehouseMapper warehouseMapper;
 
     /**
@@ -31,6 +34,7 @@ public class WarehouseService {
      * @param id 仓库主键
      * @return 仓库
      */
+    @Override
     public Warehouse selectById(Long id) {
         return warehouseMapper.selectById(id);
     }
@@ -42,6 +46,7 @@ public class WarehouseService {
      * @param page  分页条件
      * @return 仓库
      */
+    @Override
     public List<Warehouse> selectList(WarehouseQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
@@ -65,6 +70,7 @@ public class WarehouseService {
      * @param warehouse 仓库
      * @return 结果
      */
+    @Override
     public int insert(Warehouse warehouse) {
         warehouse.setDelFlag(0);
         warehouse.setCreateTime(LocalDateTime.now());
@@ -77,6 +83,7 @@ public class WarehouseService {
      * @param warehouse 仓库
      * @return 结果
      */
+    @Override
     public int update(Warehouse warehouse) {
         return warehouseMapper.updateById(warehouse);
     }
@@ -87,6 +94,7 @@ public class WarehouseService {
      * @param ids 需要删除的仓库主键
      * @return 结果
      */
+    @Override
     public int deleteByIds(Long[] ids) {
         return warehouseMapper.updateDelFlagByIds(ids);
     }
@@ -97,6 +105,7 @@ public class WarehouseService {
      * @param id 仓库主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return warehouseMapper.updateDelFlagByIds(ids);
@@ -108,6 +117,7 @@ public class WarehouseService {
      * @param ids 主键集合
      * @return 仓库列表
      */
+    @Override
     public List<Warehouse> selectByIdIn(Collection<Long> ids) {
         // 如果主键集合为空，直接返回空集合
         if (ids == null || ids.isEmpty()) {
