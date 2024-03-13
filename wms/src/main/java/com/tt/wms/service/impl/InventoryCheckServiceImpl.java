@@ -21,12 +21,10 @@ import com.tt.wms.domain.vo.InventoryCheckDetailVO;
 import com.tt.wms.domain.vo.ItemVO;
 import com.tt.wms.mapper.InventoryCheckDetailMapper;
 import com.tt.wms.mapper.InventoryCheckMapper;
-import com.tt.wms.service.InventoryCheckDetailService;
-import com.tt.wms.service.InventoryCheckService;
-import com.tt.wms.service.InventoryHistoryService;
-import com.tt.wms.service.InventoryService;
+import com.tt.wms.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,22 +52,22 @@ public class InventoryCheckServiceImpl implements InventoryCheckService {
     @Resource
     private InventoryCheckDetailMapper inventoryCheckDetailMapper;
 
-    @Resource
+    @Autowired
     private InventoryCheckDetailConvert detailConvert;
 
-    @Resource
+    @Autowired
     private InventoryCheckDetailService inventoryCheckDetailService;
 
-    @Resource
+    @Autowired
     private InventoryHistoryService inventoryHistoryService;
 
-    @Resource
+    @Autowired
     private InventoryService inventoryService;
 
-    @Resource
-    private ItemServiceImpl itemService;
+    @Autowired
+    private ItemService itemService;
 
-    @Resource
+    @Autowired
     private InventoryCheckConvert convert;
 
     /**

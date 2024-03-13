@@ -24,6 +24,7 @@ import com.tt.wms.mapper.InventoryMapper;
 import com.tt.wms.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -49,22 +50,22 @@ public class InventoryServiceImpl implements InventoryService {
     @Resource
     private InventoryMapper inventoryMapper;
 
-    @Resource
+    @Autowired
     private InventoryConvert inventoryConvert;
 
-    @Resource
+    @Autowired
     private WarehouseService warehouseService;
 
-    @Resource
+    @Autowired
     private AreaService areaService;
 
-    @Resource
+    @Autowired
     private RackService rackService;
 
-    @Resource
+    @Autowired
     private ItemService itemService;
 
-    @Resource
+    @Autowired
     private ItemTypeService itemTypeService;
 
     @Resource

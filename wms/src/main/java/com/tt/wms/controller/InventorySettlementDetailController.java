@@ -8,6 +8,7 @@ import com.tt.wms.convert.InventorySettlementDetailConvert;
 import com.tt.wms.domain.entity.InventorySettlementDetail;
 import com.tt.wms.domain.query.InventorySettlementDetailQuery;
 import com.tt.wms.domain.vo.InventorySettlementDetailVO;
+import com.tt.wms.service.InventorySettlementDetailService;
 import com.tt.wms.service.impl.InventorySettlementDetailServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,14 +26,15 @@ import java.util.List;
  * 库存结算明细Controller
  *
  * @author wangkun
- * @date 2023-04-18
  */
 @Api(description = "库存结算明细接口列表")
 @RestController
 @RequestMapping("/wms/inventorySettlementDetail")
 public class InventorySettlementDetailController extends BaseController {
+
     @Autowired
-    private InventorySettlementDetailServiceImpl service;
+    private InventorySettlementDetailService service;
+
     @Autowired
     private InventorySettlementDetailConvert convert;
 

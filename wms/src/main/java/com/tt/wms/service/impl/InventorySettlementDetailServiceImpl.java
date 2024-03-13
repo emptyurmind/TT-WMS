@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class InventorySettlementDetailServiceImpl implements InventorySettlementDetailService {
 
-    @Resource
+    @Autowired
     private InventoryService inventoryService;
 
     @Resource

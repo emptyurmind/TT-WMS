@@ -20,10 +20,12 @@ import com.tt.wms.domain.vo.InventoryMovementVO;
 import com.tt.wms.domain.vo.ItemVO;
 import com.tt.wms.mapper.InventoryMovementDetailMapper;
 import com.tt.wms.mapper.InventoryMovementMapper;
-import com.tt.wms.service.InventoryMovementService;
+import com.tt.wms.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -49,26 +51,26 @@ public class InventoryMovementServiceImpl implements InventoryMovementService {
     @Resource
     private InventoryMovementMapper inventoryMovementMapper;
 
-    @Resource
+    @Autowired
     private InventoryMovementConvert convert;
 
     @Resource
     private InventoryMovementDetailMapper inventoryMovementDetailMapper;
 
-    @Resource
-    private InventoryMovementDetailServiceImpl inventoryMovementDetailService;
+    @Autowired
+    private InventoryMovementDetailService inventoryMovementDetailService;
 
-    @Resource
-    private ItemServiceImpl itemService;
+    @Autowired
+    private ItemService itemService;
 
-    @Resource
+    @Autowired
     private InventoryMovementDetailConvert detailConvert;
 
-    @Resource
-    private InventoryHistoryServiceImpl inventoryHistoryService;
+    @Autowired
+    private InventoryHistoryService inventoryHistoryService;
 
-    @Resource
-    private InventoryServiceImpl inventoryService;
+    @Autowired
+    private InventoryService inventoryService;
 
 
     /**

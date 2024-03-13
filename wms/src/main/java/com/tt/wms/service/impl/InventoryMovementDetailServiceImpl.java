@@ -106,6 +106,7 @@ public class InventoryMovementDetailServiceImpl implements InventoryMovementDeta
         return inventoryMovementDetailMapper.selectList(qw);
     }
 
+    @Override
     public List<InventoryMovementDetailVO> toVos(List<InventoryMovementDetail> items) {
         List<InventoryMovementDetailVO> list = convert.dos2vos(items);
         list.forEach(itemVO -> {

@@ -15,7 +15,7 @@ import java.util.List;
  * @author wangkun
  */
 public interface InventoryMovementService {
-    InventoryMovement selectById(Long id);
+    InventoryMovementForm selectById(Long id);
 
     Page<InventoryMovementVO> selectList(InventoryMovementQuery query, Pageable page);
 

@@ -9,7 +9,7 @@ import com.tt.wms.domain.entity.InventoryMovement;
 import com.tt.wms.domain.form.InventoryMovementForm;
 import com.tt.wms.domain.query.InventoryMovementQuery;
 import com.tt.wms.domain.vo.InventoryMovementVO;
-import com.tt.wms.service.impl.InventoryMovementServiceImpl;
+import com.tt.wms.service.InventoryMovementService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +23,15 @@ import org.springframework.web.bind.annotation.*;
  * 库存移动Controller
  *
  * @author wangkun
- * @date 2022-08-05
  */
 @Api(description = "库存移动接口列表")
 @RestController
 @RequestMapping("/wms/inventoryMovement")
 public class InventoryMovementController extends BaseController {
+
     @Autowired
-    private InventoryMovementServiceImpl service;
+    private InventoryMovementService service;
+
     @Autowired
     private InventoryMovementConvert convert;
 

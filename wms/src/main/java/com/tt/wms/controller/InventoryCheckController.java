@@ -9,7 +9,7 @@ import com.tt.wms.domain.entity.InventoryCheck;
 import com.tt.wms.domain.form.InventoryCheckForm;
 import com.tt.wms.domain.query.InventoryCheckQuery;
 import com.tt.wms.domain.vo.InventoryCheckVO;
-import com.tt.wms.service.impl.InventoryCheckServiceImpl;
+import com.tt.wms.service.InventoryCheckService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +26,15 @@ import java.util.List;
  * 库存盘点单据Controller
  *
  * @author wangkun
- * @date 2023-04-25
  */
 @Api(description = "库存盘点单据接口列表")
 @RestController
 @RequestMapping("/wms/inventoryCheck")
 public class InventoryCheckController extends BaseController {
+
     @Autowired
-    private InventoryCheckServiceImpl service;
+    private InventoryCheckService service;
+
     @Autowired
     private InventoryCheckConvert convert;
 

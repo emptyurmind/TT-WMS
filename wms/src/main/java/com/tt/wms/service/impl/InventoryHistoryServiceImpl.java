@@ -11,6 +11,8 @@ import com.tt.wms.domain.query.InventoryHistoryQuery;
 import com.tt.wms.domain.vo.InventoryHistoryVO;
 import com.tt.wms.mapper.InventoryHistoryMapper;
 import com.tt.wms.service.InventoryHistoryService;
+import com.tt.wms.service.InventoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -33,11 +35,11 @@ public class InventoryHistoryServiceImpl implements InventoryHistoryService {
     @Resource
     private InventoryHistoryMapper inventoryHistoryMapper;
 
-    @Resource
+    @Autowired
     private InventoryHistoryConvert inventoryHistoryConvert;
 
-    @Resource
-    private InventoryServiceImpl inventoryService;
+    @Autowired
+    private InventoryService inventoryService;
 
     /**
      * 查询库存记录

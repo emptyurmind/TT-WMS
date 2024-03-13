@@ -8,7 +8,7 @@ import com.tt.wms.convert.InventoryMovementDetailConvert;
 import com.tt.wms.domain.entity.InventoryMovementDetail;
 import com.tt.wms.domain.query.InventoryMovementDetailQuery;
 import com.tt.wms.domain.vo.InventoryMovementDetailVO;
-import com.tt.wms.service.impl.InventoryMovementDetailServiceImpl;
+import com.tt.wms.service.InventoryMovementDetailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +25,15 @@ import java.util.List;
  * 库存移动详情Controller
  *
  * @author wangkun
- * @date 2022-11-02
  */
 @Api(description = "库存移动详情接口列表")
 @RestController
 @RequestMapping("/wms/inventoryMovementDetail")
 public class InventoryMovementDetailController extends BaseController {
+
     @Autowired
-    private InventoryMovementDetailServiceImpl service;
+    private InventoryMovementDetailService service;
+
     @Autowired
     private InventoryMovementDetailConvert convert;
 

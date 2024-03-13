@@ -38,10 +38,10 @@ public class InventorySettlementServiceImpl implements InventorySettlementServic
     @Resource
     private InventorySettlementDetailMapper inventorySettlementDetailMapper;
 
-    @Resource
+    @Autowired
     private InventorySettlementDetailConvert detailConvert;
 
-    @Resource
+    @Autowired
     private InventorySettlementConvert convert;
 
     /**

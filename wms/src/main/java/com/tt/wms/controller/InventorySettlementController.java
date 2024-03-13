@@ -9,6 +9,7 @@ import com.tt.wms.domain.entity.InventorySettlement;
 import com.tt.wms.domain.form.InventorySettlementForm;
 import com.tt.wms.domain.query.InventorySettlementQuery;
 import com.tt.wms.domain.vo.InventorySettlementVO;
+import com.tt.wms.service.InventorySettlementService;
 import com.tt.wms.service.impl.InventorySettlementServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,14 +27,15 @@ import java.util.List;
  * 库存结算单Controller
  *
  * @author wangkun
- * @date 2023-04-18
  */
 @Api(description = "库存结算单接口列表")
 @RestController
 @RequestMapping("/wms/inventorySettlement")
 public class InventorySettlementController extends BaseController {
+
     @Autowired
-    private InventorySettlementServiceImpl service;
+    private InventorySettlementService service;
+
     @Autowired
     private InventorySettlementConvert convert;
 
