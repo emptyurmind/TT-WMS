@@ -10,7 +10,6 @@ import com.tt.wms.domain.form.InventorySettlementForm;
 import com.tt.wms.domain.query.InventorySettlementQuery;
 import com.tt.wms.domain.vo.InventorySettlementVO;
 import com.tt.wms.service.InventorySettlementService;
-import com.tt.wms.service.impl.InventorySettlementServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
