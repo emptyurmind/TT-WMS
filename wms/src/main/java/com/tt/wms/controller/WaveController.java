@@ -10,8 +10,8 @@ import com.tt.wms.domain.form.OrderWaveForm;
 import com.tt.wms.domain.form.OrderWaveReceiptForm;
 import com.tt.wms.domain.query.WaveQuery;
 import com.tt.wms.domain.vo.WaveVO;
-import com.tt.wms.service.impl.WaveForReceiptService;
-import com.tt.wms.service.impl.WaveService;
+import com.tt.wms.service.WaveForReceiptService;
+import com.tt.wms.service.WaveService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +28,18 @@ import java.util.List;
  * 波次Controller
  *
  * @author wangkun
- * @date 2023-08-16
  */
 @Api(description = "波次接口列表")
 @RestController
 @RequestMapping("/wms/wave")
 public class WaveController extends BaseController {
+
     @Autowired
     private WaveService service;
+
     @Autowired
     private WaveConvert convert;
+
     @Autowired
     private WaveForReceiptService waveForReceiptService;
 

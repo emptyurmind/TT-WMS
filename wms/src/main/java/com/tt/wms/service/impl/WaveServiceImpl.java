@@ -17,6 +17,7 @@ import com.tt.wms.domain.vo.ShipmentOrderDetailVO;
 import com.tt.wms.mapper.ShipmentOrderDetailMapper;
 import com.tt.wms.mapper.ShipmentOrderMapper;
 import com.tt.wms.mapper.WaveMapper;
+import com.tt.wms.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,24 +39,28 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class WaveService {
+public class WaveServiceImpl implements WaveService {
     @Resource
     private WaveMapper waveMapper;
+
     @Autowired
-    private InventoryHistoryServiceImpl inventoryHistoryService;
+    private InventoryHistoryService inventoryHistoryService;
+
     @Autowired
     private ShipmentOrderService shipmentOrderService;
+
     @Autowired
     private ShipmentOrderDetailService shipmentOrderDetailService;
+
     @Autowired
     private ShipmentOrderDetailConvert shipmentOrderDetailConvert;
-
 
     @Resource
     private ShipmentOrderMapper shipmentOrderMapper;
 
     @Resource
     private ShipmentOrderDetailMapper shipmentOrderDetailMapper;
+
     @Autowired
     private InventoryService inventoryService;
 
@@ -65,6 +70,7 @@ public class WaveService {
      * @param id 波次主键
      * @return 波次
      */
+    @Override
     public Wave selectById(Long id) {
         return waveMapper.selectById(id);
     }
@@ -76,6 +82,7 @@ public class WaveService {
      * @param page  分页条件
      * @return 波次
      */
+    @Override
     public List<Wave> selectList(WaveQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
@@ -103,6 +110,7 @@ public class WaveService {
      * @param wave 波次
      * @return 结果
      */
+    @Override
     public int insert(Wave wave) {
         wave.setDelFlag(0);
         wave.setCreateTime(LocalDateTime.now());
@@ -115,6 +123,7 @@ public class WaveService {
      * @param wave 波次
      * @return 结果
      */
+    @Override
     @Transactional
     public int creatWave(Wave wave) {
         ArrayList<Long> orderIds = wave.getIds();
@@ -140,6 +149,7 @@ public class WaveService {
      * @param id 波次id
      * @return 结果
      */
+    @Override
     @Transactional
     public OrderWaveForm getShipmentOrders(long id) {
         Wave wave = selectById(id);
@@ -160,6 +170,7 @@ public class WaveService {
      * @param wave 波次
      * @return 结果
      */
+    @Override
     public int update(Wave wave) {
         return waveMapper.updateById(wave);
     }
@@ -170,6 +181,7 @@ public class WaveService {
      * @param ids 需要删除的波次主键
      * @return 结果
      */
+    @Override
     public int deleteByIds(Long[] ids) {
         shipmentOrderService.deleteByWaveIds(waveMapper.selectList(new LambdaQueryWrapper<Wave>()
                         .select(Wave::getWaveNo)
@@ -184,14 +196,16 @@ public class WaveService {
      * @param id 波次主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return waveMapper.updateDelFlagByIds(ids);
     }
 
-    /*
+    /**
      * 波次单分配仓库
-     * */
+     */
+    @Override
     @Transactional
     public OrderWaveForm allocatedInventory(Long id, Integer type) {
         log.info("波次单分配仓库分配仓库,波次单id:{}", id);
@@ -260,9 +274,9 @@ public class WaveService {
     }
 
 
-    /*
+    /**
      * 取消分配 即还原出库单明细
-     * */
+     */
     private static List<ShipmentOrderDetailVO> aggregatedShipmentOrderDetailVOS(List<ShipmentOrderDetailVO> originalDetail) {
         // 单个出库单分配后库区，还可以波次？ 可以，这一步就是重新聚合订单分散得拣货数据。
         // 聚合出库单，防止用户先前分配过库存。如果分配过库存，需要把分配过的库存加回来。保留原始订单信息
@@ -296,6 +310,7 @@ public class WaveService {
     }
 
 
+    @Override
     @Transactional
     public Integer confirmWave(OrderWaveForm order) {
         //获取波次单
@@ -351,7 +366,7 @@ public class WaveService {
         if (!adds.isEmpty()) {
             int add1 = inventoryHistoryService.batchInsert(adds);
 //            adds.forEach(it -> it.setQuantity(it.getQuantity().negate()));
-            int update1 = inventoryService.batchUpdate1(adds);
+            int update1 = inventoryService.batchUpdate(adds);
             log.info("inventoryHistory: {}, inventory: {}", add1, update1);
         }
         int batchInsert = shipmentOrderDetailMapper.batchInsert(shipmentOrderDetails);
@@ -400,9 +415,10 @@ public class WaveService {
 
     }
 
-    /*
+    /**
      * 取消波次作业
-     * */
+     */
+    @Override
     @Transactional
     public Integer cancelAllocatedInventory(Long id) {
         Wave wave = selectById(id);

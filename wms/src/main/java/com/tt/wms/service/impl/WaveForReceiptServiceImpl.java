@@ -12,11 +12,13 @@ import com.tt.wms.domain.vo.ReceiptOrderDetailVO;
 import com.tt.wms.mapper.ReceiptOrderDetailMapper;
 import com.tt.wms.mapper.ReceiptOrderMapper;
 import com.tt.wms.mapper.WaveMapper;
+import com.tt.wms.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -25,26 +27,34 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class WaveForReceiptService {
+public class WaveForReceiptServiceImpl implements WaveForReceiptService {
 
     @Autowired
     private ReceiptOrderService receiptOrderService;
+
     @Autowired
     private ReceiptOrderDetailService receiptOrderDetailService;
-    @Autowired
+
+    @Resource
     private ReceiptOrderDetailMapper receiptOrderDetailMapper;
-    @Autowired
+
+    @Resource
     private ReceiptOrderMapper receiptOrderMapper;
+
     @Autowired
     private ReceiptOrderDetailConvert receiptOrderDetailConvert;
+
     @Autowired
     private InventoryService inventoryService;
-    @Autowired
+
+    @Resource
     private WaveMapper waveMapper;
+
     @Autowired
-    private InventoryHistoryServiceImpl inventoryHistoryService;
+    private InventoryHistoryService inventoryHistoryService;
 
 
+    @Override
     @Transactional
     public OrderWaveReceiptForm getReceiptOrders(Long id) {
         Wave wave = waveMapper.selectById(id);
@@ -58,6 +68,7 @@ public class WaveForReceiptService {
         return orderWaveFrom;
     }
 
+    @Override
     @Transactional
     public int creatWaveForReceipt(Wave wave) {
         ArrayList<Long> orderIds = wave.getIds();
@@ -77,6 +88,7 @@ public class WaveForReceiptService {
         return flag ? 1 : 0;
     }
 
+    @Override
     @Transactional
     public OrderWaveReceiptForm allocatedInventoryForReceipt(Long id, Integer type) {
         log.info("波次单为入库分配仓库,波次单id:{}", id);
@@ -114,6 +126,7 @@ public class WaveForReceiptService {
         return receiptFrom;
     }
 
+    @Override
     @Transactional
     public int confirmWaveForReceipt(OrderWaveReceiptForm order) {
         //获取波次单
@@ -166,7 +179,7 @@ public class WaveForReceiptService {
         if (!adds.isEmpty()) {
             int add1 = inventoryHistoryService.batchInsert(adds);
 //            adds.forEach(it -> it.setQuantity(it.getQuantity().negate()));
-            int update1 = inventoryService.batchUpdate1(adds);
+            int update1 = inventoryService.batchUpdate(adds);
             log.info("inventoryHistory: {}, inventory: {}", add1, update1);
         }
         int batchInsert = receiptOrderDetailMapper.batchInsert(orderDetails);
@@ -214,6 +227,7 @@ public class WaveForReceiptService {
         return batchInsert;
     }
 
+    @Override
     @Transactional
     public Integer cancelAllocatedInventoryForReceipt(Long id) {
         Wave wave = waveMapper.selectById(id);
@@ -237,6 +251,7 @@ public class WaveForReceiptService {
         return receiptOrderDetailMapper.batchInsert(orderDetails);
     }
 
+    @Override
     @Transactional
     public Integer deleteByIdsForReceipt(Long[] ids) {
         receiptOrderService.deleteByWaveIds(waveMapper.selectList(new LambdaQueryWrapper<Wave>()
