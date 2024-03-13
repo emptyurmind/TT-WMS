@@ -31,7 +31,7 @@ public class ReceiptOrderDetailServiceImpl implements ReceiptOrderDetailService 
     @Resource
     private ReceiptOrderDetailMapper receiptOrderDetailMapper;
 
-    @Resource
+    @Autowired
     private ReceiptOrderDetailConvert convert;
 
     @Override
