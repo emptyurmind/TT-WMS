@@ -6,11 +6,14 @@ import com.tt.wms.domain.entity.Supplier;
 import com.tt.wms.domain.entity.SupplierTransaction;
 import com.tt.wms.domain.query.SupplierTransactionQuery;
 import com.tt.wms.mapper.SupplierTransactionMapper;
+import com.tt.wms.service.SupplierService;
+import com.tt.wms.service.SupplierTransactionService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,8 +25,9 @@ import java.util.Optional;
  * @author wangkun
  */
 @Service
-public class SupplierTransactionService {
-    @Autowired
+public class SupplierTransactionServiceImpl implements SupplierTransactionService {
+
+    @Resource
     private SupplierTransactionMapper supplierTransactionMapper;
 
     @Autowired
@@ -35,6 +39,7 @@ public class SupplierTransactionService {
      * @param id 供应商账户流水主键
      * @return 供应商账户流水
      */
+    @Override
     public SupplierTransaction selectById(Integer id) {
         return supplierTransactionMapper.selectById(id);
     }
@@ -46,6 +51,7 @@ public class SupplierTransactionService {
      * @param page  分页条件
      * @return 供应商账户流水
      */
+    @Override
     public List<SupplierTransaction> selectList(SupplierTransactionQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize(), "create_time desc");
@@ -75,6 +81,7 @@ public class SupplierTransactionService {
      * @param supplierTransaction 供应商账户流水
      * @return 结果
      */
+    @Override
     public int insert(SupplierTransaction supplierTransaction) {
         Supplier supplier = supplierService.selectById(Long.valueOf(supplierTransaction.getSupplierId()));
         if (supplier == null) {
@@ -126,6 +133,7 @@ public class SupplierTransactionService {
      * @param supplierTransaction 供应商账户流水
      * @return 结果
      */
+    @Override
     public int update(SupplierTransaction supplierTransaction) {
         return supplierTransactionMapper.updateById(supplierTransaction);
     }
@@ -136,6 +144,7 @@ public class SupplierTransactionService {
      * @param ids 需要删除的供应商账户流水主键
      * @return 结果
      */
+    @Override
     public int deleteByIds(Long[] ids) {
         return supplierTransactionMapper.updateDelFlagByIds(ids);
     }
@@ -146,6 +155,7 @@ public class SupplierTransactionService {
      * @param id 供应商账户流水主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return supplierTransactionMapper.updateDelFlagByIds(ids);

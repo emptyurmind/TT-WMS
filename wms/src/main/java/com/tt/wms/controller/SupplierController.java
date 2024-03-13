@@ -8,7 +8,7 @@ import com.tt.wms.convert.SupplierConvert;
 import com.tt.wms.domain.entity.Supplier;
 import com.tt.wms.domain.query.SupplierQuery;
 import com.tt.wms.domain.vo.SupplierVO;
-import com.tt.wms.service.impl.SupplierService;
+import com.tt.wms.service.impl.SupplierServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ import java.util.List;
 @RequestMapping("/wms/supplier")
 public class SupplierController extends BaseController {
     @Autowired
-    private SupplierService service;
+    private SupplierServiceImpl service;
     @Autowired
     private SupplierConvert convert;
 

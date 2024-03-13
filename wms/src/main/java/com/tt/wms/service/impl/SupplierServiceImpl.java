@@ -5,11 +5,13 @@ import com.github.pagehelper.PageHelper;
 import com.tt.wms.domain.entity.Supplier;
 import com.tt.wms.domain.query.SupplierQuery;
 import com.tt.wms.mapper.SupplierMapper;
+import com.tt.wms.service.SupplierService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,8 +21,9 @@ import java.util.List;
  * @author wangkun
  */
 @Service
-public class SupplierService {
-    @Autowired
+public class SupplierServiceImpl implements SupplierService {
+
+    @Resource
     private SupplierMapper supplierMapper;
 
     /**
@@ -29,6 +32,7 @@ public class SupplierService {
      * @param id 供应商主键
      * @return 供应商
      */
+    @Override
     public Supplier selectById(Long id) {
         return supplierMapper.selectById(id);
     }
@@ -40,6 +44,7 @@ public class SupplierService {
      * @param page  分页条件
      * @return 供应商
      */
+    @Override
     public List<Supplier> selectList(SupplierQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
@@ -87,6 +92,7 @@ public class SupplierService {
      * @param supplier 供应商
      * @return 结果
      */
+    @Override
     public int insert(Supplier supplier) {
         supplier.setDelFlag(0);
         supplier.setCreateTime(LocalDateTime.now());
@@ -99,6 +105,7 @@ public class SupplierService {
      * @param supplier 供应商
      * @return 结果
      */
+    @Override
     public int update(Supplier supplier) {
         return supplierMapper.updateById(supplier);
     }
@@ -109,6 +116,7 @@ public class SupplierService {
      * @param ids 需要删除的供应商主键
      * @return 结果
      */
+    @Override
     public int deleteByIds(Long[] ids) {
         return supplierMapper.updateDelFlagByIds(ids);
     }
@@ -119,6 +127,7 @@ public class SupplierService {
      * @param id 供应商主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return supplierMapper.updateDelFlagByIds(ids);
