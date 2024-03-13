@@ -25,7 +25,6 @@ import java.util.List;
  * 货架Controller
  *
  * @author wangkun
- * @date 2022-08-05
  */
 @Api(description = "货架接口列表")
 @RestController
