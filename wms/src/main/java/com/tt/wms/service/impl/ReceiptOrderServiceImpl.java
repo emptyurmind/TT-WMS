@@ -22,6 +22,7 @@ import com.tt.wms.domain.vo.ReceiptOrderDetailVO;
 import com.tt.wms.domain.vo.ReceiptOrderVO;
 import com.tt.wms.mapper.ReceiptOrderDetailMapper;
 import com.tt.wms.mapper.ReceiptOrderMapper;
+import com.tt.wms.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -46,21 +48,28 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class ReceiptOrderService {
-    @Autowired
+public class ReceiptOrderServiceImpl implements ReceiptOrderService {
+
+    @Resource
     private ReceiptOrderMapper receiptOrderMapper;
+
     @Autowired
     private ReceiptOrderConvert receiptOrderConvert;
+
     @Autowired
     private ReceiptOrderDetailConvert receiptOrderDetailConvert;
-    @Autowired
+
+    @Resource
     private ReceiptOrderDetailMapper receiptOrderDetailMapper;
+
     @Autowired
     private ReceiptOrderDetailService receiptOrderDetailService;
+
     @Autowired
     private ItemService itemService;
+
     @Autowired
-    private InventoryHistoryServiceImpl inventoryHistoryService;
+    private InventoryHistoryService inventoryHistoryService;
 
     @Autowired
     private InventoryService inventoryService;
@@ -81,6 +90,7 @@ public class ReceiptOrderService {
      * @param id 入库单主键
      * @return 入库单
      */
+    @Override
     public ReceiptOrderForm selectById(Long id) {
         ReceiptOrder order = receiptOrderMapper.selectById(id);
         if (order == null) {
@@ -109,11 +119,13 @@ public class ReceiptOrderService {
      * @param query 查询条件
      * @return 入库单
      */
+    @Override
     public List<ReceiptOrderVO> selectList(ReceiptOrderQuery query) {
         List<ReceiptOrder> list = selectList1(query);
         return receiptOrderConvert.dos2vos(list);
     }
 
+    @Override
     public Page<ReceiptOrderVO> selectList(ReceiptOrderQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize(), "create_time desc");
@@ -160,6 +172,7 @@ public class ReceiptOrderService {
      * @param receiptOrder 入库单
      * @return 结果
      */
+    @Override
     @Transactional
     public int add(ReceiptOrderForm receiptOrder) {
         int res;
@@ -182,6 +195,7 @@ public class ReceiptOrderService {
      * @param receiptOrder 入库单
      * @return 结果
      */
+    @Override
     @Transactional
     public int update(ReceiptOrderForm receiptOrder) {
         int res;
@@ -229,9 +243,9 @@ public class ReceiptOrderService {
             adds.add(h);
         });
 
-        if (adds.size() > 0) {
+        if (!adds.isEmpty()) {
             int add1 = inventoryHistoryService.batchInsert(adds);
-            int update1 = inventoryService.batchUpdate1(adds);
+            int update1 = inventoryService.batchUpdate(adds);
             log.info("inventoryHistory: {}, inventory: {}", add1, update1);
         }
         // 2.1 编辑或发货入库，都要先删除details 再重新保存
@@ -279,6 +293,7 @@ public class ReceiptOrderService {
      * @param receiptOrder 入库单
      * @return 结果
      */
+    @Override
     public int update(ReceiptOrder receiptOrder) {
         return receiptOrderMapper.updateById(receiptOrder);
     }
@@ -289,6 +304,7 @@ public class ReceiptOrderService {
      * @param ids 需要删除的入库单主键
      * @return 结果
      */
+    @Override
     @Transactional
     public int deleteByIds(Long[] ids) {
         int flag = 0;
@@ -318,7 +334,7 @@ public class ReceiptOrderService {
             });
 
             // 4. 回滚库存
-            inventoryService.batchUpdate1(inventoryHistories);
+            inventoryService.batchUpdate(inventoryHistories);
 
             // 5. 删除库存记录
             inventoryHistoryService.deleteByForm(receiptOrder.getId(), receiptOrder.getReceiptOrderType());
@@ -335,11 +351,13 @@ public class ReceiptOrderService {
      * @param id 入库单主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return receiptOrderMapper.updateDelFlagByIds(ids);
     }
 
+    @Override
     public OrderWaveReceiptForm selectDetailByWaveNo(String waveNo) {
         OrderWaveReceiptForm form = new OrderWaveReceiptForm();
         List<ReceiptOrderDetail> orderDetails = receiptOrderDetailMapper.selectDetailByWaveNo(waveNo);
@@ -357,6 +375,7 @@ public class ReceiptOrderService {
         return form;
     }
 
+    @Override
     public void updateWaveNo(Long orderId, String waveNo) {
         ReceiptOrder receiptOrder = receiptOrderMapper.selectById(orderId);
         if (receiptOrder == null) {

@@ -9,10 +9,12 @@ import com.tt.wms.domain.entity.ReceiptOrderDetail;
 import com.tt.wms.domain.query.ReceiptOrderDetailQuery;
 import com.tt.wms.domain.vo.ReceiptOrderDetailVO;
 import com.tt.wms.mapper.ReceiptOrderDetailMapper;
+import com.tt.wms.service.ReceiptOrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -24,12 +26,15 @@ import java.util.List;
  * @author wangkun
  */
 @Service
-public class ReceiptOrderDetailService {
-    @Autowired
+public class ReceiptOrderDetailServiceImpl implements ReceiptOrderDetailService {
+
+    @Resource
     private ReceiptOrderDetailMapper receiptOrderDetailMapper;
-    @Autowired
+
+    @Resource
     private ReceiptOrderDetailConvert convert;
 
+    @Override
     public ReceiptOrderDetailVO toVo(ReceiptOrderDetail item) {
         ReceiptOrderDetailVO itemVO = convert.toVo(item);
 
@@ -47,6 +52,7 @@ public class ReceiptOrderDetailService {
         return itemVO;
     }
 
+    @Override
     public List<ReceiptOrderDetailVO> toVos(List<ReceiptOrderDetail> items) {
         List<ReceiptOrderDetailVO> list = convert.dos2vos(items);
         list.forEach(itemVO -> {
@@ -71,6 +77,7 @@ public class ReceiptOrderDetailService {
      * @param id 入库单详情主键
      * @return 入库单详情
      */
+    @Override
     public ReceiptOrderDetail selectById(Long id) {
         return receiptOrderDetailMapper.selectById(id);
     }
@@ -82,6 +89,7 @@ public class ReceiptOrderDetailService {
      * @param page  分页条件
      * @return 入库单详情
      */
+    @Override
     public List<ReceiptOrderDetail> selectList(ReceiptOrderDetailQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
@@ -129,6 +137,7 @@ public class ReceiptOrderDetailService {
      * @param receiptOrderDetail 入库单详情
      * @return 结果
      */
+    @Override
     public int insert(ReceiptOrderDetail receiptOrderDetail) {
         receiptOrderDetail.setDelFlag(0);
         receiptOrderDetail.setCreateTime(LocalDateTime.now());
@@ -141,6 +150,7 @@ public class ReceiptOrderDetailService {
      * @param receiptOrderDetail 入库单详情
      * @return 结果
      */
+    @Override
     public int update(ReceiptOrderDetail receiptOrderDetail) {
         return receiptOrderDetailMapper.updateById(receiptOrderDetail);
     }
@@ -151,6 +161,7 @@ public class ReceiptOrderDetailService {
      * @param ids 需要删除的入库单详情主键
      * @return 结果
      */
+    @Override
     public int deleteByIds(Long[] ids) {
         return receiptOrderDetailMapper.updateDelFlagByIds(ids);
     }
@@ -161,11 +172,13 @@ public class ReceiptOrderDetailService {
      * @param id 入库单详情主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return receiptOrderDetailMapper.updateDelFlagByIds(ids);
     }
 
+    @Override
     public void updateDelFlag(ReceiptOrder receiptOrder) {
         LambdaUpdateWrapper<ReceiptOrderDetail> updateWrapper = new LambdaUpdateWrapper<ReceiptOrderDetail>()
                 .eq(ReceiptOrderDetail::getReceiptOrderId, receiptOrder.getId())

@@ -8,7 +8,8 @@ import com.tt.wms.convert.ReceiptOrderDetailConvert;
 import com.tt.wms.domain.entity.ReceiptOrderDetail;
 import com.tt.wms.domain.query.ReceiptOrderDetailQuery;
 import com.tt.wms.domain.vo.ReceiptOrderDetailVO;
-import com.tt.wms.service.impl.ReceiptOrderDetailService;
+import com.tt.wms.service.ReceiptOrderDetailService;
+import com.tt.wms.service.impl.ReceiptOrderDetailServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/wms/receiptOrderDetail")
 public class ReceiptOrderDetailController extends BaseController {
+
     @Autowired
     private ReceiptOrderDetailService service;
+
     @Autowired
     private ReceiptOrderDetailConvert convert;
 
