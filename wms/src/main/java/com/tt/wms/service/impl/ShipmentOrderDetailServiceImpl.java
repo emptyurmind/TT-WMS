@@ -9,10 +9,12 @@ import com.tt.wms.domain.entity.ShipmentOrderDetail;
 import com.tt.wms.domain.query.ShipmentOrderDetailQuery;
 import com.tt.wms.domain.vo.ShipmentOrderDetailVO;
 import com.tt.wms.mapper.ShipmentOrderDetailMapper;
+import com.tt.wms.service.ShipmentOrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -24,9 +26,11 @@ import java.util.List;
  * @author wangkun
  */
 @Service
-public class ShipmentOrderDetailService {
-    @Autowired
+public class ShipmentOrderDetailServiceImpl implements ShipmentOrderDetailService {
+
+    @Resource
     private ShipmentOrderDetailMapper shipmentOrderDetailMapper;
+
     @Autowired
     private ShipmentOrderDetailConvert convert;
 
@@ -36,6 +40,7 @@ public class ShipmentOrderDetailService {
      * @param id 出库单详情主键
      * @return 出库单详情
      */
+    @Override
     public ShipmentOrderDetail selectById(Long id) {
         return shipmentOrderDetailMapper.selectById(id);
     }
@@ -47,6 +52,7 @@ public class ShipmentOrderDetailService {
      * @param page  分页条件
      * @return 出库单详情
      */
+    @Override
     public List<ShipmentOrderDetail> selectList(ShipmentOrderDetailQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
@@ -77,6 +83,7 @@ public class ShipmentOrderDetailService {
     }
 
 
+    @Override
     public List<ShipmentOrderDetailVO> toVos(List<ShipmentOrderDetail> items) {
         List<ShipmentOrderDetailVO> list = convert.dos2vos(items);
         list.forEach(itemVO -> {
@@ -101,6 +108,7 @@ public class ShipmentOrderDetailService {
      * @param shipmentOrderDetail 出库单详情
      * @return 结果
      */
+    @Override
     public int insert(ShipmentOrderDetail shipmentOrderDetail) {
         shipmentOrderDetail.setDelFlag(0);
         shipmentOrderDetail.setCreateTime(LocalDateTime.now());
@@ -113,6 +121,7 @@ public class ShipmentOrderDetailService {
      * @param shipmentOrderDetail 出库单详情
      * @return 结果
      */
+    @Override
     public int update(ShipmentOrderDetail shipmentOrderDetail) {
         return shipmentOrderDetailMapper.updateById(shipmentOrderDetail);
     }
@@ -123,6 +132,7 @@ public class ShipmentOrderDetailService {
      * @param ids 需要删除的出库单详情主键
      * @return 结果
      */
+    @Override
     public int deleteByIds(Long[] ids) {
         return shipmentOrderDetailMapper.updateDelFlagByIds(ids);
     }
@@ -133,11 +143,13 @@ public class ShipmentOrderDetailService {
      * @param id 出库单详情主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return shipmentOrderDetailMapper.updateDelFlagByIds(ids);
     }
 
+    @Override
     public void updateDelFlag(ShipmentOrder shipmentOrder) {
         LambdaUpdateWrapper<ShipmentOrderDetail> updateWrapper = new LambdaUpdateWrapper<ShipmentOrderDetail>()
                 .eq(ShipmentOrderDetail::getShipmentOrderId, shipmentOrder.getId())
@@ -152,6 +164,7 @@ public class ShipmentOrderDetailService {
      * @param orderId 出库单详情主键
      * @return 结果
      */
+    @Override
     public int deleteByOrderId(Long orderId) {
         LambdaUpdateWrapper<ShipmentOrderDetail> delete = new LambdaUpdateWrapper<ShipmentOrderDetail>()
                 .eq(ShipmentOrderDetail::getShipmentOrderId, orderId);

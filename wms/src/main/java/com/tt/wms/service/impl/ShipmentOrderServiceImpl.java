@@ -23,6 +23,7 @@ import com.tt.wms.domain.vo.ShipmentOrderDetailVO;
 import com.tt.wms.domain.vo.ShipmentOrderVO;
 import com.tt.wms.mapper.ShipmentOrderDetailMapper;
 import com.tt.wms.mapper.ShipmentOrderMapper;
+import com.tt.wms.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -45,27 +47,38 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class ShipmentOrderService {
-    @Autowired
+public class ShipmentOrderServiceImpl implements ShipmentOrderService {
+
+    @Resource
     private ShipmentOrderMapper shipmentOrderMapper;
+
     @Autowired
     private ShipmentOrderConvert convert;
+
     @Autowired
     private ShipmentOrderDetailConvert detailConvert;
-    @Autowired
+
+    @Resource
     private ShipmentOrderDetailMapper shipmentOrderDetailMapper;
+
     @Autowired
-    private ShipmentOrderDetailService shipmentOrderDetailService;
+    private ShipmentOrderDetailServiceImpl shipmentOrderDetailService;
+
     @Autowired
     private ItemService itemService;
+
     @Autowired
     private DeliveryConvert deliveryConvert;
+
     @Autowired
-    private DeliveryServiceImpl deliveryService;
+    private DeliveryService deliveryService;
+
     @Autowired
-    private InventoryHistoryServiceImpl inventoryHistoryService;
+    private InventoryHistoryService inventoryHistoryService;
+
     @Autowired
     private InventoryService inventoryService;
+
     @Autowired
     private CustomerTransactionServiceImpl customerTransactionService;
 
@@ -75,6 +88,7 @@ public class ShipmentOrderService {
      * @param id 出库单主键
      * @return 出库单
      */
+    @Override
     public ShipmentOrderFrom selectById(Long id) {
         ShipmentOrder order = shipmentOrderMapper.selectById(id);
         if (order == null) {
@@ -109,6 +123,7 @@ public class ShipmentOrderService {
      * @param page  分页条件
      * @return 出库单
      */
+    @Override
     public Page<ShipmentOrderVO> selectList(ShipmentOrderQuery query, Pageable page) {
         if (page != null) {
             PageHelper.startPage(page.getPageNumber() + 1, page.getPageSize());
@@ -156,6 +171,7 @@ public class ShipmentOrderService {
      * @param shipmentOrder 出库单
      * @return 结果
      */
+    @Override
     public int insert(ShipmentOrder shipmentOrder) {
         shipmentOrder.setDelFlag(0);
         shipmentOrder.setCreateTime(LocalDateTime.now());
@@ -168,6 +184,7 @@ public class ShipmentOrderService {
      * @param shipmentOrder 出库单
      * @return 结果
      */
+    @Override
     public int update(ShipmentOrder shipmentOrder) {
         return shipmentOrderMapper.updateById(shipmentOrder);
     }
@@ -178,6 +195,7 @@ public class ShipmentOrderService {
      * @param ids 需要删除的出库单主键
      * @return 结果
      */
+    @Override
     @Transactional
     public int deleteByIds(Long[] ids) {
         int flag = 0;
@@ -209,7 +227,7 @@ public class ShipmentOrderService {
             });
 
             // 4. 回滚库存
-            inventoryService.batchUpdate1(inventoryHistories);
+            inventoryService.batchUpdate(inventoryHistories);
 
             // 5. 删除库存记录
             inventoryHistoryService.deleteByForm(shipmentOrder.getId(), shipmentOrder.getShipmentOrderType());
@@ -226,11 +244,13 @@ public class ShipmentOrderService {
      * @param id 出库单主键
      * @return 结果
      */
+    @Override
     public int deleteById(Long id) {
         Long[] ids = {id};
         return shipmentOrderMapper.updateDelFlagByIds(ids);
     }
 
+    @Override
     @Transactional
     public int add(ShipmentOrderFrom order) {
         int res;
@@ -247,6 +267,7 @@ public class ShipmentOrderService {
 
     }
 
+    @Override
     public int update(ShipmentOrderFrom order) {
         int res;
         QueryWrapper<ShipmentOrderDetail> qw = new QueryWrapper<>();
@@ -297,7 +318,7 @@ public class ShipmentOrderService {
         if (!adds.isEmpty()) {
             int add1 = inventoryHistoryService.batchInsert(adds);
 //            adds.forEach(it -> it.setQuantity(it.getQuantity().negate()));
-            int update1 = inventoryService.batchUpdate1(adds);
+            int update1 = inventoryService.batchUpdate(adds);
             log.info("inventoryHistory: {}, inventory: {}", add1, update1);
         }
         // 2.1 先删除details 再重新保存
@@ -356,7 +377,7 @@ public class ShipmentOrderService {
         }
     }
 
-    /*
+    /**
      * 单个订单分配仓库(填充详情单的仓库id,库区id,货架id)
      * @param id 出库单id
      * 1.根据出库单id查询出库单详情
@@ -364,7 +385,8 @@ public class ShipmentOrderService {
      * 3.根据库存分配规则分配库存
      * 4.修改出库单详情
      * 5.修改出库单
-     * */
+     */
+    @Override
     @Transactional
     public void allocatedInventory(long id, Integer type) {
         log.info("单个订单分配仓库,出库单id:{}", id);
@@ -398,6 +420,7 @@ public class ShipmentOrderService {
 
     }
 
+    @Override
     public void updateWaveNo(Long orderId, String waveNo) {
         ShipmentOrder shipmentOrder = shipmentOrderMapper.selectById(orderId);
         if (shipmentOrder == null) {
@@ -414,9 +437,10 @@ public class ShipmentOrderService {
         shipmentOrderMapper.updateById(shipmentOrder);
     }
 
-    /*
+    /**
      *
-     * */
+     */
+    @Override
     public OrderWaveForm selectDetailByWaveNo(String waveNo) {
         OrderWaveForm form = new OrderWaveForm();
         List<ShipmentOrderDetail> shipmentOrderDetails = shipmentOrderDetailMapper.selectDetailByWaveNo(waveNo);
@@ -434,6 +458,7 @@ public class ShipmentOrderService {
         return form;
     }
 
+    @Override
     public void deleteByWaveIds(Collection<String> ids) {
         LambdaUpdateWrapper<ShipmentOrder> qw = new LambdaUpdateWrapper<>();
         qw.in(ShipmentOrder::getWaveNo, ids);

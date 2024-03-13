@@ -8,7 +8,7 @@ import com.tt.wms.convert.ShipmentOrderDetailConvert;
 import com.tt.wms.domain.entity.ShipmentOrderDetail;
 import com.tt.wms.domain.query.ShipmentOrderDetailQuery;
 import com.tt.wms.domain.vo.ShipmentOrderDetailVO;
-import com.tt.wms.service.impl.ShipmentOrderDetailService;
+import com.tt.wms.service.impl.ShipmentOrderDetailServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ import java.util.List;
 @RequestMapping("/wms/shipmentOrderDetail")
 public class ShipmentOrderDetailController extends BaseController {
     @Autowired
-    private ShipmentOrderDetailService service;
+    private ShipmentOrderDetailServiceImpl service;
     @Autowired
     private ShipmentOrderDetailConvert convert;
 
