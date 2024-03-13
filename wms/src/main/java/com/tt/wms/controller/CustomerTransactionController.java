@@ -8,10 +8,9 @@ import com.tt.wms.convert.CustomerTransactionConvert;
 import com.tt.wms.domain.entity.CustomerTransaction;
 import com.tt.wms.domain.query.CustomerTransactionQuery;
 import com.tt.wms.domain.vo.CustomerTransactionVO;
-import com.tt.wms.service.impl.CustomerTransactionServiceImpl;
+import com.tt.wms.service.CustomerTransactionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +25,6 @@ import java.util.List;
  * 客户账户流水Controller
  *
  * @author wangkun
- * @date 2023-05-04
  */
 @Api(description = "客户账户流水接口列表")
 @RestController
@@ -34,7 +32,7 @@ import java.util.List;
 public class CustomerTransactionController extends BaseController {
 
     @Resource
-    private CustomerTransactionServiceImpl customerTransactionService;
+    private CustomerTransactionService customerTransactionService;
 
     @Resource
     private CustomerTransactionConvert customerTransactionConvert;
