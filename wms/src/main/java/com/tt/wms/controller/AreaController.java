@@ -9,7 +9,6 @@ import com.tt.wms.domain.entity.Area;
 import com.tt.wms.domain.query.AreaQuery;
 import com.tt.wms.domain.vo.AreaVO;
 import com.tt.wms.service.AreaService;
-import com.tt.wms.service.impl.AreaServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
