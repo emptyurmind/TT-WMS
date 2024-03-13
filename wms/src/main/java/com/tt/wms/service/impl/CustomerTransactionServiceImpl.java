@@ -9,6 +9,7 @@ import com.tt.wms.mapper.CustomerTransactionMapper;
 import com.tt.wms.service.CustomerService;
 import com.tt.wms.service.CustomerTransactionService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class CustomerTransactionServiceImpl implements CustomerTransactionServic
     @Resource
     private CustomerTransactionMapper customerTransactionMapper;
 
-    @Resource
+    @Autowired
     private CustomerService customerService;
 
     /**

@@ -30,7 +30,7 @@ public class InventoryCheckDetailServiceImpl implements InventoryCheckDetailServ
     @Resource
     private InventoryCheckDetailMapper inventoryCheckDetailMapper;
 
-    @Resource
+    @Autowired
     private InventoryCheckDetailConvert inventoryCheckDetailConvert;
 
     /**
