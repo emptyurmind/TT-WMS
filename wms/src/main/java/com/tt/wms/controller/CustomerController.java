@@ -25,7 +25,6 @@ import java.util.List;
  * 客户Controller
  *
  * @author wangkun
- * @date 2022-08-05
  */
 @Api(description = "客户接口列表")
 @RestController
