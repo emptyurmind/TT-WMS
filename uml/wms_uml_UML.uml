@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.gen_table</OriginalElement>
+  <nodes>
+    <node x="-322.0" y="1284.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_dict_data</node>
+    <node x="1389.0" y="1692.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_delivery</node>
+    <node x="400.0" y="2054.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_wave</node>
+    <node x="2125.0" y="1692.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_notice</node>
+    <node x="973.0" y="1692.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_item_type</node>
+    <node x="-322.0" y="1692.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_customer_transaction</node>
+    <node x="511.0" y="1284.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_receipt_order</node>
+    <node x="-322.0" y="2370.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_user_role</node>
+    <node x="23.0" y="2370.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_role_menu</node>
+    <node x="2114.0" y="2054.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_job_log</node>
+    <node x="-322.0" y="-285.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_inventory_settlement_detail</node>
+    <node x="244.0" y="330.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_inventory_movement_detail</node>
+    <node x="636.0" y="1692.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_inventory</node>
+    <node x="719.0" y="330.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_customer</node>
+    <node x="2101.0" y="-285.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_menu</node>
+    <node x="1440.0" y="2054.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_warehouse</node>
+    <node x="1318.0" y="-285.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_item</node>
+    <node x="157.0" y="1692.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_supplier_transaction</node>
+    <node x="737.0" y="2054.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_post</node>
+    <node x="1777.0" y="2054.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_dict_type</node>
+    <node x="857.0" y="830.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_role</node>
+    <node x="520.0" y="830.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_carrier</node>
+    <node x="1546.0" y="830.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_inventory_check_detail</node>
+    <node x="-322.0" y="330.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_inventory_check</node>
+    <node x="1074.0" y="2054.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_logininfor</node>
+    <node x="-322.0" y="2054.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_config</node>
+    <node x="50.0" y="2054.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_area</node>
+    <node x="104.0" y="830.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_receipt_order_detail</node>
+    <node x="368.0" y="2370.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_user_post</node>
+    <node x="172.0" y="-285.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.gen_table_column</node>
+    <node x="1298.0" y="1284.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_job</node>
+    <node x="-322.0" y="830.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_shipment_order_detail</node>
+    <node x="1925.0" y="330.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_oper_log</node>
+    <node x="908.0" y="1284.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_inventory_movement</node>
+    <node x="1466.0" y="330.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_shipment_order</node>
+    <node x="1788.0" y="1692.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_rack</node>
+    <node x="1058.0" y="2370.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.qrtz_locks</node>
+    <node x="1685.0" y="-285.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_user</node>
+    <node x="713.0" y="2370.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_role_dept</node>
+    <node x="1104.0" y="330.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_supplier</node>
+    <node x="95.0" y="1284.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.sys_dept</node>
+    <node x="2014.0" y="830.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_inventory_history</node>
+    <node x="787.0" y="-285.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.gen_table</node>
+    <node x="1888.0" y="1284.0">c9a0935e-eff0-4e65-9d45-8e496d8039f3.TABLE:wms.wms_inventory_settlement</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic" zoom="0.4831526168055053" showDependencies="false" x="1076.0000000000002" y="1085.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
