@@ -1,8 +1,8 @@
 package ${fullPackage};
 
-#foreach ($import in $importList)
-import ${import};
-#end
+    #foreach ($import in $importList)
+    import ${import};
+    #end
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -136,79 +136,79 @@ public class ${ClassName}Example {
             }
             addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
-#foreach ($column in $columns)
-        public Criteria and${column.capJavaField}IsNull() {
-            addCriterion("${column.columnName} is null");
-            return (Criteria) this;
-        }
+        #foreach ($column in $columns)
+            public Criteria and${column.capJavaField}IsNull() {
+                addCriterion("${column.columnName} is null");
+                return (Criteria) this;
+            }
 
-        public Criteria and${column.capJavaField}IsNotNull() {
-            addCriterion("${column.columnName} is not null");
-            return (Criteria) this;
-        }
+            public Criteria and${column.capJavaField}IsNotNull() {
+                addCriterion("${column.columnName} is not null");
+                return (Criteria) this;
+            }
 
-        public Criteria and${column.capJavaField}EqualTo(${column.javaType} value) {
-            addCriterion("${column.columnName} =", value, "${column.javaField}");
-            return (Criteria) this;
-        }
+            public Criteria and${column.capJavaField}EqualTo(${column.javaType} value) {
+                addCriterion("${column.columnName} =", value, "${column.javaField}");
+                return (Criteria) this;
+            }
 
-        public Criteria and${column.capJavaField}NotEqualTo(${column.javaType} value) {
-            addCriterion("${column.columnName} <>", value, "${column.javaField}");
-            return (Criteria) this;
-        }
+            public Criteria and${column.capJavaField}NotEqualTo(${column.javaType} value) {
+                addCriterion("${column.columnName} <>", value, "${column.javaField}");
+                return (Criteria) this;
+            }
 
-        public Criteria and${column.capJavaField}GreaterThan(${column.javaType} value) {
-            addCriterion("${column.columnName} >", value, "${column.javaField}");
-            return (Criteria) this;
-        }
+            public Criteria and${column.capJavaField}GreaterThan(${column.javaType} value) {
+                addCriterion("${column.columnName} >", value, "${column.javaField}");
+                return (Criteria) this;
+            }
 
-        public Criteria and${column.capJavaField}GreaterThanOrEqualTo(${column.javaType} value) {
-            addCriterion("${column.columnName} >=", value, "${column.javaField}");
-            return (Criteria) this;
-        }
+            public Criteria and${column.capJavaField}GreaterThanOrEqualTo(${column.javaType} value) {
+                addCriterion("${column.columnName} >=", value, "${column.javaField}");
+                return (Criteria) this;
+            }
 
-        public Criteria and${column.capJavaField}LessThan(${column.javaType} value) {
-            addCriterion("${column.columnName} <", value, "${column.javaField}");
-            return (Criteria) this;
-        }
+            public Criteria and${column.capJavaField}LessThan(${column.javaType} value) {
+                addCriterion("${column.columnName} <", value, "${column.javaField}");
+                return (Criteria) this;
+            }
 
-        public Criteria and${column.capJavaField}LessThanOrEqualTo(${column.javaType} value) {
-            addCriterion("${column.columnName} <=", value, "${column.javaField}");
-            return (Criteria) this;
-        }
-#if($column.javaType == 'String')
+            public Criteria and${column.capJavaField}LessThanOrEqualTo(${column.javaType} value) {
+                addCriterion("${column.columnName} <=", value, "${column.javaField}");
+                return (Criteria) this;
+            }
+            #if($column.javaType == 'String')
 
-        public Criteria and${column.capJavaField}Like(${column.javaType} value) {
-            addCriterion("${column.columnName}  like", value, "${column.javaField}");
-            return (Criteria) this;
-        }
+                public Criteria and${column.capJavaField}Like(${column.javaType} value) {
+                    addCriterion("${column.columnName}  like", value, "${column.javaField}");
+                    return (Criteria) this;
+                }
 
-        public Criteria and${column.capJavaField}NotLike(${column.javaType} value) {
-            addCriterion("${column.columnName}  not like", value, "${column.javaField}");
-            return (Criteria) this;
-        }
+                public Criteria and${column.capJavaField}NotLike(${column.javaType} value) {
+                    addCriterion("${column.columnName}  not like", value, "${column.javaField}");
+                    return (Criteria) this;
+                }
 
-#end
-        public Criteria and${column.capJavaField}In(List<${column.javaType}> values) {
-            addCriterion("${column.columnName} in", values, "${column.javaField}");
-            return (Criteria) this;
-        }
+            #end
+            public Criteria and${column.capJavaField}In(List<${column.javaType}> values) {
+                addCriterion("${column.columnName} in", values, "${column.javaField}");
+                return (Criteria) this;
+            }
 
-        public Criteria and${column.capJavaField}NotIn(List<${column.javaType}> values) {
-            addCriterion("${column.columnName} not in", values, "${column.javaField}");
-            return (Criteria) this;
-        }
+            public Criteria and${column.capJavaField}NotIn(List<${column.javaType}> values) {
+                addCriterion("${column.columnName} not in", values, "${column.javaField}");
+                return (Criteria) this;
+            }
 
-        public Criteria and${column.capJavaField}Between(${column.javaType} value1, ${column.javaType} value2) {
-            addCriterion("${column.columnName} between", value1, value2, "${column.javaField}");
-            return (Criteria) this;
-        }
+            public Criteria and${column.capJavaField}Between(${column.javaType} value1, ${column.javaType} value2) {
+                addCriterion("${column.columnName} between", value1, value2, "${column.javaField}");
+                return (Criteria) this;
+            }
 
-        public Criteria and${column.capJavaField}NotBetween(${column.javaType} value1, ${column.javaType} value2) {
-            addCriterion("${column.columnName} not between", value1, value2, "${column.javaField}");
-            return (Criteria) this;
-        }
-#end
+            public Criteria and${column.capJavaField}NotBetween(${column.javaType} value1, ${column.javaType} value2) {
+                addCriterion("${column.columnName} not between", value1, value2, "${column.javaField}");
+                return (Criteria) this;
+            }
+        #end
     }
 
     public static class Criteria extends GeneratedCriteria {

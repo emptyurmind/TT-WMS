@@ -20,6 +20,7 @@ import java.util.Map;
 public class GenUtils {
     private static GenConfig genConfig;
     public static final Map<String, String> queryType2Suffix;
+
     static {
         queryType2Suffix = new HashMap<>();
         queryType2Suffix.put("BETWEEN", "Range");
@@ -30,7 +31,9 @@ public class GenUtils {
         queryType2Suffix.put("LTE", "LessThanOrEqual");
         queryType2Suffix.put("LIKE", "Like");
     }
+
     public static final Map<String, String> queryType2Method;
+
     static {
         queryType2Method = new HashMap<>();
         queryType2Method.put("EQ", "eq");
@@ -41,6 +44,7 @@ public class GenUtils {
         queryType2Method.put("LTE", "le");
         queryType2Method.put("LIKE", "like");
     }
+
     public static void setGenConfig(GenConfig genConfig) {
         GenUtils.genConfig = genConfig;
     }

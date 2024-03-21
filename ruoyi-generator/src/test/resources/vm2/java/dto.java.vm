@@ -1,12 +1,13 @@
 package ${fullPackage};
 
-#foreach ($import in $importList)
-import ${import};
-#end
-#if( ${table.audit} == 1 )
-import ${env.baseAudit};
-#end
+    #foreach ($import in $importList)
+    import ${import};
+    #end
+    #if( ${table.audit} == 1 )
+    import ${env.baseAudit};
+    #end
 import lombok.Data;
+
 /**
  * ${functionName} DTO 对象
  *
@@ -14,12 +15,12 @@ import lombok.Data;
  */
 @Data
 public class ${ClassName}DTO#if( ${table.audit} == 1 ) extends BaseAudit#end {
-#foreach ($column in $columns)
-#if(!$table.isSuperColumn($column.javaField) and $column.javaField != "delFlag")
-    private $column.javaType $column.javaField;
-#end
-#end
-#if($table.sub)
-    private List<${subClassName}DTO> ${subclassName}List;
-#end
+    #foreach ($column in $columns)
+        #if(!$table.isSuperColumn($column.javaField) and $column.javaField != "delFlag")
+            private $column.javaType $column.javaField;
+        #end
+    #end
+    #if($table.sub)
+        private List<${subClassName}DTO> ${subclassName}List;
+    #end
 }
