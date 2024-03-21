@@ -37,8 +37,10 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 @RestController
 @RequestMapping("/${moduleName}/${className}")
 public class ${_className.controller} extends BaseController {
+
     @Autowired
     private ${_className.service} service;
+
     @Autowired
     private ${_className.convert} convert;
 
