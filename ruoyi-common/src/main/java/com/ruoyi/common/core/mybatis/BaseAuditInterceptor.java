@@ -5,14 +5,10 @@ import com.ruoyi.common.core.domain.BaseAudit;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.plugin.Interceptor;
-import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
-import org.apache.ibatis.plugin.Signature;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -28,9 +24,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class BaseAuditInterceptor implements Interceptor {
     private Map<Class, Method> clazz2Id = new ConcurrentHashMap<>();
     private Method noMethod = BaseAuditInterceptor.class.getMethods()[0];
+
     @Override
     public Object intercept(Invocation invocation) throws IllegalAccessException, InvocationTargetException {
-        if(this.getUserId()!=null){
+        if (this.getUserId() != null) {
             fillField(invocation);
         }
         return invocation.proceed();

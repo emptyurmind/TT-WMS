@@ -5,7 +5,8 @@ import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.Executor;
-import org.apache.ibatis.mapping.*;
+import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.plugin.*;
 import org.springframework.stereotype.Component;
 
@@ -26,10 +27,10 @@ public class MybatisAutoSetUserAuditInfoInterceptor implements Interceptor {
         return invocation.proceed();
     }
 
-    private void autoSetUserAuditInfo(Invocation invocation){
+    private void autoSetUserAuditInfo(Invocation invocation) {
         Object[] queryArgs = invocation.getArgs();
         MappedStatement mappedStatement = (MappedStatement) queryArgs[INDEX_ZERO];
-        if(!mappedStatement.getId().contains("com.tt")){
+        if (!mappedStatement.getId().contains("com.tt")) {
             return;
         }
         Long userId = this.getUserId();
@@ -47,31 +48,30 @@ public class MybatisAutoSetUserAuditInfoInterceptor implements Interceptor {
             if (!(objectList.get(0) instanceof BaseAudit)) {
                 return;
             }
-            dealList(objectList,sqlCommandType);
+            dealList(objectList, sqlCommandType);
         } else if (object instanceof Map) {
-            Map<String, Object> map = (Map<String, Object>)object;
+            Map<String, Object> map = (Map<String, Object>) object;
             Iterator<Map.Entry<String, Object>> iterable = map.entrySet().iterator();
             Set<Object> objects = new HashSet<>();
             while (iterable.hasNext()) {
                 objects.add(iterable.next().getValue());
             }
-            objects.stream().filter(it -> it instanceof BaseAudit).forEach(it -> this.dealItem((BaseAudit) it,sqlCommandType));
+            objects.stream().filter(it -> it instanceof BaseAudit).forEach(it -> this.dealItem((BaseAudit) it, sqlCommandType));
         } else if (object instanceof BaseAudit) {
-            dealItem((BaseAudit)object,sqlCommandType);
+            dealItem((BaseAudit) object, sqlCommandType);
         }
         return;
 
     }
 
-    private void dealItem(BaseAudit parameter,SqlCommandType sqlCommandType){
+    private void dealItem(BaseAudit parameter, SqlCommandType sqlCommandType) {
 
         try {
             LocalDateTime time = LocalDateTime.now();
-            if (sqlCommandType == SqlCommandType.INSERT ) {
+            if (sqlCommandType == SqlCommandType.INSERT) {
                 parameter.setCreateTime(time);
                 parameter.setCreateBy(getUserId());
-            }
-            else if (sqlCommandType == SqlCommandType.UPDATE ) {
+            } else if (sqlCommandType == SqlCommandType.UPDATE) {
                 parameter.setUpdateBy(getUserId());
                 parameter.setUpdateTime(time);
             }
@@ -80,9 +80,9 @@ public class MybatisAutoSetUserAuditInfoInterceptor implements Interceptor {
         }
     }
 
-    private void dealList(List<? extends BaseAudit> list,SqlCommandType sqlCommandType) {
-        list.forEach(item->{
-            dealItem(item,sqlCommandType);
+    private void dealList(List<? extends BaseAudit> list, SqlCommandType sqlCommandType) {
+        list.forEach(item -> {
+            dealItem(item, sqlCommandType);
         });
     }
 

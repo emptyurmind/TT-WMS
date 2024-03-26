@@ -4,12 +4,11 @@ import lombok.Data;
 
 /**
  * 用户登录对象
- * 
+ *
  * @author ruoyi
  */
 @Data
-public class LoginBody
-{
+public class LoginBody {
     /**
      * 用户名
      */

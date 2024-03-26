@@ -43,6 +43,7 @@ public class ServiceException extends RuntimeException {
     public String getDetailMessage() {
         return detailMessage;
     }
+
     @Override
     public String getMessage() {
         return message;
