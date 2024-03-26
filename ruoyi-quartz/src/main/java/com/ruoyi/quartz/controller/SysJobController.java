@@ -1,17 +1,5 @@
 package com.ruoyi.quartz.controller;
 
-import java.util.List;
-import org.quartz.SchedulerException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.controller.BaseController;
@@ -24,16 +12,21 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.quartz.domain.SysJob;
 import com.ruoyi.quartz.service.ISysJobService;
 import com.ruoyi.quartz.util.CronUtils;
+import org.quartz.SchedulerException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 调度任务信息操作处理
- * 
+ *
  * @author ruoyi
  */
 @RestController
 @RequestMapping("/monitor/job")
-public class SysJobController extends BaseController
-{
+public class SysJobController extends BaseController {
     @Autowired
     private ISysJobService jobService;
 
@@ -42,8 +35,7 @@ public class SysJobController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('monitor:job:list')")
     @GetMapping("/list")
-    public TableDataInfo list(SysJob sysJob)
-    {
+    public TableDataInfo list(SysJob sysJob) {
         startPage();
         List<SysJob> list = jobService.selectJobList(sysJob);
         return getDataTable(list);
@@ -55,8 +47,7 @@ public class SysJobController extends BaseController
     @PreAuthorize("@ss.hasPermi('monitor:job:export')")
     @Log(title = "定时任务", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
-    public AjaxResult export(SysJob sysJob)
-    {
+    public AjaxResult export(SysJob sysJob) {
         List<SysJob> list = jobService.selectJobList(sysJob);
         ExcelUtil<SysJob> util = new ExcelUtil<SysJob>(SysJob.class);
         return util.exportExcel(list, "定时任务");
@@ -67,8 +58,7 @@ public class SysJobController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('monitor:job:query')")
     @GetMapping(value = "/{jobId}")
-    public AjaxResult getInfo(@PathVariable("jobId") Long jobId)
-    {
+    public AjaxResult getInfo(@PathVariable("jobId") Long jobId) {
         return AjaxResult.success(jobService.selectJobById(jobId));
     }
 
@@ -78,22 +68,14 @@ public class SysJobController extends BaseController
     @PreAuthorize("@ss.hasPermi('monitor:job:add')")
     @Log(title = "定时任务", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody SysJob job) throws SchedulerException, TaskException
-    {
-        if (!CronUtils.isValid(job.getCronExpression()))
-        {
+    public AjaxResult add(@RequestBody SysJob job) throws SchedulerException, TaskException {
+        if (!CronUtils.isValid(job.getCronExpression())) {
             return error("新增任务'" + job.getJobName() + "'失败，Cron表达式不正确");
-        }
-        else if (StringUtils.containsIgnoreCase(job.getInvokeTarget(), Constants.LOOKUP_RMI))
-        {
+        } else if (StringUtils.containsIgnoreCase(job.getInvokeTarget(), Constants.LOOKUP_RMI)) {
             return error("新增任务'" + job.getJobName() + "'失败，目标字符串不允许'rmi://'调用");
-        }
-        else if (StringUtils.containsIgnoreCase(job.getInvokeTarget(), Constants.LOOKUP_LDAP))
-        {
+        } else if (StringUtils.containsIgnoreCase(job.getInvokeTarget(), Constants.LOOKUP_LDAP)) {
             return error("新增任务'" + job.getJobName() + "'失败，目标字符串不允许'ldap://'调用");
-        }
-        else if (StringUtils.containsAnyIgnoreCase(job.getInvokeTarget(), new String[] { Constants.HTTP, Constants.HTTPS }))
-        {
+        } else if (StringUtils.containsAnyIgnoreCase(job.getInvokeTarget(), new String[]{Constants.HTTP, Constants.HTTPS})) {
             return error("新增任务'" + job.getJobName() + "'失败，目标字符串不允许'http(s)//'调用");
         }
         job.setCreateBy(getUserId());
@@ -106,22 +88,14 @@ public class SysJobController extends BaseController
     @PreAuthorize("@ss.hasPermi('monitor:job:edit')")
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody SysJob job) throws SchedulerException, TaskException
-    {
-        if (!CronUtils.isValid(job.getCronExpression()))
-        {
+    public AjaxResult edit(@RequestBody SysJob job) throws SchedulerException, TaskException {
+        if (!CronUtils.isValid(job.getCronExpression())) {
             return error("修改任务'" + job.getJobName() + "'失败，Cron表达式不正确");
-        }
-        else if (StringUtils.containsIgnoreCase(job.getInvokeTarget(), Constants.LOOKUP_RMI))
-        {
+        } else if (StringUtils.containsIgnoreCase(job.getInvokeTarget(), Constants.LOOKUP_RMI)) {
             return error("修改任务'" + job.getJobName() + "'失败，目标字符串不允许'rmi://'调用");
-        }
-        else if (StringUtils.containsIgnoreCase(job.getInvokeTarget(), Constants.LOOKUP_LDAP))
-        {
+        } else if (StringUtils.containsIgnoreCase(job.getInvokeTarget(), Constants.LOOKUP_LDAP)) {
             return error("修改任务'" + job.getJobName() + "'失败，目标字符串不允许'ldap://'调用");
-        }
-        else if (StringUtils.containsAnyIgnoreCase(job.getInvokeTarget(), new String[] { Constants.HTTP, Constants.HTTPS }))
-        {
+        } else if (StringUtils.containsAnyIgnoreCase(job.getInvokeTarget(), new String[]{Constants.HTTP, Constants.HTTPS})) {
             return error("修改任务'" + job.getJobName() + "'失败，目标字符串不允许'http(s)//'调用");
         }
         job.setUpdateBy(getUserId());
@@ -134,8 +108,7 @@ public class SysJobController extends BaseController
     @PreAuthorize("@ss.hasPermi('monitor:job:changeStatus')")
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
-    public AjaxResult changeStatus(@RequestBody SysJob job) throws SchedulerException
-    {
+    public AjaxResult changeStatus(@RequestBody SysJob job) throws SchedulerException {
         SysJob newJob = jobService.selectJobById(job.getJobId());
         newJob.setStatus(job.getStatus());
         return toAjax(jobService.changeStatus(newJob));
@@ -147,8 +120,7 @@ public class SysJobController extends BaseController
     @PreAuthorize("@ss.hasPermi('monitor:job:changeStatus')")
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping("/run")
-    public AjaxResult run(@RequestBody SysJob job) throws SchedulerException
-    {
+    public AjaxResult run(@RequestBody SysJob job) throws SchedulerException {
         jobService.run(job);
         return AjaxResult.success();
     }
@@ -159,8 +131,7 @@ public class SysJobController extends BaseController
     @PreAuthorize("@ss.hasPermi('monitor:job:remove')")
     @Log(title = "定时任务", businessType = BusinessType.DELETE)
     @DeleteMapping("/{jobIds}")
-    public AjaxResult remove(@PathVariable Long[] jobIds) throws SchedulerException, TaskException
-    {
+    public AjaxResult remove(@PathVariable Long[] jobIds) throws SchedulerException, TaskException {
         jobService.deleteJobByIds(jobIds);
         return AjaxResult.success();
     }
