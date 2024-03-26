@@ -21,7 +21,7 @@ import java.util.Set;
 
 /**
  * 登录验证
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -85,12 +85,11 @@ public class SysLoginController {
 
     /**
      * 获取路由信息
-     * 
+     *
      * @return 路由信息
      */
     @GetMapping("getRouters")
-    public AjaxResult getRouters()
-    {
+    public AjaxResult getRouters() {
         Long userId = SecurityUtils.getUserId();
         List<SysMenu> menus = menuService.selectMenuTreeByUserId(userId);
         return AjaxResult.success(menuService.buildMenus(menus));

@@ -31,6 +31,7 @@ public class CommonTest {
         ImgUtil.scale(new File(f1), new File(f2), .1f);
         log.info("end {}", System.currentTimeMillis() - start);
     }
+
     @Test
     public void test5() throws IOException {
         String f1 = "D:/build/tt.jpg";

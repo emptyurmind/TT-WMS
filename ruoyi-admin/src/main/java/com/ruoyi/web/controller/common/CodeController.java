@@ -23,7 +23,7 @@ public class CodeController extends BaseController {
     @GetMapping("/get")
     public AjaxResult getCode(HttpServletRequest request, @RequestParam String phone) {
         String uuid = request.getHeader(traceIdName);
-        boolean res  = phoneCodeService.obtainCode(uuid, phone);
+        boolean res = phoneCodeService.obtainCode(uuid, phone);
         return AjaxResult.success(res);
     }
 }
