@@ -18,14 +18,12 @@ import java.util.TimeZone;
 @EnableAspectJAutoProxy(exposeProxy = true)
 // 指定要扫描的Mapper类的包的路径
 @MapperScan({"com.ruoyi.**.mapper", "com.fjp.**.mapper", "com.tt.**.mapper"})
-public class ApplicationConfig
-{
+public class ApplicationConfig {
     /**
      * 时区配置
      */
     @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jacksonObjectMapperCustomization()
-    {
+    public Jackson2ObjectMapperBuilderCustomizer jacksonObjectMapperCustomization() {
         return jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder.timeZone(TimeZone.getDefault());
     }
 }
